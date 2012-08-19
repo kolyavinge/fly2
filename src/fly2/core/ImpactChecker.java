@@ -3,8 +3,14 @@ package fly2.core;
 import fly2.common.*;
 import java.util.*;
 
+/**
+ * Занимается проверкой соударения игровых объектов
+ */
 public class ImpactChecker {
 
+	/**
+	 * Ищит объекты которые ударились и возвращает их в виде коллекции кортежей.
+	 */
 	public Collection<WorldItemTuple> checkImpact(List<WorldItem> worldItems) {
 		Collection<WorldItemTuple> result = new ArrayList<WorldItemTuple>();
 
@@ -23,11 +29,11 @@ public class ImpactChecker {
 	}
 
 	private boolean isImpacted(WorldItem item1, WorldItem item2) {
-		Rectangle bounds1 = item1.getBounds();
-		Rectangle bounds2 = item2.getBounds();
+		Bounds bounds1 = item1.getBounds();
+		Bounds bounds2 = item2.getBounds();
 
 		return Geometry.impactRect(
-				bounds1.getLeftUpX(), bounds1.getLeftUpY(), bounds1.getWidth(), bounds1.getHeight(),
-				bounds2.getLeftUpX(), bounds2.getLeftUpY(), bounds2.getWidth(), bounds2.getHeight());
+				bounds1.getLeftUpX(), bounds1.getLeftUpY(), item1.getWidth(), item1.getHeight(),
+				bounds2.getLeftUpX(), bounds2.getLeftUpY(), item2.getWidth(), item2.getHeight());
 	}
 }

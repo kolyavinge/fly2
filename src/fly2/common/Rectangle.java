@@ -1,6 +1,6 @@
 package fly2.common;
 
-public class Rectangle {
+public class Rectangle implements Bounds {
 
 	public static Rectangle create(double leftUpX, double leftUpY, double width, double height) {
 		Rectangle rect = new Rectangle();
@@ -24,6 +24,9 @@ public class Rectangle {
 
 	private double leftUpX, leftUpY;
 	private double width, height;
+
+	private Rectangle() {
+	}
 
 	public double getLeftUpX() {
 		return leftUpX;
@@ -79,7 +82,7 @@ public class Rectangle {
 
 	public void setWidth(double width) {
 		if (width <= 0)
-			throw new IllegalArgumentException("Ширина прямоугольника задана неверно");
+			throw new IllegalArgumentException("Ширина прямоугольника должна быть больше нуля");
 
 		this.width = width;
 	}
@@ -90,7 +93,7 @@ public class Rectangle {
 
 	public void setHeight(double height) {
 		if (height <= 0)
-			throw new IllegalArgumentException("Высота прямоугольника задана неверно");
+			throw new IllegalArgumentException("Высота прямоугольника должна быть больше нуля");
 
 		this.height = height;
 	}

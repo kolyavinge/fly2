@@ -15,35 +15,35 @@ public class ImpactCheckerTest extends TestCase {
 	}
 
 	public void testCheckImpactTwoItems() {
-		WorldItem item1 = addWorldItem(new WorldItem(0, 0, 10, 10));
-		WorldItem item2 = addWorldItem(new WorldItem(5, 5, 10, 10));
+		WorldItem item1 = addWorldItem(0, 0, 10, 10);
+		WorldItem item2 = addWorldItem(5, 5, 10, 10);
 		checkImpact();
 		resultSize(1);
 		resultContainsTuple(item1, item2);
 	}
 
 	public void testCheckImpactTwoItemsTouch() {
-		WorldItem item1 = addWorldItem(new WorldItem(0, 0, 1, 1));
-		WorldItem item2 = addWorldItem(new WorldItem(1, 1, 1, 1));
+		WorldItem item1 = addWorldItem(0, 0, 1, 1);
+		WorldItem item2 = addWorldItem(1, 1, 1, 1);
 		checkImpact();
 		resultSize(1);
 		resultContainsTuple(item1, item2);
 	}
 
 	public void testCheckImpactThreeItems() {
-		WorldItem item1 = addWorldItem(new WorldItem(0, 0, 2, 2));
-		WorldItem item2 = addWorldItem(new WorldItem(1, 1, 3, 3));
-		WorldItem item3 = addWorldItem(new WorldItem(3, 3, 2, 2));
+		WorldItem item1 = addWorldItem(0, 0, 2, 2);
+		WorldItem item2 = addWorldItem(1, 1, 3, 3);
+		WorldItem item3 = addWorldItem(3, 3, 2, 2);
 		checkImpact();
 		resultSize(2);
 		resultContainsTuple(item1, item2);
 		resultContainsTuple(item2, item3);
 	}
-	
+
 	public void testCheckImpactThreeItemsSameCoords() {
-		WorldItem item1 = addWorldItem(new WorldItem(0, 0, 1, 1));
-		WorldItem item2 = addWorldItem(new WorldItem(0, 0, 1, 1));
-		WorldItem item3 = addWorldItem(new WorldItem(0, 0, 1, 1));
+		WorldItem item1 = addWorldItem(0, 0, 1, 1);
+		WorldItem item2 = addWorldItem(0, 0, 1, 1);
+		WorldItem item3 = addWorldItem(0, 0, 1, 1);
 		checkImpact();
 		resultSize(3);
 		resultContainsTuple(item1, item2);
@@ -77,8 +77,12 @@ public class ImpactCheckerTest extends TestCase {
 		result = impactChecker.checkImpact(worldItems);
 	}
 
-	private WorldItem addWorldItem(WorldItem item) {
+	private WorldItem addWorldItem(double leftUpX, double leftUpY, double width, double height) {
+		WorldItem item = new WorldItem();
+		item.setLeftUpPoint(leftUpX, leftUpY);
+		item.setSize(width, height);
 		worldItems.add(item);
+
 		return item;
 	}
 }

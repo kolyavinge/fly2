@@ -4,6 +4,9 @@ import fly2.common.DuplicateKeyException;
 
 import java.util.*;
 
+/**
+ * Коллекция объектов типа ImpactStrategy
+ */
 public class ImpactStrategyCollection {
 
 	private List<ImpactStrategy> items;
@@ -13,8 +16,8 @@ public class ImpactStrategyCollection {
 	}
 
 	public void add(ImpactStrategy impactStrategy) {
-		Class leftClass = impactStrategy.getLeftObjectClass();
-		Class rightClass = impactStrategy.getRightObjectClass();
+		Class leftClass = impactStrategy.getFirstObjectClass();
+		Class rightClass = impactStrategy.getSecondObjectClass();
 
 		if (contains(leftClass, rightClass)) {
 			String message = String.format("%s %s", leftClass.getName(), rightClass.getName());
@@ -34,7 +37,7 @@ public class ImpactStrategyCollection {
 
 	public boolean contains(Class left, Class right) {
 		for (ImpactStrategy impactStrategy : items) {
-			if (impactStrategy.getLeftObjectClass() == left && impactStrategy.getRightObjectClass() == right)
+			if (impactStrategy.getFirstObjectClass() == left && impactStrategy.getSecondObjectClass() == right)
 				return true;
 		}
 
@@ -43,7 +46,7 @@ public class ImpactStrategyCollection {
 
 	public ImpactStrategy getFor(Class left, Class right) {
 		for (ImpactStrategy impactStrategy : items) {
-			if (impactStrategy.getLeftObjectClass() == left && impactStrategy.getRightObjectClass() == right)
+			if (impactStrategy.getFirstObjectClass() == left && impactStrategy.getSecondObjectClass() == right)
 				return impactStrategy;
 		}
 

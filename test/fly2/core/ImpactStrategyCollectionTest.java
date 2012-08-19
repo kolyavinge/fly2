@@ -67,11 +67,11 @@ public class ImpactStrategyCollectionTest extends TestCase {
 	private ImpactStrategy getImpactStrategyStringDouble() {
 		return new ImpactStrategy() {
 
-			public Class getLeftObjectClass() {
+			public Class getFirstObjectClass() {
 				return String.class;
 			}
 
-			public Class getRightObjectClass() {
+			public Class getSecondObjectClass() {
 				return Double.class;
 			}
 

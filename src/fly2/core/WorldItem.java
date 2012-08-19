@@ -1,35 +1,30 @@
 package fly2.core;
 
+import fly2.common.Bounds;
 import fly2.common.Rectangle;
 
+/**
+ * Объект игрового мира. Имеет координаты и размеры. Умеет перемещаться по осям Х и У.
+ */
 public class WorldItem {
 
 	private Rectangle bounds;
 
 	public WorldItem() {
-		this(0, 0, 1, 1);
-	}
-
-	public WorldItem(double width, double height) {
-		this(0, 0, width, height);
-	}
-
-	public WorldItem(double leftUpX, double leftUpY, double width, double height) {
-		bounds = Rectangle.create(leftUpX, leftUpY, width, height);
+		bounds = Rectangle.create(0, 0, 1, 1);
 	}
 
 	public void setLeftUpX(double leftUpX) {
-		if (leftUpX < 0)
-			throw new IllegalArgumentException("Координата х не может быть отрицательной");
-
 		bounds.setLeftUpX(leftUpX);
 	}
 
 	public void setLeftUpY(double leftUpY) {
-		if (leftUpY < 0)
-			throw new IllegalArgumentException("Координата y не может быть отрицательной");
-
 		bounds.setLeftUpY(leftUpY);
+	}
+
+	public void setLeftUpPoint(double x, double y) {
+		setLeftUpX(x);
+		setLeftUpY(y);
 	}
 
 	public void moveX(double value) {
@@ -40,16 +35,36 @@ public class WorldItem {
 		bounds.setLeftUpY(bounds.getLeftUpY() + value);
 	}
 
-	public void setSize(double width, double height) {
+	public double getWidth() {
+		return bounds.getWidth();
+	}
+
+	public void setWidth(double width) {
 		try {
 			bounds.setWidth(width);
-			bounds.setHeight(height);
 		} catch (IllegalArgumentException exp) {
-			throw new IllegalArgumentException("Размеры объекта заданы неверно");
+			throw new IllegalArgumentException("Ширина объекта задана неверно");
 		}
 	}
 
-	public Rectangle getBounds() {
+	public double getHeight() {
+		return bounds.getHeight();
+	}
+
+	public void setHeight(double height) {
+		try {
+			bounds.setHeight(height);
+		} catch (IllegalArgumentException exp) {
+			throw new IllegalArgumentException("Высота объекта задана неверно");
+		}
+	}
+
+	public void setSize(double width, double height) {
+		setWidth(width);
+		setHeight(height);
+	}
+
+	public Bounds getBounds() {
 		return bounds;
 	}
 }

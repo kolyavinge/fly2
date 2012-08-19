@@ -8,16 +8,7 @@ public class RectangleTest extends TestCase {
 	private Rectangle rect;
 
 	public void setUp() {
-		rect = new Rectangle();
-	}
-
-	public void testNew() {
-		assertLeftUp(0, 0);
-		assertRightUp(0, 0);
-		assertLeftDown(0, 0);
-		assertRightDown(0, 0);
-		assertMiddle(0, 0);
-		assertSize(0, 0);
+		rect = Rectangle.create(0, 0, 1, 1);
 	}
 
 	public void testSize() {
