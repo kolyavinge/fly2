@@ -1,7 +1,9 @@
 package fly2.core;
 
+import fly2.common.DuplicateKeyException;
+
 import java.util.NoSuchElementException;
-import fly2.core.*;
+
 import junit.framework.TestCase;
 
 public class ImpactStrategyCollectionTest extends TestCase {
@@ -10,6 +12,15 @@ public class ImpactStrategyCollectionTest extends TestCase {
 
 	public void setUp() {
 		collection = new ImpactStrategyCollection();
+	}
+
+	public void testAddDuplicateKey() {
+		collection.add(getImpactStrategyStringDouble());
+		try {
+			collection.add(getImpactStrategyStringDouble());
+			fail();
+		} catch (DuplicateKeyException exp) {
+		}
 	}
 
 	public void testContains() {
@@ -64,7 +75,7 @@ public class ImpactStrategyCollectionTest extends TestCase {
 				return Double.class;
 			}
 
-			public void impact(Object leftObject, Object rightObject) {
+			public void activateImpact(Object leftObject, Object rightObject) {
 			}
 		};
 	}

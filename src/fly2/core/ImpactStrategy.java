@@ -6,5 +6,5 @@ public interface ImpactStrategy {
 
 	Class getRightObjectClass();
 
-	void impact(Object leftObject, Object rightObject);
+	void activateImpact(Object leftObject, Object rightObject);
 }

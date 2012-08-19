@@ -1,21 +1,23 @@
 package fly2.core;
 
 import java.util.*;
+
 import fly2.common.*;
 
 public class World {
 
 	private double width, height;
-	private List<WorldItem> items;
-	private List<Updateable> updateables;
+	private List<WorldItem> worldItems;
+	private ImpactStrategyCollection impactStrategies;
+	private ImpactChecker impactChecker;
 
 	public World(double width, double height) {
 		if (width <= 0 || height <= 0)
 			throw new IllegalArgumentException("Размеры игрового мира должны быть больше нуля");
 		this.width = width;
 		this.height = height;
-		this.items = new ArrayList<WorldItem>(32);
-		this.updateables = new ArrayList<Updateable>(32);
+		this.worldItems = new ArrayList<WorldItem>();
+		this.impactStrategies = new ImpactStrategyCollection();
 	}
 
 	public double getWidth() {
@@ -30,10 +32,7 @@ public class World {
 		if (checkBounds(item) == false)
 			throw new ItemOutOfWorldException(item);
 
-		items.add(item);
-
-		if (item instanceof Updateable)
-			updateables.add((Updateable) item);
+		worldItems.add(item);
 	}
 
 	private boolean checkBounds(WorldItem item) {
@@ -44,23 +43,51 @@ public class World {
 	}
 
 	public void removeItem(WorldItem item) {
-		items.remove(item);
+		worldItems.remove(item);
 	}
 
 	public Iterable<WorldItem> getItems() {
-		return items;
+		return worldItems;
 	}
 
 	public int getItemsCount() {
-		return items.size();
+		return worldItems.size();
 	}
 
-	public void update() {
-		updateAllItems();
+	public void registerImpactStrategy(ImpactStrategy impactStrategy) {
+		impactStrategies.add(impactStrategy);
 	}
 
-	private void updateAllItems() {
-		for (Updateable u : updateables)
-			u.update();
+	public void setImpactChecker(ImpactChecker impactChecker) {
+		if (impactChecker == null)
+			throw new NullPointerException("impactChecker");
+
+		this.impactChecker = impactChecker;
+	}
+
+	public void updateAllItems() {
+		for (WorldItem item : worldItems)
+			if (item instanceof Updateable)
+				((Updateable) item).update();
+	}
+
+	public void activateItemsImpact() {
+		if (impactChecker == null)
+			throw new IllegalStateException();
+
+		Collection<WorldItemTuple> impactedItemTuples = impactChecker.checkImpact(worldItems);
+
+		for (WorldItemTuple t : impactedItemTuples) {
+			Class firstClass = t.getFirst().getClass();
+			Class secondClass = t.getSecond().getClass();
+
+			if (impactStrategies.contains(firstClass, secondClass) == false) {
+				String message = String.format("Отсутствует объект ImpactStrategy для классов %s %s", firstClass.getName(), secondClass.getName());
+				throw new NoSuchElementException(message);
+			}
+
+			ImpactStrategy strategy = impactStrategies.getFor(firstClass, secondClass);
+			strategy.activateImpact(t.getFirst(), t.getSecond());
+		}
 	}
 }
