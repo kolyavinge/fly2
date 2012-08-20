@@ -37,13 +37,6 @@ public class World implements WorldItemCollection {
 		worldItems.add(item);
 	}
 
-	private boolean checkBounds(WorldItem item) {
-		Bounds bounds = item.getBounds();
-		return Geometry.innerRect(
-				0.0, 0.0, width, height,
-				bounds.getLeftUpX(), bounds.getLeftUpY(), item.getWidth(), item.getHeight());
-	}
-
 	public void removeItem(WorldItem item) {
 		worldItems.remove(item);
 	}
@@ -69,6 +62,22 @@ public class World implements WorldItemCollection {
 
 	public void setRaiseErrorIfImpactStrategyNotFound(boolean value) {
 		raiseErrorIfImpactStrategyNotFound = value;
+	}
+
+	public void removeOutOfWorldItems() {
+		Iterator<WorldItem> iterator = worldItems.iterator();
+		while (iterator.hasNext()) {
+			WorldItem item = iterator.next();
+			if (inWorld(item) == false)
+				iterator.remove();
+		}
+	}
+
+	private boolean inWorld(WorldItem item) {
+		Bounds bounds = item.getBounds();
+		return Geometry.innerRect(
+				0.0, 0.0, width, height,
+				bounds.getLeftUpX(), bounds.getLeftUpY(), item.getWidth(), item.getHeight());
 	}
 
 	public void updateAllItems() {

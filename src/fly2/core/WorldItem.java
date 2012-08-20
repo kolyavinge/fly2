@@ -11,7 +11,7 @@ public class WorldItem {
 	private Rectangle bounds;
 
 	public WorldItem() {
-		bounds = Rectangle.create(0, 0, 1, 1);
+		bounds = new Rectangle();
 	}
 
 	public void setLeftUpX(double leftUpX) {

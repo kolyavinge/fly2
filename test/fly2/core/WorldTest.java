@@ -66,37 +66,15 @@ public class WorldTest extends TestCase {
 		assertEquals(0, world.getItemsCount());
 	}
 
-//	public void testOutOfWorldBounds() {
-//		WorldItem item = null;
-//
-//		try {
-//			item = addWorldItem(-10, 20, 30, 40);
-//			fail();
-//		} catch (ItemOutOfWorldException exp) {
-//			assertSame(item, exp.getWorldItem());
-//		}
-//
-//		try {
-//			item = addWorldItem(10, -20, 30, 40);
-//			fail();
-//		} catch (ItemOutOfWorldException exp) {
-//			assertSame(item, exp.getWorldItem());
-//		}
-//
-//		try {
-//			item = addWorldItem(10, 20, 30000, 40);
-//			fail();
-//		} catch (ItemOutOfWorldException exp) {
-//			assertSame(item, exp.getWorldItem());
-//		}
-//
-//		try {
-//			item = addWorldItem(10, 20, 30, 400000);
-//			fail();
-//		} catch (ItemOutOfWorldException exp) {
-//			assertSame(item, exp.getWorldItem());
-//		}
-//	}
+	public void testRemoveOutOfWorldItems() {
+		addWorldItem(-10, 20, 30, 40);
+		addWorldItem(10, -20, 30, 40);
+		addWorldItem(10, 20, 30000, 40);
+		addWorldItem(10, 20, 30, 400000);
+		assertEquals(4, world.getItemsCount());
+		world.removeOutOfWorldItems();
+		assertEquals(0, world.getItemsCount());
+	}
 
 	public void testUpdateAllItems() {
 		addUpdateableWorldItem();

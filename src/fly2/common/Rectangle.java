@@ -2,16 +2,6 @@ package fly2.common;
 
 public class Rectangle implements Bounds {
 
-	public static Rectangle create(double leftUpX, double leftUpY, double width, double height) {
-		Rectangle rect = new Rectangle();
-		rect.setLeftUpX(leftUpX);
-		rect.setLeftUpY(leftUpY);
-		rect.setWidth(width);
-		rect.setHeight(height);
-
-		return rect;
-	}
-
 	public static Rectangle copyFrom(Rectangle rect) {
 		Rectangle copyRect = new Rectangle();
 		copyRect.leftUpX = rect.leftUpX;
@@ -25,8 +15,16 @@ public class Rectangle implements Bounds {
 	private double leftUpX, leftUpY;
 	private double width, height;
 
-	private Rectangle() {
+	public Rectangle() {
+		this(0.0, 0.0, 1.0, 1.0);
 	}
+	
+	public Rectangle(double leftUpX, double leftUpY, double width, double height) {
+		setLeftUpX(leftUpX);
+		setLeftUpY(leftUpY);
+		setWidth(width);
+		setHeight(height);
+	}	
 
 	public double getLeftUpX() {
 		return leftUpX;

@@ -8,7 +8,16 @@ public class RectangleTest extends TestCase {
 	private Rectangle rect;
 
 	public void setUp() {
-		rect = Rectangle.create(0, 0, 1, 1);
+		rect = new Rectangle();
+	}
+	
+	public void testNew() {
+		assertLeftUp(0, 0);
+		assertRightUp(1.0, 0);
+		assertLeftDown(0, 1.0);
+		assertRightDown(1.0, 1.0);
+		assertMiddle(0.5, 0.5);
+		assertSize(1.0, 1.0);
 	}
 
 	public void testSize() {
@@ -57,7 +66,7 @@ public class RectangleTest extends TestCase {
 	}
 
 	public void testCreate() {
-		rect = Rectangle.create(10, 20, 30, 40);
+		rect = new Rectangle(10, 20, 30, 40);
 		assertLeftUp(10, 20);
 		assertRightUp(40, 20);
 		assertLeftDown(10, 60);
@@ -67,7 +76,7 @@ public class RectangleTest extends TestCase {
 	}
 
 	public void testCopyFrom() {
-		rect = Rectangle.create(10, 20, 30, 40);
+		rect = new Rectangle(10, 20, 30, 40);
 		Rectangle copyRect = Rectangle.copyFrom(rect);
 		assertEquals(rect.getLeftUpX(), copyRect.getLeftUpX());
 		assertEquals(rect.getLeftUpY(), copyRect.getLeftUpY());
