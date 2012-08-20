@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 
 public class BulletTest extends TestCase {
 
-	private double damage = 20.0;
+	private int damage = 20;
 	private Bullet bullet;
 
 	public void setUp() {
@@ -18,7 +18,7 @@ public class BulletTest extends TestCase {
 
 	public void testNegativeDamageValue() {
 		try {
-			bullet.setDamage(-1.0);
+			bullet.setDamage(-1);
 			fail();
 		} catch (IllegalArgumentException exp) {
 		}

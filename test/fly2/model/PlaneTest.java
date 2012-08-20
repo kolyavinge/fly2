@@ -8,6 +8,7 @@ public class PlaneTest extends TestCase {
 
 	private double width = 10.0;
 	private double height = 20.0;
+	private int health = 15;
 	private Plane plane;
 	private Weapon weapon;
 	private WorldItemCollection worldItems;
@@ -17,6 +18,18 @@ public class PlaneTest extends TestCase {
 		weapon = new Weapon(worldItems);
 		plane = new Plane(weapon);
 		plane.setSize(width, height);
+		plane.setHealth(health);
+	}
+
+	public void testNew() {
+		plane = new Plane(weapon);
+		assertEquals(0, plane.getHealth());
+		assertSame(weapon, plane.getWeapon());
+	}
+
+	public void testSettersGetters() {
+		assertEquals(health, plane.getHealth());
+		assertSame(weapon, plane.getWeapon());
 	}
 
 	public void testFire() {
@@ -27,6 +40,51 @@ public class PlaneTest extends TestCase {
 		assertTrue(item instanceof Bullet);
 		// убеждаемся что пулька создалась, все остальное
 		// протестировано в классе Weapon
+	}
+
+	public void testDamage() {
+		assertEquals(health, plane.getHealth());
+		plane.damage(2);
+		assertEquals(health - 2, plane.getHealth());
+	}
+
+	public void testTotalDamage() {
+		assertEquals(health, plane.getHealth());
+		plane.damage(health);
+		assertEquals(0, plane.getHealth());
+	}
+
+	public void testMoreTotalDamage() {
+		assertEquals(health, plane.getHealth());
+		plane.damage(2 * health);
+		assertEquals(0, plane.getHealth());
+	}
+
+	public void testZeroDamage() {
+		assertEquals(health, plane.getHealth());
+		plane.damage(0);
+		assertEquals(health, plane.getHealth());
+	}
+
+	public void testNegativeDamage() {
+		try {
+			plane.damage(-1);
+			fail();
+		} catch (IllegalArgumentException exp) {
+		}
+	}
+
+	public void testZeroHealth() {
+		plane.setHealth(0);
+		assertEquals(0, plane.getHealth());
+	}
+
+	public void testNegativeHealth() {
+		try {
+			plane.setHealth(-1);
+			fail();
+		} catch (IllegalArgumentException exp) {
+		}
 	}
 
 	public void testCreateWithNullWeapon() {

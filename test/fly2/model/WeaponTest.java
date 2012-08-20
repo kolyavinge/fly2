@@ -11,7 +11,7 @@ public class WeaponTest extends TestCase {
 	private double x = 10.0, y = 20.0;
 	private double bulletSize = 8.0;
 	private Direction bulletDirection = UP;
-	private double bulletDamage = 15.0;
+	private int bulletDamage = 15;
 	private double bulletSpeed = 50.0;
 	private Weapon weapon;
 	private WorldItemCollection worldItems;
@@ -42,7 +42,7 @@ public class WeaponTest extends TestCase {
 		assertEquals(0.0, weapon.getY());
 		assertEquals(1.0, weapon.getBulletSize());
 		assertEquals(LEFT, weapon.getBulletDirection());
-		assertEquals(0.0, weapon.getBulletDamage());
+		assertEquals(0, weapon.getBulletDamage());
 		assertEquals(0.0, weapon.getBulletSpeed());
 		assertSame(worldItems, weapon.getWorldItems());
 	}

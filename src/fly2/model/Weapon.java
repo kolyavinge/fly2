@@ -12,7 +12,7 @@ public class Weapon {
 	private double x, y;
 	private double bulletSize;
 	private double bulletSpeed;
-	private double bulletDamage;
+	private int bulletDamage;
 	private Direction bulletDirection;
 	private WorldItemCollection worldItems;
 
@@ -74,11 +74,11 @@ public class Weapon {
 		this.bulletSpeed = bulletSpeed;
 	}
 
-	public double getBulletDamage() {
+	public int getBulletDamage() {
 		return bulletDamage;
 	}
 
-	public void setBulletDamage(double bulletDamage) {
+	public void setBulletDamage(int bulletDamage) {
 		this.bulletDamage = bulletDamage;
 	}
 

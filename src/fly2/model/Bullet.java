@@ -7,13 +7,13 @@ import fly2.core.*;
  */
 public class Bullet extends MoveableWorldItem {
 
-	private double damage;
+	private int damage;
 
-	public double getDamage() {
+	public int getDamage() {
 		return damage;
 	}
 
-	public void setDamage(double damage) {
+	public void setDamage(int damage) {
 		if (damage < 0)
 			throw new IllegalArgumentException();
 
