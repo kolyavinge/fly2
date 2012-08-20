@@ -23,7 +23,7 @@ public class WorldTest extends TestCase {
 		assertEquals(worldHeight, world.getHeight());
 	}
 
-	public void testWrongSize() {
+	public void testWrongWorldSize() {
 		try {
 			new World(0, 1);
 			fail();
@@ -67,13 +67,15 @@ public class WorldTest extends TestCase {
 	}
 
 	public void testRemoveOutOfWorldItems() {
+		WorldItem itemInWorld = addWorldItem(0.0, 0.0, 1.0, 1.0);
 		addWorldItem(-10, 20, 30, 40);
 		addWorldItem(10, -20, 30, 40);
 		addWorldItem(10, 20, 30000, 40);
 		addWorldItem(10, 20, 30, 400000);
-		assertEquals(4, world.getItemsCount());
+		assertEquals(5, world.getItemsCount());
 		world.removeOutOfWorldItems();
-		assertEquals(0, world.getItemsCount());
+		assertEquals(1, world.getItemsCount());
+		assertSame(itemInWorld, world.getItems().iterator().next());
 	}
 
 	public void testUpdateAllItems() {
@@ -150,17 +152,17 @@ public class WorldTest extends TestCase {
 		return item;
 	}
 
-	private class TestImpactStrategy implements ImpactStrategy {
+	private class TestImpactStrategy implements ImpactStrategy<WorldItem, WorldItem> {
 
-		public Class getFirstObjectClass() {
+		public Class<WorldItem> getFirstObjectClass() {
 			return WorldItem.class;
 		}
 
-		public Class getSecondObjectClass() {
+		public Class<WorldItem> getSecondObjectClass() {
 			return WorldItem.class;
 		}
 
-		public void activateImpact(Object leftObject, Object rightObject) {
+		public void activateImpact(WorldItem left, WorldItem right) {
 			activateImpactFlag = true;
 		}
 	}

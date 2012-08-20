@@ -3,20 +3,20 @@ package fly2.core;
 /**
  * Реализует логику соударения разных игровых объектов друг с другом
  */
-public interface ImpactStrategy {
+public interface ImpactStrategy<T extends WorldItem, U extends WorldItem> {
 
 	/**
 	 * Класс первого игрового объекта, для которого предназначена данная стратегия
 	 */
-	Class getFirstObjectClass();
+	Class<T> getFirstObjectClass();
 
 	/**
 	 * Класс второго игрового объекта, для которого предназначена данная стратегия
 	 */
-	Class getSecondObjectClass();
+	Class<U> getSecondObjectClass();
 
 	/**
 	 * Активирует логику соударения объектов
 	 */
-	void activateImpact(Object first, Object second);
+	void activateImpact(T first, U second);
 }

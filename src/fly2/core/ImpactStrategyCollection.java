@@ -15,19 +15,19 @@ public class ImpactStrategyCollection {
 		items = new ArrayList<ImpactStrategy>();
 	}
 
-	public void add(ImpactStrategy impactStrategy) {
-		Class leftClass = impactStrategy.getFirstObjectClass();
-		Class rightClass = impactStrategy.getSecondObjectClass();
+	public <T extends WorldItem, U extends WorldItem> void add(ImpactStrategy<T, U> impactStrategy) {
+		Class<T> left = impactStrategy.getFirstObjectClass();
+		Class<U> right = impactStrategy.getSecondObjectClass();
 
-		if (contains(leftClass, rightClass)) {
-			String message = String.format("%s %s", leftClass.getName(), rightClass.getName());
+		if (contains(left, right)) {
+			String message = String.format("%s %s", left.getName(), right.getName());
 			throw new DuplicateKeyException(message);
 		}
 
 		items.add(impactStrategy);
 	}
 
-	public void remove(ImpactStrategy impactStrategy) {
+	public <T extends WorldItem, U extends WorldItem> void remove(ImpactStrategy<T, U> impactStrategy) {
 		items.remove(impactStrategy);
 	}
 
@@ -35,18 +35,18 @@ public class ImpactStrategyCollection {
 		return items.size();
 	}
 
-	public boolean contains(Class left, Class right) {
+	public <T extends WorldItem, U extends WorldItem> boolean contains(Class<T> first, Class<U> second) {
 		for (ImpactStrategy impactStrategy : items) {
-			if (impactStrategy.getFirstObjectClass() == left && impactStrategy.getSecondObjectClass() == right)
+			if (impactStrategy.getFirstObjectClass() == first && impactStrategy.getSecondObjectClass() == second)
 				return true;
 		}
 
 		return false;
 	}
 
-	public ImpactStrategy getFor(Class left, Class right) {
+	public <T extends WorldItem, U extends WorldItem> ImpactStrategy<T, U> getFor(Class<T> first, Class<U> second) {
 		for (ImpactStrategy impactStrategy : items) {
-			if (impactStrategy.getFirstObjectClass() == left && impactStrategy.getSecondObjectClass() == right)
+			if (impactStrategy.getFirstObjectClass() == first && impactStrategy.getSecondObjectClass() == second)
 				return impactStrategy;
 		}
 

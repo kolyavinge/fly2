@@ -93,8 +93,8 @@ public class World implements WorldItemCollection {
 		Collection<WorldItemTuple> impactedItemTuples = impactChecker.checkImpact(worldItems);
 
 		for (WorldItemTuple t : impactedItemTuples) {
-			Class firstClass = t.getFirst().getClass();
-			Class secondClass = t.getSecond().getClass();
+			Class<? extends WorldItem> firstClass = t.getFirst().getClass();
+			Class<? extends WorldItem> secondClass = t.getSecond().getClass();
 
 			if (impactStrategies.contains(firstClass, secondClass)) {
 				ImpactStrategy strategy = impactStrategies.getFor(firstClass, secondClass);
