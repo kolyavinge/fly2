@@ -18,14 +18,15 @@ public class WeaponTest extends TestCase {
 
 	public void setUp() {
 		worldItems = new TestWorldItemCollection();
-
 		weapon = new Weapon(worldItems);
 		weapon.setPosition(x, y);
 		weapon.setBulletSize(bulletSize);
 		weapon.setBulletDirection(bulletDirection);
 		weapon.setBulletSpeed(bulletSpeed);
 		weapon.setBulletDamage(bulletDamage);
+	}
 
+	public void testGettersSetters() {
 		assertEquals(x, weapon.getX());
 		assertEquals(y, weapon.getY());
 		assertEquals(bulletSize, weapon.getBulletSize());

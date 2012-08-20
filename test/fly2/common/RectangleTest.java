@@ -65,7 +65,7 @@ public class RectangleTest extends TestCase {
 		assertSize(10, 20);
 	}
 
-	public void testCreate() {
+	public void testConstructor() {
 		rect = new Rectangle(10, 20, 30, 40);
 		assertLeftUp(10, 20);
 		assertRightUp(40, 20);
