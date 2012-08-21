@@ -7,7 +7,7 @@ import fly2.common.*;
 /**
  * Игровой мир. Обновляет объекты и запускает логику соударения.
  */
-public class World implements WorldItemCollection {
+public final class World implements WorldItemCollection {
 
 	private double width, height;
 	private List<WorldItem> worldItems;
