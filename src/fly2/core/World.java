@@ -64,23 +64,7 @@ public final class World implements WorldItemCollection {
 		raiseErrorIfImpactStrategyNotFound = value;
 	}
 
-	public void removeOutOfWorldItems() {
-		Iterator<WorldItem> iterator = worldItems.iterator();
-		while (iterator.hasNext()) {
-			WorldItem item = iterator.next();
-			if (inWorld(item) == false)
-				iterator.remove();
-		}
-	}
-
-	private boolean inWorld(WorldItem item) {
-		Bounds bounds = item.getBounds();
-		return Geometry.innerRect(
-				0.0, 0.0, width, height,
-				bounds.getLeftUpX(), bounds.getLeftUpY(), item.getWidth(), item.getHeight());
-	}
-
-	public void updateAllItems() {
+	public void updateItems() {
 		for (WorldItem item : worldItems)
 			if (item instanceof Updateable)
 				((Updateable) item).update();
@@ -106,5 +90,30 @@ public final class World implements WorldItemCollection {
 				}
 			}
 		}
+	}
+
+	public void removeDestroyedItems() {
+		Iterator<WorldItem> iterator = worldItems.iterator();
+		while (iterator.hasNext()) {
+			WorldItem item = iterator.next();
+			if (item instanceof Destroyable && ((Destroyable) item).isDestroyed())
+				iterator.remove();
+		}
+	}
+
+	public void removeOutOfWorldItems() {
+		Iterator<WorldItem> iterator = worldItems.iterator();
+		while (iterator.hasNext()) {
+			WorldItem item = iterator.next();
+			if (inWorld(item) == false)
+				iterator.remove();
+		}
+	}
+
+	private boolean inWorld(WorldItem item) {
+		Bounds bounds = item.getBounds();
+		return Geometry.innerRect(
+				0.0, 0.0, width, height,
+				bounds.getLeftUpX(), bounds.getLeftUpY(), item.getWidth(), item.getHeight());
 	}
 }

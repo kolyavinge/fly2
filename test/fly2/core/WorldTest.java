@@ -19,6 +19,7 @@ public class WorldTest extends TestCase {
 	}
 
 	public void testNew() {
+		world = new World(worldWidth, worldHeight);
 		assertEquals(worldWidth, world.getWidth());
 		assertEquals(worldHeight, world.getHeight());
 	}
@@ -78,11 +79,11 @@ public class WorldTest extends TestCase {
 		assertSame(itemInWorld, world.getItems().iterator().next());
 	}
 
-	public void testUpdateAllItems() {
+	public void testUpdateItems() {
 		addUpdateableWorldItem();
 		addUpdateableWorldItem();
 		addUpdateableWorldItem();
-		world.updateAllItems();
+		world.updateItems();
 		assertEquals(3, updateables);
 	}
 
@@ -136,8 +137,25 @@ public class WorldTest extends TestCase {
 		}
 	}
 
+	public void testRemoveAllDestroyedItems() {
+		DestroyableWorldItem item1 = addDestroyableWorldItem();
+		item1.destroy();
+		DestroyableWorldItem item2 = addDestroyableWorldItem();
+		assertEquals(2, world.getItemsCount());
+		world.removeDestroyedItems();
+		assertEquals(1, world.getItemsCount());
+		assertSame(item2, world.getItems().iterator().next());
+	}
+
 	private WorldItem addUpdateableWorldItem() {
 		WorldItem item = new UpdateableWorldItem();
+		world.addItem(item);
+
+		return item;
+	}
+
+	private DestroyableWorldItem addDestroyableWorldItem() {
+		DestroyableWorldItem item = new DestroyableWorldItem();
 		world.addItem(item);
 
 		return item;
@@ -171,6 +189,19 @@ public class WorldTest extends TestCase {
 
 		public void update() {
 			updateables++;
+		}
+	}
+
+	private class DestroyableWorldItem extends WorldItem implements Destroyable {
+
+		private boolean isDestroyed = false;
+
+		public boolean isDestroyed() {
+			return isDestroyed;
+		}
+
+		public void destroy() {
+			isDestroyed = true;
 		}
 	}
 }
