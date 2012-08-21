@@ -5,9 +5,14 @@ import fly2.core.*;
 /**
  * Пуля
  */
-public class Bullet extends MoveableWorldItem {
+public class Bullet extends MoveableWorldItem implements Destroyable {
 
 	private int damage;
+	private boolean isDestroyed;
+
+	public Bullet() {
+		isDestroyed = false;
+	}
 
 	public int getDamage() {
 		return damage;
@@ -18,5 +23,13 @@ public class Bullet extends MoveableWorldItem {
 			throw new IllegalArgumentException();
 
 		this.damage = damage;
+	}
+	
+	public void destroy() {
+		isDestroyed = true;
+	}
+
+	public boolean isDestroyed() {
+		return isDestroyed;
 	}
 }

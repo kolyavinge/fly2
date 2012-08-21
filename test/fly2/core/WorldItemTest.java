@@ -13,6 +13,7 @@ public class WorldItemTest extends TestCase {
 	}
 
 	public void testNew() {
+		worldItem = new WorldItem();
 		Bounds bounds = worldItem.getBounds();
 		assertEquals(0.0, bounds.getLeftUpX());
 		assertEquals(0.0, bounds.getLeftUpY());

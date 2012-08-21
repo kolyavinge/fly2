@@ -2,7 +2,7 @@ package fly2.model;
 
 import fly2.core.*;
 
-public class Plane extends MoveableWorldItem {
+public class Plane extends MoveableWorldItem implements Destroyable {
 
 	private int health;
 	private Weapon weapon;
@@ -31,6 +31,14 @@ public class Plane extends MoveableWorldItem {
 			throw new IllegalArgumentException("health");
 
 		this.health = health;
+	}
+
+	public boolean isDestroyed() {
+		return health == 0;
+	}
+	
+	public void destroy() {
+		health = 0;
 	}
 
 	public void damage(int damageValue) {

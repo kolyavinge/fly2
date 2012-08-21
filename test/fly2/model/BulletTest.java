@@ -13,7 +13,20 @@ public class BulletTest extends TestCase {
 	}
 
 	public void testNew() {
+		bullet = new Bullet();
+		assertEquals(0, bullet.getDamage());
+		assertFalse(bullet.isDestroyed());
+	}
+	
+	public void testGettersSetters() {
 		assertEquals(damage, bullet.getDamage());
+		assertFalse(bullet.isDestroyed());
+	}
+	
+	public void testDestroy() {
+		assertFalse(bullet.isDestroyed());
+		bullet.destroy();
+		assertTrue(bullet.isDestroyed());
 	}
 
 	public void testNegativeDamageValue() {

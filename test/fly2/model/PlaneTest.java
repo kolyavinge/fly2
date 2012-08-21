@@ -24,11 +24,13 @@ public class PlaneTest extends TestCase {
 	public void testNew() {
 		plane = new Plane(weapon);
 		assertEquals(0, plane.getHealth());
+		assertTrue(plane.isDestroyed());
 		assertSame(weapon, plane.getWeapon());
 	}
 
 	public void testSettersGetters() {
 		assertEquals(health, plane.getHealth());
+		assertFalse(plane.isDestroyed());
 		assertSame(weapon, plane.getWeapon());
 	}
 
@@ -59,6 +61,12 @@ public class PlaneTest extends TestCase {
 		plane.damage(2 * health);
 		assertEquals(0, plane.getHealth());
 	}
+	
+	public void testDestroy() {
+		assertFalse(plane.isDestroyed());
+		plane.destroy();
+		assertTrue(plane.isDestroyed());
+	}
 
 	public void testZeroDamage() {
 		assertEquals(health, plane.getHealth());
@@ -85,6 +93,12 @@ public class PlaneTest extends TestCase {
 			fail();
 		} catch (IllegalArgumentException exp) {
 		}
+	}
+	
+	public void testIsDestroyed() {
+		assertFalse(plane.isDestroyed());
+		plane.damage(plane.getHealth());
+		assertTrue(plane.isDestroyed());
 	}
 
 	public void testCreateWithNullWeapon() {
