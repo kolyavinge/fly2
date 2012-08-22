@@ -44,6 +44,20 @@ public class PlaneTest extends TestCase {
 		// протестировано в классе Weapon
 	}
 
+	public void testMoveXPlaneWithWeapon() {
+		weapon.setPosition(1.0, 1.0);
+		plane.moveX(2.0);
+		assertEquals(3.0, weapon.getX(), 0.001);
+		assertEquals(1.0, weapon.getY(), 0.001);
+	}
+
+	public void testMoveYPlaneWithWeapon() {
+		weapon.setPosition(1.0, 1.0);
+		plane.moveY(2.0);
+		assertEquals(1.0, weapon.getX(), 0.001);
+		assertEquals(3.0, weapon.getY(), 0.001);
+	}
+
 	public void testDamage() {
 		assertEquals(health, plane.getHealth());
 		plane.damage(2);
@@ -61,7 +75,7 @@ public class PlaneTest extends TestCase {
 		plane.damage(2 * health);
 		assertEquals(0, plane.getHealth());
 	}
-	
+
 	public void testDestroy() {
 		assertFalse(plane.isDestroyed());
 		plane.destroy();
@@ -94,7 +108,7 @@ public class PlaneTest extends TestCase {
 		} catch (IllegalArgumentException exp) {
 		}
 	}
-	
+
 	public void testIsDestroyed() {
 		assertFalse(plane.isDestroyed());
 		plane.damage(plane.getHealth());

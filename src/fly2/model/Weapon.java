@@ -37,6 +37,14 @@ public class Weapon {
 		worldItems.addItem(bullet);
 	}
 
+	public void moveX(double value) {
+		x += value;
+	}
+
+	public void moveY(double value) {
+		y += value;
+	}
+
 	public double getX() {
 		return x;
 	}

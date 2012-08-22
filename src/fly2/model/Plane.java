@@ -36,7 +36,7 @@ public class Plane extends MoveableWorldItem implements Destroyable {
 	public boolean isDestroyed() {
 		return health == 0;
 	}
-	
+
 	public void destroy() {
 		health = 0;
 	}
@@ -53,5 +53,17 @@ public class Plane extends MoveableWorldItem implements Destroyable {
 
 	public void fire() {
 		weapon.fire();
+	}
+
+	@Override
+	public void moveX(double value) {
+		super.moveX(value);
+		weapon.moveX(value);
+	}
+
+	@Override
+	public void moveY(double value) {
+		super.moveY(value);
+		weapon.moveY(value);
 	}
 }

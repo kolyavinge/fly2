@@ -62,6 +62,20 @@ public class WeaponTest extends TestCase {
 		assertEquals(bulletDamage, bullet.getDamage());
 	}
 
+	public void moveX() {
+		weapon.setPosition(1.0, 1.0);
+		weapon.moveX(2.0);
+		assertEquals(3.0, weapon.getX(), 0.001);
+		assertEquals(1.0, weapon.getY(), 0.001);
+	}
+
+	public void moveY() {
+		weapon.setPosition(1.0, 1.0);
+		weapon.moveY(2.0);
+		assertEquals(1.0, weapon.getX(), 0.001);
+		assertEquals(3.0, weapon.getY(), 0.001);
+	}
+
 	public void testSetNullWorldItemCollection() {
 		try {
 			new Weapon(null);
