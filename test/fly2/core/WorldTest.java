@@ -1,21 +1,15 @@
 package fly2.core;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
+import fly2.unittest.*;
 
-import junit.framework.TestCase;
-
-public class WorldTest extends TestCase {
+public class WorldTest extends WorldTestCase {
 
 	private double worldWidth = 100.0;
 	private double worldHeight = 200.0;
-	private World world;
-	private int updateables;
-	private boolean activateImpactFlag;
 
 	public void setUp() {
 		world = new World(worldWidth, worldHeight, new ImpactChecker());
-		updateables = 0;
 	}
 
 	public void testNew() {
@@ -82,11 +76,16 @@ public class WorldTest extends TestCase {
 	}
 
 	public void testUpdateItems() {
-		addUpdateableWorldItem();
-		addUpdateableWorldItem();
-		addUpdateableWorldItem();
+		UpdateableWorldItem item1 = addUpdateableWorldItem();
+		UpdateableWorldItem item2 = addUpdateableWorldItem();
+
+		assertFalse(item1.isUpdated());
+		assertFalse(item2.isUpdated());
+
 		world.updateItems();
-		assertEquals(3, updateables);
+
+		assertTrue(item1.isUpdated());
+		assertTrue(item2.isUpdated());
 	}
 
 	public void testActivateItemsImpact() {
@@ -166,111 +165,5 @@ public class WorldTest extends TestCase {
 		world.removeDestroyedItems();
 		assertEquals(1, world.getItemsCount());
 		assertSame(item2, world.getItems().iterator().next());
-	}
-
-	private WorldItem addUpdateableWorldItem() {
-		WorldItem item = new UpdateableWorldItem();
-		world.addItem(item);
-
-		return item;
-	}
-
-	private WorldItem addUpdateableWorldItem(double leftUpX, double leftUpY, double width, double height) {
-		WorldItem item = new UpdateableWorldItem();
-		item.setLeftUpPoint(leftUpX, leftUpY);
-		item.setSize(width, height);
-		world.addItem(item);
-
-		return item;
-	}
-
-	private DestroyableWorldItem addDestroyableWorldItem() {
-		DestroyableWorldItem item = new DestroyableWorldItem();
-		world.addItem(item);
-
-		return item;
-	}
-
-	private DestroyableWorldItem addDestroyableWorldItem(double leftUpX, double leftUpY, double width, double height) {
-		DestroyableWorldItem item = new DestroyableWorldItem();
-		item.setLeftUpPoint(leftUpX, leftUpY);
-		item.setSize(width, height);
-		world.addItem(item);
-
-		return item;
-	}
-
-	private WorldItem addWorldItem(double leftUpX, double leftUpY, double width, double height) {
-		WorldItem item = new WorldItem();
-		item.setLeftUpPoint(leftUpX, leftUpY);
-		item.setSize(width, height);
-		world.addItem(item);
-
-		return item;
-	}
-
-	private class TestImpactStrategy implements ImpactStrategy<WorldItem, WorldItem> {
-
-		public Class<WorldItem> getFirstObjectClass() {
-			return WorldItem.class;
-		}
-
-		public Class<WorldItem> getSecondObjectClass() {
-			return WorldItem.class;
-		}
-
-		public void activateImpact(WorldItem left, WorldItem right) {
-			activateImpactFlag = true;
-		}
-	}
-
-	private class DestroyableWorldItemImpactStrategy implements ImpactStrategy<DestroyableWorldItem, WorldItem> {
-
-		public Class<DestroyableWorldItem> getFirstObjectClass() {
-			return DestroyableWorldItem.class;
-		}
-
-		public Class<WorldItem> getSecondObjectClass() {
-			return WorldItem.class;
-		}
-
-		public void activateImpact(DestroyableWorldItem left, WorldItem right) {
-			activateImpactFlag = true;
-		}
-	}
-
-	private class UpdateableWorldItemImpactStrategy implements ImpactStrategy<UpdateableWorldItem, WorldItem> {
-
-		public Class<UpdateableWorldItem> getFirstObjectClass() {
-			return UpdateableWorldItem.class;
-		}
-
-		public Class<WorldItem> getSecondObjectClass() {
-			return WorldItem.class;
-		}
-
-		public void activateImpact(UpdateableWorldItem left, WorldItem right) {
-			activateImpactFlag = true;
-		}
-	}
-
-	private class UpdateableWorldItem extends WorldItem implements Updateable {
-
-		public void update() {
-			updateables++;
-		}
-	}
-
-	private class DestroyableWorldItem extends WorldItem implements Destroyable {
-
-		private boolean isDestroyed = false;
-
-		public boolean isDestroyed() {
-			return isDestroyed;
-		}
-
-		public void destroy() {
-			isDestroyed = true;
-		}
 	}
 }
