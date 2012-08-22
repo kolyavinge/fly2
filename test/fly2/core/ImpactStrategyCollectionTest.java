@@ -12,9 +12,17 @@ public class ImpactStrategyCollectionTest extends TestCase {
 
 	public void setUp() {
 		collection = new ImpactStrategyCollection();
+		assertEquals(0, collection.size());
 	}
 
-	public void testAddDuplicateKey() {
+	public void testAddSameClasses() {
+		AAImpactStrategy strategy = new AAImpactStrategy();
+		collection.add(strategy);
+		ImpactStrategy<AWorldItem, AWorldItem> actual = collection.getFor(AWorldItem.class, AWorldItem.class);
+		assertSame(strategy, actual);
+	}
+
+	public void testAddDuplicateKey1() {
 		collection.add(new ABImpactStrategy());
 		try {
 			collection.add(new ABImpactStrategy());
@@ -23,28 +31,44 @@ public class ImpactStrategyCollectionTest extends TestCase {
 		}
 	}
 
-	public void testContains() {
+	public void testAddDuplicateKey2() {
+		collection.add(new ABImpactStrategy());
+		try {
+			collection.add(new BAImpactStrategy());
+			fail();
+		} catch (DuplicateKeyException exp) {
+		}
+	}
+
+	public void testContainsForward() {
 		ImpactStrategy<AWorldItem, BWorldItem> strategy = new ABImpactStrategy();
 		collection.add(strategy);
 		assertTrue(collection.contains(AWorldItem.class, BWorldItem.class));
 	}
 
-	public void testContainsFalse1() {
+	public void testContainsBackward() {
+		ImpactStrategy<AWorldItem, BWorldItem> strategy = new ABImpactStrategy();
+		collection.add(strategy);
+		assertTrue(collection.contains(BWorldItem.class, AWorldItem.class));
+	}
+
+	public void testContainsFalse() {
 		ImpactStrategy<AWorldItem, BWorldItem> strategy = new ABImpactStrategy();
 		collection.add(strategy);
 		assertFalse(collection.contains(AWorldItem.class, CWorldItem.class));
 	}
 
-	public void testContainsFalse2() {
-		ImpactStrategy<AWorldItem, BWorldItem> strategy = new ABImpactStrategy();
-		collection.add(strategy);
-		assertFalse(collection.contains(BWorldItem.class, AWorldItem.class));
-	}
-
-	public void testGet() {
+	public void testGetForward() {
 		ImpactStrategy<AWorldItem, BWorldItem> strategy = new ABImpactStrategy();
 		collection.add(strategy);
 		ImpactStrategy<AWorldItem, BWorldItem> gettedStrategy = collection.getFor(AWorldItem.class, BWorldItem.class);
+		assertSame(strategy, gettedStrategy);
+	}
+
+	public void testGetBackward() {
+		ImpactStrategy<AWorldItem, BWorldItem> strategy = new ABImpactStrategy();
+		collection.add(strategy);
+		ImpactStrategy<BWorldItem, AWorldItem> gettedStrategy = collection.getFor(BWorldItem.class, AWorldItem.class);
 		assertSame(strategy, gettedStrategy);
 	}
 
@@ -78,6 +102,20 @@ public class ImpactStrategyCollectionTest extends TestCase {
 	private class CWorldItem extends WorldItem {
 	}
 
+	private class AAImpactStrategy implements ImpactStrategy<AWorldItem, AWorldItem> {
+
+		public Class<AWorldItem> getFirstObjectClass() {
+			return AWorldItem.class;
+		}
+
+		public Class<AWorldItem> getSecondObjectClass() {
+			return AWorldItem.class;
+		}
+
+		public void activateImpact(AWorldItem first, AWorldItem second) {
+		}
+	}
+
 	private class ABImpactStrategy implements ImpactStrategy<AWorldItem, BWorldItem> {
 
 		public Class<AWorldItem> getFirstObjectClass() {
@@ -89,6 +127,20 @@ public class ImpactStrategyCollectionTest extends TestCase {
 		}
 
 		public void activateImpact(AWorldItem first, BWorldItem second) {
+		}
+	}
+
+	private class BAImpactStrategy implements ImpactStrategy<BWorldItem, AWorldItem> {
+
+		public Class<BWorldItem> getFirstObjectClass() {
+			return BWorldItem.class;
+		}
+
+		public Class<AWorldItem> getSecondObjectClass() {
+			return AWorldItem.class;
+		}
+
+		public void activateImpact(BWorldItem first, AWorldItem second) {
 		}
 	}
 }
