@@ -15,9 +15,10 @@ public final class World implements WorldItemCollection {
 	private ImpactChecker impactChecker;
 	private boolean raiseErrorIfImpactStrategyNotFound;
 
-	public World(double width, double height) {
+	public World(double width, double height, ImpactChecker impactChecker) {
 		if (width <= 0 || height <= 0)
 			throw new IllegalArgumentException("Размеры игрового мира должны быть больше нуля");
+		setImpactChecker(impactChecker);
 		this.width = width;
 		this.height = height;
 		this.worldItems = new ArrayList<WorldItem>();
@@ -53,6 +54,10 @@ public final class World implements WorldItemCollection {
 		impactStrategies.add(impactStrategy);
 	}
 
+	public ImpactChecker getImpactChecker() {
+		return impactChecker;
+	}
+
 	public void setImpactChecker(ImpactChecker impactChecker) {
 		if (impactChecker == null)
 			throw new NullPointerException("impactChecker");
@@ -71,23 +76,26 @@ public final class World implements WorldItemCollection {
 	}
 
 	public void activateItemsImpact() {
-		if (impactChecker == null)
-			throw new IllegalStateException("Объект типа ImpactChecker не задан");
-
 		Collection<WorldItemTuple> impactedItemTuples = impactChecker.checkImpact(worldItems);
 
 		for (WorldItemTuple t : impactedItemTuples) {
-			Class<? extends WorldItem> firstClass = t.getFirst().getClass();
-			Class<? extends WorldItem> secondClass = t.getSecond().getClass();
+			if (isDestroyed(t.getFirst()) || isDestroyed(t.getSecond()))
+				continue;
+
+			Class firstClass = t.getFirst().getClass();
+			Class secondClass = t.getSecond().getClass();
 
 			if (impactStrategies.contains(firstClass, secondClass)) {
 				ImpactStrategy strategy = impactStrategies.getFor(firstClass, secondClass);
 				strategy.activateImpact(t.getFirst(), t.getSecond());
-			} else {
-				if (raiseErrorIfImpactStrategyNotFound) {
-					String message = String.format("Отсутствует объект ImpactStrategy для классов %s %s", firstClass.getName(), secondClass.getName());
-					throw new NoSuchElementException(message);
-				}
+
+			} else if (impactStrategies.contains(secondClass, firstClass)) {
+				ImpactStrategy strategy = impactStrategies.getFor(secondClass, firstClass);
+				strategy.activateImpact(t.getSecond(), t.getFirst());
+
+			} else if (raiseErrorIfImpactStrategyNotFound) {
+				String message = String.format("Отсутствует объект ImpactStrategy для классов %s %s", firstClass.getName(), secondClass.getName());
+				throw new NoSuchElementException(message);
 			}
 		}
 	}
@@ -96,7 +104,7 @@ public final class World implements WorldItemCollection {
 		Iterator<WorldItem> iterator = worldItems.iterator();
 		while (iterator.hasNext()) {
 			WorldItem item = iterator.next();
-			if (item instanceof Destroyable && ((Destroyable) item).isDestroyed())
+			if (isDestroyed(item))
 				iterator.remove();
 		}
 	}
@@ -115,5 +123,9 @@ public final class World implements WorldItemCollection {
 		return Geometry.innerRect(
 				0.0, 0.0, width, height,
 				bounds.getLeftUpX(), bounds.getLeftUpY(), item.getWidth(), item.getHeight());
+	}
+
+	private boolean isDestroyed(WorldItem item) {
+		return (item instanceof Destroyable) && ((Destroyable) item).isDestroyed();
 	}
 }

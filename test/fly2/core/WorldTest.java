@@ -14,40 +14,42 @@ public class WorldTest extends TestCase {
 	private boolean activateImpactFlag;
 
 	public void setUp() {
-		world = new World(worldWidth, worldHeight);
+		world = new World(worldWidth, worldHeight, new ImpactChecker());
 		updateables = 0;
 	}
 
 	public void testNew() {
-		world = new World(worldWidth, worldHeight);
+		ImpactChecker impactChecker = new ImpactChecker();
+		world = new World(worldWidth, worldHeight, impactChecker);
 		assertEquals(worldWidth, world.getWidth());
 		assertEquals(worldHeight, world.getHeight());
+		assertSame(impactChecker, world.getImpactChecker());
 	}
 
 	public void testWrongWorldSize() {
 		try {
-			new World(0, 1);
+			new World(0, 1, new ImpactChecker());
 			fail();
 		} catch (IllegalArgumentException exp) {
 			assertTrue(true);
 		}
 
 		try {
-			new World(1, 0);
+			new World(1, 0, new ImpactChecker());
 			fail();
 		} catch (IllegalArgumentException exp) {
 			assertTrue(true);
 		}
 
 		try {
-			new World(-1, 1);
+			new World(-1, 1, new ImpactChecker());
 			fail();
 		} catch (IllegalArgumentException exp) {
 			assertTrue(true);
 		}
 
 		try {
-			new World(1, -1);
+			new World(1, -1, new ImpactChecker());
 			fail();
 		} catch (IllegalArgumentException exp) {
 			assertTrue(true);
@@ -90,17 +92,40 @@ public class WorldTest extends TestCase {
 	public void testActivateItemsImpact() {
 		addWorldItem(0, 0, 1, 1);
 		addWorldItem(1, 1, 1, 1);
-		world.setImpactChecker(new ImpactChecker());
 		world.registerImpactStrategy(new TestImpactStrategy());
+		world.setRaiseErrorIfImpactStrategyNotFound(true);
 		activateImpactFlag = false;
 		world.activateItemsImpact();
 		assertTrue(activateImpactFlag);
 	}
 
+	public void testActivateItemsImpactWithBackwardItems() {
+		// соударение произойдет как WorldItem и UpdateableWorldItem
+		addWorldItem(0, 0, 1, 1);
+		addUpdateableWorldItem(1, 1, 1, 1);
+		// а стратегия объявлена как ImpactStrategy<UpdateableWorldItem, WorldItem>
+		world.registerImpactStrategy(new UpdateableWorldItemImpactStrategy());
+		world.setRaiseErrorIfImpactStrategyNotFound(true);
+		activateImpactFlag = false;
+		world.activateItemsImpact();
+		// она должна сработать
+		assertTrue(activateImpactFlag);
+	}
+
+	public void testActivateItemsImpactWithDestoyedItem() {
+		// один из объектов уничтожен
+		addDestroyableWorldItem(1, 1, 1, 1).destroy();
+		addWorldItem(0, 0, 1, 1);
+		world.registerImpactStrategy(new DestroyableWorldItemImpactStrategy());
+		activateImpactFlag = false;
+		world.activateItemsImpact();
+		// стратегия не должна срабатывать
+		assertFalse(activateImpactFlag);
+	}
+
 	public void testActivateItemsImpactWithoutStrategyRaiseErrorOff() {
 		addWorldItem(0, 0, 1, 1);
 		addWorldItem(1, 1, 1, 1);
-		world.setImpactChecker(new ImpactChecker());
 		world.setRaiseErrorIfImpactStrategyNotFound(false);
 		world.activateItemsImpact();
 		assertTrue(true);
@@ -109,7 +134,6 @@ public class WorldTest extends TestCase {
 	public void testActivateItemsImpactWithoutStrategyRaiseErrorOn() {
 		addWorldItem(0, 0, 1, 1);
 		addWorldItem(1, 1, 1, 1);
-		world.setImpactChecker(new ImpactChecker());
 		world.setRaiseErrorIfImpactStrategyNotFound(true);
 		try {
 			world.activateItemsImpact();
@@ -118,14 +142,11 @@ public class WorldTest extends TestCase {
 		}
 	}
 
-	public void testActivateItemsImpactWithoutImpactChecker() {
-		addWorldItem(0, 0, 1, 1);
-		addWorldItem(1, 1, 1, 1);
-		world.registerImpactStrategy(new TestImpactStrategy());
+	public void testCreateWithNullImpactChecker() {
 		try {
-			world.activateItemsImpact();
+			new World(1.0, 1.0, null);
 			fail();
-		} catch (IllegalStateException exp) {
+		} catch (NullPointerException exp) {
 		}
 	}
 
@@ -154,8 +175,26 @@ public class WorldTest extends TestCase {
 		return item;
 	}
 
+	private WorldItem addUpdateableWorldItem(double leftUpX, double leftUpY, double width, double height) {
+		WorldItem item = new UpdateableWorldItem();
+		item.setLeftUpPoint(leftUpX, leftUpY);
+		item.setSize(width, height);
+		world.addItem(item);
+
+		return item;
+	}
+
 	private DestroyableWorldItem addDestroyableWorldItem() {
 		DestroyableWorldItem item = new DestroyableWorldItem();
+		world.addItem(item);
+
+		return item;
+	}
+
+	private DestroyableWorldItem addDestroyableWorldItem(double leftUpX, double leftUpY, double width, double height) {
+		DestroyableWorldItem item = new DestroyableWorldItem();
+		item.setLeftUpPoint(leftUpX, leftUpY);
+		item.setSize(width, height);
 		world.addItem(item);
 
 		return item;
@@ -181,6 +220,36 @@ public class WorldTest extends TestCase {
 		}
 
 		public void activateImpact(WorldItem left, WorldItem right) {
+			activateImpactFlag = true;
+		}
+	}
+
+	private class DestroyableWorldItemImpactStrategy implements ImpactStrategy<DestroyableWorldItem, WorldItem> {
+
+		public Class<DestroyableWorldItem> getFirstObjectClass() {
+			return DestroyableWorldItem.class;
+		}
+
+		public Class<WorldItem> getSecondObjectClass() {
+			return WorldItem.class;
+		}
+
+		public void activateImpact(DestroyableWorldItem left, WorldItem right) {
+			activateImpactFlag = true;
+		}
+	}
+
+	private class UpdateableWorldItemImpactStrategy implements ImpactStrategy<UpdateableWorldItem, WorldItem> {
+
+		public Class<UpdateableWorldItem> getFirstObjectClass() {
+			return UpdateableWorldItem.class;
+		}
+
+		public Class<WorldItem> getSecondObjectClass() {
+			return WorldItem.class;
+		}
+
+		public void activateImpact(UpdateableWorldItem left, WorldItem right) {
 			activateImpactFlag = true;
 		}
 	}

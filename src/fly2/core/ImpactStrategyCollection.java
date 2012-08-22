@@ -26,9 +26,6 @@ public class ImpactStrategyCollection {
 		}
 
 		items.add(left, right, impactStrategy);
-		if (left != right)
-			items.add(right, left, impactStrategy);
-
 		itemsCount++;
 	}
 
@@ -44,7 +41,7 @@ public class ImpactStrategyCollection {
 	}
 
 	public <T extends WorldItem, U extends WorldItem> boolean contains(Class<T> first, Class<U> second) {
-		return items.contains(first, second) || items.contains(second, first);
+		return items.contains(first, second);
 	}
 
 	public <T extends WorldItem, U extends WorldItem> ImpactStrategy<T, U> getFor(Class<T> first, Class<U> second) {
