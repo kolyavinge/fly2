@@ -83,21 +83,18 @@ public final class World implements WorldItemCollection {
 	public void activateItemsImpact() {
 		Collection<WorldItemTuple> impactedItems = impactChecker.checkImpact(worldItems);
 		for (WorldItemTuple t : impactedItems) {
-			if (notDestroyed(t.getFirst()) && notDestroyed(t.getSecond()))
+			if (notDestroyed(t.getFirst()) && notDestroyed(t.getSecond()) && inWorld(t.getFirst()) && inWorld(t.getSecond()))
 				activateImpactStrategyOrRaiseError(t.getFirst(), t.getSecond());
 		}
 	}
 
 	private void activateImpactStrategyOrRaiseError(WorldItem first, WorldItem second) {
-		boolean activated = foundAndActivateImpactStrategy(first, second) || foundAndActivateImpactStrategy(second, first);
-		if (!activated && raiseErrorIfImpactStrategyNotFound) {
-			String message = String.format("Отсутствует объект ImpactStrategy для классов %s %s",
-					first.getClass().getName(), second.getClass().getName());
-			throw new NoSuchElementException(message);
-		}
+		boolean activated = tryActivateImpactStrategy(first, second) || tryActivateImpactStrategy(second, first);
+		if (!activated && raiseErrorIfImpactStrategyNotFound)
+			throw new NoSuchWorldItemImpactStrategy(first, second);
 	}
 
-	private boolean foundAndActivateImpactStrategy(WorldItem first, WorldItem second) {
+	private boolean tryActivateImpactStrategy(WorldItem first, WorldItem second) {
 		boolean founded = impactStrategies.contains(first.getClass(), second.getClass());
 		if (founded) {
 			ImpactStrategy strategy = impactStrategies.getFor(first.getClass(), second.getClass());
@@ -134,7 +131,7 @@ public final class World implements WorldItemCollection {
 		Bounds bounds = item.getBounds();
 		return Geometry.innerRect(
 				0.0, 0.0, width, height,
-				bounds.getLeftUpX(), bounds.getLeftUpY(), item.getWidth(), item.getHeight());
+				bounds.getLeftDownX(), bounds.getLeftDownY(), item.getWidth(), item.getHeight());
 	}
 
 	private boolean notDestroyed(WorldItem item) {

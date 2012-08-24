@@ -93,4 +93,9 @@ public class WorldTestCase extends TestCase {
 			activateImpactFlag = true;
 		}
 	}
+
+	public class BlankOutOfWorldStrategy implements OutOfWorldStrategy<WorldItem> {
+		public void activate(WorldItem item, double worldWidth, double worldHeight) {
+		}
+	}
 }

@@ -63,19 +63,7 @@ public class WorldTest extends WorldTestCase {
 		assertEquals(0, world.getItemsCount());
 	}
 
-	public void testRemoveOutOfWorldItems() {
-		WorldItem itemInWorld = addWorldItem(0.0, 0.0, 1.0, 1.0);
-		addWorldItem(-10, 20, 1, 1);
-		addWorldItem(10, -20, 1, 1);
-		addWorldItem(10, 20, 30000, 1);
-		addWorldItem(10, 20, 1, 400000);
-		assertEquals(5, world.getItemsCount());
-		world.activateOutOfWorldItems();
-		assertEquals(1, world.getItemsCount());
-		assertSame(itemInWorld, world.getItems().iterator().next());
-	}
-
-	public void testActivateOutOfWorldItems() {
+	public void testOutOfWorld() {
 		final boolean flag[] = new boolean[] { false };
 		OutOfWorldStrategy strategy = new OutOfWorldStrategy<WorldItem>() {
 			public void activate(WorldItem item, double worldWidth, double worldHeight) {
@@ -86,6 +74,18 @@ public class WorldTest extends WorldTestCase {
 		world.registerOutOfWorldStrategy(item, strategy);
 		world.activateOutOfWorldItems();
 		assertTrue(flag[0]);
+	}
+
+	public void testOutOfWorldWithoutStrategies() {
+		WorldItem itemInWorld = addWorldItem(10.0, 10.0, 1.0, 1.0);
+		addWorldItem(-10, 20, 1, 1);
+		addWorldItem(10, -20, 1, 1);
+		addWorldItem(10, 20, 30000, 1);
+		addWorldItem(10, 20, 1, 400000);
+		assertEquals(5, world.getItemsCount());
+		world.activateOutOfWorldItems();
+		assertEquals(1, world.getItemsCount());
+		assertSame(itemInWorld, world.getItems().iterator().next());
 	}
 
 	public void testUpdateItems() {
@@ -101,7 +101,7 @@ public class WorldTest extends WorldTestCase {
 		assertTrue(item2.isUpdated());
 	}
 
-	public void testActivateItemsImpact() {
+	public void testImpact() {
 		addWorldItem(10, 10, 1, 1);
 		addWorldItem(11, 11, 1, 1);
 		world.registerImpactStrategy(new TestImpactStrategy());
@@ -111,7 +111,7 @@ public class WorldTest extends WorldTestCase {
 		assertTrue(activateImpactFlag);
 	}
 
-	public void testActivateItemsImpactWithBackwardItems() {
+	public void testImpactWithBackwardItems() {
 		// соударение произойдет как WorldItem и UpdateableWorldItem
 		addWorldItem(10, 10, 1, 1);
 		addUpdateableWorldItem(11, 11, 1, 1);
@@ -124,18 +124,49 @@ public class WorldTest extends WorldTestCase {
 		assertTrue(activateImpactFlag);
 	}
 
-	public void testActivateItemsImpactWithDestoyedItem() {
+	public void testImpactWithOutOfWorldFirstItem() {
+		addWorldItem(2, 2, 1000000, 1000000);
+		addWorldItem(2, 2, 1, 1);
+		world.registerImpactStrategy(new TestImpactStrategy());
+		activateImpactFlag = false;
+		world.setRaiseErrorIfImpactStrategyNotFound(true);
+		world.activateItemsImpact();
+		assertFalse(activateImpactFlag);
+	}
+
+	public void testImpactWithOutOfWorldSecondItem() {
+		addWorldItem(2, 2, 1, 1);
+		addWorldItem(2, 2, 1000000, 1000000);
+		world.registerImpactStrategy(new TestImpactStrategy());
+		activateImpactFlag = false;
+		world.setRaiseErrorIfImpactStrategyNotFound(true);
+		world.activateItemsImpact();
+		assertFalse(activateImpactFlag);
+	}
+
+	public void testImpactWithOutOfWorldBothItems() {
+		addWorldItem(0, 0, 1, 1);
+		addWorldItem(0, 0, 1, 1);
+		world.registerImpactStrategy(new TestImpactStrategy());
+		activateImpactFlag = false;
+		world.setRaiseErrorIfImpactStrategyNotFound(true);
+		world.activateItemsImpact();
+		assertFalse(activateImpactFlag);
+	}
+
+	public void testImpactWithDestoyedItem() {
 		// один из объектов уничтожен
 		addDestroyableWorldItem(11, 11, 1, 1).destroy();
 		addWorldItem(10, 10, 1, 1);
 		world.registerImpactStrategy(new DestroyableWorldItemImpactStrategy());
 		activateImpactFlag = false;
+		world.setRaiseErrorIfImpactStrategyNotFound(true);
 		world.activateItemsImpact();
 		// стратегия не должна срабатывать
 		assertFalse(activateImpactFlag);
 	}
 
-	public void testActivateItemsImpactWithoutStrategyRaiseErrorOff() {
+	public void testImpactWithoutStrategyRaiseErrorOff() {
 		addWorldItem(10, 10, 1, 1);
 		addWorldItem(11, 11, 1, 1);
 		world.setRaiseErrorIfImpactStrategyNotFound(false);
@@ -143,14 +174,14 @@ public class WorldTest extends WorldTestCase {
 		assertTrue(true);
 	}
 
-	public void testActivateItemsImpactWithoutStrategyRaiseErrorOn() {
+	public void testImpactWithoutStrategyRaiseErrorOn() {
 		addWorldItem(10, 10, 1, 1);
 		addWorldItem(11, 11, 1, 1);
 		world.setRaiseErrorIfImpactStrategyNotFound(true);
 		try {
 			world.activateItemsImpact();
 			fail();
-		} catch (NoSuchElementException exp) {
+		} catch (NoSuchWorldItemImpactStrategy exp) {
 		}
 	}
 
