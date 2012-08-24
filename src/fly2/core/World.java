@@ -1,7 +1,6 @@
 package fly2.core;
 
 import java.util.*;
-
 import fly2.common.*;
 
 /**
@@ -11,6 +10,7 @@ public final class World implements WorldItemCollection {
 
 	private double width, height;
 	private List<WorldItem> worldItems;
+	private Map<WorldItem, OutOfWorldStrategy<WorldItem>> outOfWorldStrategies;
 	private ImpactStrategyCollection impactStrategies;
 	private ImpactChecker impactChecker;
 	private boolean raiseErrorIfImpactStrategyNotFound;
@@ -23,6 +23,7 @@ public final class World implements WorldItemCollection {
 		this.height = height;
 		this.worldItems = new ArrayList<WorldItem>();
 		this.impactStrategies = new ImpactStrategyCollection();
+		this.outOfWorldStrategies = new HashMap<WorldItem, OutOfWorldStrategy<WorldItem>>();
 		this.raiseErrorIfImpactStrategyNotFound = false;
 	}
 
@@ -54,6 +55,10 @@ public final class World implements WorldItemCollection {
 		impactStrategies.add(impactStrategy);
 	}
 
+	public void registerOutOfWorldStrategy(WorldItem item, OutOfWorldStrategy strategy) {
+		outOfWorldStrategies.put(item, strategy);
+	}
+
 	public ImpactChecker getImpactChecker() {
 		return impactChecker;
 	}
@@ -76,28 +81,30 @@ public final class World implements WorldItemCollection {
 	}
 
 	public void activateItemsImpact() {
-		Collection<WorldItemTuple> impactedItemTuples = impactChecker.checkImpact(worldItems);
-
-		for (WorldItemTuple t : impactedItemTuples) {
-			if (isDestroyed(t.getFirst()) || isDestroyed(t.getSecond()))
-				continue;
-
-			Class firstClass = t.getFirst().getClass();
-			Class secondClass = t.getSecond().getClass();
-
-			if (impactStrategies.contains(firstClass, secondClass)) {
-				ImpactStrategy strategy = impactStrategies.getFor(firstClass, secondClass);
-				strategy.activateImpact(t.getFirst(), t.getSecond());
-
-			} else if (impactStrategies.contains(secondClass, firstClass)) {
-				ImpactStrategy strategy = impactStrategies.getFor(secondClass, firstClass);
-				strategy.activateImpact(t.getSecond(), t.getFirst());
-
-			} else if (raiseErrorIfImpactStrategyNotFound) {
-				String message = String.format("Отсутствует объект ImpactStrategy для классов %s %s", firstClass.getName(), secondClass.getName());
-				throw new NoSuchElementException(message);
-			}
+		Collection<WorldItemTuple> impactedItems = impactChecker.checkImpact(worldItems);
+		for (WorldItemTuple t : impactedItems) {
+			if (notDestroyed(t.getFirst()) && notDestroyed(t.getSecond()))
+				activateImpactStrategyOrRaiseError(t.getFirst(), t.getSecond());
 		}
+	}
+
+	private void activateImpactStrategyOrRaiseError(WorldItem first, WorldItem second) {
+		boolean activated = foundAndActivateImpactStrategy(first, second) || foundAndActivateImpactStrategy(second, first);
+		if (!activated && raiseErrorIfImpactStrategyNotFound) {
+			String message = String.format("Отсутствует объект ImpactStrategy для классов %s %s",
+					first.getClass().getName(), second.getClass().getName());
+			throw new NoSuchElementException(message);
+		}
+	}
+
+	private boolean foundAndActivateImpactStrategy(WorldItem first, WorldItem second) {
+		boolean founded = impactStrategies.contains(first.getClass(), second.getClass());
+		if (founded) {
+			ImpactStrategy strategy = impactStrategies.getFor(first.getClass(), second.getClass());
+			strategy.activateImpact(first, second);
+		}
+
+		return founded;
 	}
 
 	public void removeDestroyedItems() {
@@ -109,12 +116,17 @@ public final class World implements WorldItemCollection {
 		}
 	}
 
-	public void removeOutOfWorldItems() {
+	public void activateOutOfWorldItems() {
 		Iterator<WorldItem> iterator = worldItems.iterator();
 		while (iterator.hasNext()) {
 			WorldItem item = iterator.next();
-			if (inWorld(item) == false)
-				iterator.remove();
+			if (inWorld(item) == false) {
+				if (outOfWorldStrategies.containsKey(item)) {
+					outOfWorldStrategies.get(item).activate(item, width, height);
+				} else {
+					iterator.remove();
+				}
+			}
 		}
 	}
 
@@ -123,6 +135,10 @@ public final class World implements WorldItemCollection {
 		return Geometry.innerRect(
 				0.0, 0.0, width, height,
 				bounds.getLeftUpX(), bounds.getLeftUpY(), item.getWidth(), item.getHeight());
+	}
+
+	private boolean notDestroyed(WorldItem item) {
+		return isDestroyed(item) == false;
 	}
 
 	private boolean isDestroyed(WorldItem item) {
