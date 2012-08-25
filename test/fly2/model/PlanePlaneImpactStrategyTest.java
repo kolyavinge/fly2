@@ -12,13 +12,13 @@ public class PlanePlaneImpactStrategyTest extends TestCase {
 	}
 
 	public void testGetClasses() {
-		assertEquals(Plane.class, impactStrategy.getFirstObjectClass());
-		assertEquals(Plane.class, impactStrategy.getSecondObjectClass());
+		assertEquals(DefaultPlane.class, impactStrategy.getFirstObjectClass());
+		assertEquals(DefaultPlane.class, impactStrategy.getSecondObjectClass());
 	}
 
 	public void testActivateImpact() {
-		Plane plane1 = getPlane();
-		Plane plane2 = getPlane();
+		DefaultPlane plane1 = getPlane();
+		DefaultPlane plane2 = getPlane();
 
 		assertFalse(plane1.isDestroyed());
 		assertFalse(plane2.isDestroyed());
@@ -29,9 +29,9 @@ public class PlanePlaneImpactStrategyTest extends TestCase {
 		assertTrue(plane2.isDestroyed());
 	}
 
-	private Plane getPlane() {
-		Weapon weapon = new Weapon(new TestWorldItemCollection());
-		Plane plane = new Plane(weapon);
+	private DefaultPlane getPlane() {
+		DefaultWeapon weapon = new DefaultWeapon(new TestWorldItemCollection());
+		DefaultPlane plane = new DefaultPlane(weapon);
 		plane.setHealth(1000);
 
 		return plane;

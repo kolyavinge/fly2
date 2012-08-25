@@ -5,17 +5,17 @@ import fly2.core.*;
 /**
  * Соударение двух самолетов
  */
-public class PlanePlaneImpactStrategy implements ImpactStrategy<Plane, Plane> {
+public class PlanePlaneImpactStrategy implements ImpactStrategy<DefaultPlane, DefaultPlane> {
 
-	public Class<Plane> getFirstObjectClass() {
-		return Plane.class;
+	public Class<DefaultPlane> getFirstObjectClass() {
+		return DefaultPlane.class;
 	}
 
-	public Class<Plane> getSecondObjectClass() {
-		return Plane.class;
+	public Class<DefaultPlane> getSecondObjectClass() {
+		return DefaultPlane.class;
 	}
 
-	public void activateImpact(Plane plane1, Plane plane2) {
+	public void activateImpact(DefaultPlane plane1, DefaultPlane plane2) {
 		plane1.destroy();
 		plane2.destroy();
 	}

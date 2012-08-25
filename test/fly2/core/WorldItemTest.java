@@ -39,6 +39,13 @@ public class WorldItemTest extends TestCase {
 		assertEquals(-20.0, worldItem.getY());
 	}
 
+	public void testMiddleXY() {
+		worldItem.setPosition(2.0, 6.0);
+		worldItem.setSize(10.0, 20.0);
+		assertEquals(7.0, worldItem.getMiddleX(), 0.001);
+		assertEquals(16.0, worldItem.getMiddleY(), 0.001);
+	}
+
 	public void testSetWidthAndHeight() {
 		worldItem.setWidth(20.0);
 		worldItem.setHeight(40.0);

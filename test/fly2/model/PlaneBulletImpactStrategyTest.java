@@ -12,12 +12,12 @@ public class PlaneBulletImpactStrategyTest extends TestCase {
 	}
 
 	public void testGetClasses() {
-		assertEquals(Plane.class, impactStrategy.getFirstObjectClass());
+		assertEquals(DefaultPlane.class, impactStrategy.getFirstObjectClass());
 		assertEquals(Bullet.class, impactStrategy.getSecondObjectClass());
 	}
 
 	public void testActivateImpact() {
-		Plane plane = getPlaneWithHealth(10);
+		DefaultPlane plane = getPlaneWithHealth(10);
 		Bullet bullet = getBulletWithDamage(2);
 
 		impactStrategy.activateImpact(plane, bullet);
@@ -26,9 +26,9 @@ public class PlaneBulletImpactStrategyTest extends TestCase {
 		assertTrue(bullet.isDestroyed());
 	}
 
-	private Plane getPlaneWithHealth(int health) {
-		Weapon weapon = new Weapon(new TestWorldItemCollection());
-		Plane plane = new Plane(weapon);
+	private DefaultPlane getPlaneWithHealth(int health) {
+		DefaultWeapon weapon = new DefaultWeapon(new TestWorldItemCollection());
+		DefaultPlane plane = new DefaultPlane(weapon);
 		plane.setHealth(health);
 
 		return plane;
