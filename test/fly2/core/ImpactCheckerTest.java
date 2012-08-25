@@ -77,9 +77,9 @@ public class ImpactCheckerTest extends TestCase {
 		result = impactChecker.checkImpact(worldItems);
 	}
 
-	private WorldItem addWorldItem(double leftUpX, double leftUpY, double width, double height) {
+	private WorldItem addWorldItem(double x, double y, double width, double height) {
 		WorldItem item = new WorldItem();
-		item.setLeftUpPoint(leftUpX, leftUpY);
+		item.setPosition(x, y);
 		item.setSize(width, height);
 		worldItems.add(item);
 

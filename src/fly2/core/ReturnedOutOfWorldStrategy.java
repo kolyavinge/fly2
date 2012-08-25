@@ -1,25 +1,21 @@
 package fly2.core;
 
-import fly2.common.*;
-
 /**
- * Возвращает объект в игровой мир, когда он из него вылетает
+ * Возвращает объект в игровой мир, когда он из него выпадает
  */
 public class ReturnedOutOfWorldStrategy<T extends WorldItem> implements OutOfWorldStrategy<T> {
 
 	public void activate(WorldItem item, double worldWidth, double worldHeight) {
-		Bounds bounds = item.getBounds();
-
-		if (bounds.getLeftUpX() < 0) {
-			item.setLeftUpX(0);
-		} else if (bounds.getRightUpX() >= worldWidth) {
-			item.setLeftUpX(worldWidth - item.getWidth());
+		if (item.getX() < 0) {
+			item.setX(0);
+		} else if (item.getX() + item.getWidth() >= worldWidth) {
+			item.setX(worldWidth - item.getWidth());
 		}
 
-		if (bounds.getLeftUpY() < 0) {
-			item.setLeftUpY(item.getHeight());
-		} else if (bounds.getRightUpY() >= worldHeight) {
-			item.setLeftUpY(worldHeight - item.getHeight());
+		if (item.getY() < 0) {
+			item.setY(0);
+		} else if (item.getY() + item.getHeight() >= worldHeight) {
+			item.setY(worldHeight - item.getHeight());
 		}
 	}
 }

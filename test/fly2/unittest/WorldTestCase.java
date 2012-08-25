@@ -15,9 +15,9 @@ public class WorldTestCase extends TestCase {
 		return item;
 	}
 
-	protected UpdateableWorldItem addUpdateableWorldItem(double leftUpX, double leftUpY, double width, double height) {
+	protected UpdateableWorldItem addUpdateableWorldItem(double x, double y, double width, double height) {
 		UpdateableWorldItem item = new UpdateableWorldItem();
-		item.setLeftUpPoint(leftUpX, leftUpY);
+		item.setPosition(x, y);
 		item.setSize(width, height);
 		world.addItem(item);
 
@@ -31,18 +31,18 @@ public class WorldTestCase extends TestCase {
 		return item;
 	}
 
-	protected DestroyableWorldItem addDestroyableWorldItem(double leftUpX, double leftUpY, double width, double height) {
+	protected DestroyableWorldItem addDestroyableWorldItem(double x, double y, double width, double height) {
 		DestroyableWorldItem item = new DestroyableWorldItem();
-		item.setLeftUpPoint(leftUpX, leftUpY);
+		item.setPosition(x, y);
 		item.setSize(width, height);
 		world.addItem(item);
 
 		return item;
 	}
 
-	protected WorldItem addWorldItem(double leftUpX, double leftUpY, double width, double height) {
+	protected WorldItem addWorldItem(double x, double y, double width, double height) {
 		WorldItem item = new WorldItem();
-		item.setLeftUpPoint(leftUpX, leftUpY);
+		item.setPosition(x, y);
 		item.setSize(width, height);
 		world.addItem(item);
 

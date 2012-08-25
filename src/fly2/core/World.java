@@ -10,7 +10,7 @@ public final class World implements WorldItemCollection {
 
 	private double width, height;
 	private List<WorldItem> worldItems;
-	private Map<WorldItem, OutOfWorldStrategy<WorldItem>> outOfWorldStrategies;
+	private Map<WorldItem, OutOfWorldStrategy> outOfWorldStrategies;
 	private ImpactStrategyCollection impactStrategies;
 	private ImpactChecker impactChecker;
 	private boolean raiseErrorIfImpactStrategyNotFound;
@@ -23,7 +23,7 @@ public final class World implements WorldItemCollection {
 		this.height = height;
 		this.worldItems = new ArrayList<WorldItem>();
 		this.impactStrategies = new ImpactStrategyCollection();
-		this.outOfWorldStrategies = new HashMap<WorldItem, OutOfWorldStrategy<WorldItem>>();
+		this.outOfWorldStrategies = new HashMap<WorldItem, OutOfWorldStrategy>();
 		this.raiseErrorIfImpactStrategyNotFound = false;
 	}
 
@@ -51,7 +51,7 @@ public final class World implements WorldItemCollection {
 		return worldItems.size();
 	}
 
-	public void registerImpactStrategy(ImpactStrategy impactStrategy) {
+	public <T extends WorldItem, U extends WorldItem> void registerImpactStrategy(ImpactStrategy<T, U> impactStrategy) {
 		impactStrategies.add(impactStrategy);
 	}
 
@@ -127,11 +127,10 @@ public final class World implements WorldItemCollection {
 		}
 	}
 
-	private boolean inWorld(WorldItem item) {
-		Bounds bounds = item.getBounds();
+	public boolean inWorld(WorldItem item) {
 		return Geometry.innerRect(
 				0.0, 0.0, width, height,
-				bounds.getLeftDownX(), bounds.getLeftDownY(), item.getWidth(), item.getHeight());
+				item.getX(), item.getY(), item.getWidth(), item.getHeight());
 	}
 
 	private boolean notDestroyed(WorldItem item) {

@@ -29,11 +29,8 @@ public class ImpactChecker {
 	}
 
 	private boolean isImpacted(WorldItem item1, WorldItem item2) {
-		Bounds bounds1 = item1.getBounds();
-		Bounds bounds2 = item2.getBounds();
-
 		return Geometry.impactRect(
-				bounds1.getLeftUpX(), bounds1.getLeftUpY(), item1.getWidth(), item1.getHeight(),
-				bounds2.getLeftUpX(), bounds2.getLeftUpY(), item2.getWidth(), item2.getHeight());
+				item1.getX(), item1.getY(), item1.getWidth(), item1.getHeight(),
+				item2.getX(), item2.getY(), item2.getWidth(), item2.getHeight());
 	}
 }

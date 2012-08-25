@@ -53,8 +53,8 @@ public class WeaponTest extends TestCase {
 		WorldItem item = getFirstWorldItem();
 		assertTrue(item instanceof Bullet);
 		Bullet bullet = (Bullet) item;
-		assertEquals(x, bullet.getBounds().getMiddleX());
-		assertEquals(y, bullet.getBounds().getMiddleY());
+		assertEquals(x, bullet.getMiddleX());
+		assertEquals(y, bullet.getMiddleY());
 		assertEquals(bulletSize, bullet.getWidth());
 		assertEquals(bulletSize, bullet.getHeight());
 		assertEquals(bulletDirection, bullet.getDirection());

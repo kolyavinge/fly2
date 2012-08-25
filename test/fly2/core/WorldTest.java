@@ -63,6 +63,41 @@ public class WorldTest extends WorldTestCase {
 		assertEquals(0, world.getItemsCount());
 	}
 
+	public void testInWorld1() {
+		WorldItem item = new WorldItem();
+		item.setPosition(10.0, 10.0);
+		item.setSize(1.0, 1.0);
+		assertTrue(world.inWorld(item));
+	}
+
+	public void testInWorld2() {
+		WorldItem item = new WorldItem();
+		item.setPosition(0.0, 0.0);
+		item.setSize(1.0, 1.0);
+		assertTrue(world.inWorld(item));
+	}
+
+	public void testInWorld3() {
+		WorldItem item = new WorldItem();
+		item.setPosition(world.getWidth() - 1.0, world.getHeight() - 1.0);
+		item.setSize(1.0, 1.0);
+		assertTrue(world.inWorld(item));
+	}
+
+	public void testInWorld4() {
+		WorldItem item = new WorldItem();
+		item.setPosition(-1.0, 1.0);
+		item.setSize(1.0, 1.0);
+		assertFalse(world.inWorld(item));
+	}
+
+	public void testInWorld5() {
+		WorldItem item = new WorldItem();
+		item.setPosition(1.0, -1.0);
+		item.setSize(1.0, 1.0);
+		assertFalse(world.inWorld(item));
+	}
+
 	public void testOutOfWorld() {
 		final boolean flag[] = new boolean[] { false };
 		OutOfWorldStrategy strategy = new OutOfWorldStrategy<WorldItem>() {
@@ -145,8 +180,8 @@ public class WorldTest extends WorldTestCase {
 	}
 
 	public void testImpactWithOutOfWorldBothItems() {
-		addWorldItem(0, 0, 1, 1);
-		addWorldItem(0, 0, 1, 1);
+		addWorldItem(-1, -1, 1, 1);
+		addWorldItem(-1, -1, 1, 1);
 		world.registerImpactStrategy(new TestImpactStrategy());
 		activateImpactFlag = false;
 		world.setRaiseErrorIfImpactStrategyNotFound(true);

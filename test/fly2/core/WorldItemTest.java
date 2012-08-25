@@ -1,8 +1,6 @@
 package fly2.core;
 
-import fly2.common.*;
 import junit.framework.TestCase;
-import static fly2.unittest.RectangleTestUtils.*;
 
 public class WorldItemTest extends TestCase {
 
@@ -14,45 +12,42 @@ public class WorldItemTest extends TestCase {
 
 	public void testNew() {
 		worldItem = new WorldItem();
-		Bounds bounds = worldItem.getBounds();
-		assertEquals(0.0, bounds.getLeftUpX());
-		assertEquals(0.0, bounds.getLeftUpY());
+		assertEquals(0.0, worldItem.getX());
+		assertEquals(0.0, worldItem.getY());
 		assertEquals(1.0, worldItem.getWidth());
 		assertEquals(1.0, worldItem.getHeight());
+		assertEquals(0.5, worldItem.getMiddleX());
+		assertEquals(0.5, worldItem.getMiddleY());
 	}
 
-	public void testSetLeftUpPoint() {
-		worldItem.setLeftUpPoint(10, 20);
-		Bounds bounds = worldItem.getBounds();
-		assertEquals(10.0, bounds.getLeftUpX());
-		assertEquals(20.0, bounds.getLeftUpY());
+	public void testSetXY() {
+		worldItem.setX(10.0);
+		assertEquals(10.0, worldItem.getX());
+		worldItem.setY(20.0);
+		assertEquals(20.0, worldItem.getY());
 	}
 
-	public void testSetLeftUpXYPoint() {
-		worldItem.setLeftUpX(10);
-		worldItem.setLeftUpY(20);
-		Bounds bounds = worldItem.getBounds();
-		assertEquals(10.0, bounds.getLeftUpX());
-		assertEquals(20.0, bounds.getLeftUpY());
+	public void testSetPosition() {
+		worldItem.setPosition(10.0, 20.0);
+		assertEquals(10.0, worldItem.getX());
+		assertEquals(20.0, worldItem.getY());
 	}
 
-	public void testSetNegativeLeftUpPoint() {
-		worldItem.setLeftUpX(-10.0);
-		worldItem.setLeftUpY(-20.0);
-		Bounds bounds = worldItem.getBounds();
-		assertEquals(-10.0, bounds.getLeftUpX());
-		assertEquals(-20.0, bounds.getLeftUpY());
+	public void testSetNegativePosition() {
+		worldItem.setPosition(-10.0, -20.0);
+		assertEquals(-10.0, worldItem.getX());
+		assertEquals(-20.0, worldItem.getY());
 	}
 
 	public void testSetWidthAndHeight() {
-		worldItem.setWidth(20);
-		worldItem.setHeight(40);
+		worldItem.setWidth(20.0);
+		worldItem.setHeight(40.0);
 		assertEquals(20.0, worldItem.getWidth());
 		assertEquals(40.0, worldItem.getHeight());
 	}
 
 	public void testSetSize() {
-		worldItem.setSize(20, 40);
+		worldItem.setSize(20.0, 40.0);
 		assertEquals(20.0, worldItem.getWidth());
 		assertEquals(40.0, worldItem.getHeight());
 	}
@@ -90,25 +85,18 @@ public class WorldItemTest extends TestCase {
 	}
 
 	public void testMoveX() {
-		worldItem.setLeftUpPoint(10, 20);
-		Bounds after = getCopyOfBounds();
-		double moveValue = 20.0;
+		worldItem.setPosition(10.0, 20.0);
+		double moveValue = 10.0;
 		worldItem.moveX(moveValue);
-		Bounds before = getCopyOfBounds();
-		assertXShifted(moveValue, after, before);
+		assertEquals(10.0 + moveValue, worldItem.getX(), 0.001);
+		assertEquals(20.0, worldItem.getY(), 0.001);
 	}
 
 	public void testMoveY() {
-		worldItem.setLeftUpPoint(10, 20);
-		Bounds after = getCopyOfBounds();
+		worldItem.setPosition(10.0, 20.0);
 		double moveValue = 10.0;
 		worldItem.moveY(moveValue);
-		Bounds before = getCopyOfBounds();
-		assertYShifted(moveValue, after, before);
-	}
-
-	private Bounds getCopyOfBounds() {
-		Bounds bounds = worldItem.getBounds();
-		return Rectangle.copyFrom((Rectangle) bounds);
+		assertEquals(10.0, worldItem.getX(), 0.001);
+		assertEquals(20.0 + moveValue, worldItem.getY(), 0.001);
 	}
 }

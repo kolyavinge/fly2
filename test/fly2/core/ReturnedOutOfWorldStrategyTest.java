@@ -16,30 +16,30 @@ public class ReturnedOutOfWorldStrategyTest extends TestCase {
 	}
 
 	public void testOutFromLeft() {
-		item.setLeftUpPoint(-10.0, 10.0);
+		item.setPosition(-10.0, 10.0);
 		strategy.activate(item, worldWidth, worldHeight);
-		assertEquals(0.0, item.getBounds().getLeftUpX(), 0.001);
-		assertEquals(10.0, item.getBounds().getLeftUpY(), 0.001);
+		assertEquals(0.0, item.getX(), 0.001);
+		assertEquals(10.0, item.getY(), 0.001);
 	}
 
 	public void testOutFromRight() {
-		item.setLeftUpPoint(worldWidth + 10.0, 10.0);
+		item.setPosition(worldWidth + 10.0, 10.0);
 		strategy.activate(item, worldWidth, worldHeight);
-		assertEquals(worldWidth - item.getWidth(), item.getBounds().getLeftUpX(), 0.001);
-		assertEquals(10.0, item.getBounds().getLeftUpY(), 0.001);
+		assertEquals(worldWidth - item.getWidth(), item.getX(), 0.001);
+		assertEquals(10.0, item.getY(), 0.001);
 	}
 
 	public void testOutFromDown() {
-		item.setLeftUpPoint(10.0, -10.0);
+		item.setPosition(10.0, -10.0);
 		strategy.activate(item, worldWidth, worldHeight);
-		assertEquals(10.0, item.getBounds().getLeftUpX(), 0.001);
-		assertEquals(item.getHeight(), item.getBounds().getLeftUpY(), 0.001);
+		assertEquals(10.0, item.getX(), 0.001);
+		assertEquals(0.0, item.getY(), 0.001);
 	}
 
 	public void testOutFromUp() {
-		item.setLeftUpPoint(10.0, worldHeight + 10.0);
+		item.setPosition(10.0, worldHeight + 10.0);
 		strategy.activate(item, worldWidth, worldHeight);
-		assertEquals(10.0, item.getBounds().getLeftUpX(), 0.001);
-		assertEquals(worldHeight - item.getHeight(), item.getBounds().getLeftUpY(), 0.001);
+		assertEquals(10.0, item.getX(), 0.001);
+		assertEquals(worldHeight - item.getHeight(), item.getY(), 0.001);
 	}
 }

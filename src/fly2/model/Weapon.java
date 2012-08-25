@@ -29,7 +29,7 @@ public class Weapon {
 	 */
 	public void fire() {
 		Bullet bullet = new Bullet();
-		bullet.setLeftUpPoint(x - bulletSize / 2.0, y - bulletSize / 2.0);
+		bullet.setPosition(x - bulletSize / 2.0, y - bulletSize / 2.0);
 		bullet.setSize(bulletSize, bulletSize);
 		bullet.setDirection(bulletDirection);
 		bullet.setSpeed(bulletSpeed);

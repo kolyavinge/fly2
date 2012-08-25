@@ -20,10 +20,10 @@ public class MoveableWorldItem extends WorldItem implements Updateable {
 			moveX(speed);
 			break;
 		case UP:
-			moveY(-speed);
+			moveY(speed);
 			break;
 		case DOWN:
-			moveY(speed);
+			moveY(-speed);
 			break;
 		default:
 			throw new IllegalArgumentException();
