@@ -1,7 +1,8 @@
 package fly2.unittest;
 
 import java.util.*;
-import fly2.core.*;
+
+import fly2.phyzix.*;
 
 public class TestWorldItemCollection implements WorldItemCollection {
 

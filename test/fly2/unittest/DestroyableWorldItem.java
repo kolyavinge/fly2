@@ -1,6 +1,6 @@
 package fly2.unittest;
 
-import fly2.core.*;
+import fly2.phyzix.*;
 
 public class DestroyableWorldItem extends WorldItem implements Destroyable {
 

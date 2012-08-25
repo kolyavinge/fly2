@@ -1,6 +1,6 @@
 package fly2.unittest;
 
-import fly2.core.*;
+import fly2.phyzix.*;
 import junit.framework.TestCase;
 
 public class WorldTestCase extends TestCase {
