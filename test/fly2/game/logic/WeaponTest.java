@@ -1,7 +1,7 @@
 package fly2.game.logic;
 
 import fly2.common.*;
-import fly2.game.logic.BulletWorldItem;
+import fly2.game.logic.Bullet;
 import fly2.game.logic.Weapon;
 import fly2.phyzix.*;
 import fly2.unittest.*;
@@ -53,8 +53,8 @@ public class WeaponTest extends TestCase {
 		weapon.fire();
 		assertEquals(1, worldItems.getItemsCount());
 		WorldItem item = getFirstWorldItem();
-		assertTrue(item instanceof BulletWorldItem);
-		BulletWorldItem bullet = (BulletWorldItem) item;
+		assertTrue(item instanceof Bullet);
+		Bullet bullet = (Bullet) item;
 		assertEquals(x, bullet.getMiddleX());
 		assertEquals(y, bullet.getMiddleY());
 		assertEquals(bulletSize, bullet.getWidth());

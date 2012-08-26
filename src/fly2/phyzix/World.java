@@ -15,15 +15,15 @@ public final class World implements WorldItemCollection {
 	private ImpactChecker impactChecker;
 	private boolean raiseErrorIfImpactStrategyNotFound;
 
-	public World(double width, double height, ImpactChecker impactChecker) {
+	public World(double width, double height) {
 		if (width <= 0 || height <= 0)
 			throw new IllegalArgumentException("Размеры игрового мира должны быть больше нуля");
-		setImpactChecker(impactChecker);
 		this.width = width;
 		this.height = height;
 		this.worldItems = new ArrayList<WorldItem>();
 		this.impactStrategies = new ImpactStrategyCollection();
 		this.outOfWorldStrategies = new HashMap<WorldItem, OutOfWorldStrategy>();
+		this.impactChecker = new ImpactChecker();
 		this.raiseErrorIfImpactStrategyNotFound = false;
 	}
 
@@ -57,17 +57,6 @@ public final class World implements WorldItemCollection {
 
 	public void registerOutOfWorldStrategy(WorldItem item, OutOfWorldStrategy strategy) {
 		outOfWorldStrategies.put(item, strategy);
-	}
-
-	public ImpactChecker getImpactChecker() {
-		return impactChecker;
-	}
-
-	public void setImpactChecker(ImpactChecker impactChecker) {
-		if (impactChecker == null)
-			throw new NullPointerException("impactChecker");
-
-		this.impactChecker = impactChecker;
 	}
 
 	public void setRaiseErrorIfImpactStrategyNotFound(boolean value) {

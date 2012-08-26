@@ -15,41 +15,39 @@ public class WorldTest extends WorldTestCase {
 	private double worldHeight = 200.0;
 
 	public void setUp() {
-		world = new World(worldWidth, worldHeight, new ImpactChecker());
+		world = new World(worldWidth, worldHeight);
 	}
 
 	public void testNew() {
-		ImpactChecker impactChecker = new ImpactChecker();
-		world = new World(worldWidth, worldHeight, impactChecker);
+		world = new World(worldWidth, worldHeight);
 		assertEquals(worldWidth, world.getWidth());
 		assertEquals(worldHeight, world.getHeight());
-		assertSame(impactChecker, world.getImpactChecker());
 	}
 
 	public void testWrongWorldSize() {
 		try {
-			new World(0, 1, new ImpactChecker());
+			new World(0, 1);
 			fail();
 		} catch (IllegalArgumentException exp) {
 			assertTrue(true);
 		}
 
 		try {
-			new World(1, 0, new ImpactChecker());
+			new World(1, 0);
 			fail();
 		} catch (IllegalArgumentException exp) {
 			assertTrue(true);
 		}
 
 		try {
-			new World(-1, 1, new ImpactChecker());
+			new World(-1, 1);
 			fail();
 		} catch (IllegalArgumentException exp) {
 			assertTrue(true);
 		}
 
 		try {
-			new World(1, -1, new ImpactChecker());
+			new World(1, -1);
 			fail();
 		} catch (IllegalArgumentException exp) {
 			assertTrue(true);
@@ -223,22 +221,6 @@ public class WorldTest extends WorldTestCase {
 			world.activateItemsImpact();
 			fail();
 		} catch (NoSuchWorldItemImpactStrategy exp) {
-		}
-	}
-
-	public void testCreateWithNullImpactChecker() {
-		try {
-			new World(1.0, 1.0, null);
-			fail();
-		} catch (NullPointerException exp) {
-		}
-	}
-
-	public void testSetNullImpactChecker() {
-		try {
-			world.setImpactChecker(null);
-			fail();
-		} catch (NullPointerException exp) {
 		}
 	}
 

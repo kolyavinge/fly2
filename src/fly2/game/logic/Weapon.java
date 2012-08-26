@@ -28,7 +28,7 @@ public class Weapon implements fly2.game.frontend.Weapon {
 	 * Создает в игровом мире новую пульку с заданными параметрами.
 	 */
 	public void fire() {
-		BulletWorldItem bullet = new BulletWorldItem();
+		Bullet bullet = new Bullet();
 		bullet.setPosition(x - bulletSize / 2.0, y - bulletSize / 2.0);
 		bullet.setSize(bulletSize, bulletSize);
 		bullet.setDirection(bulletDirection);

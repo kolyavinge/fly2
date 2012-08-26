@@ -2,7 +2,6 @@ package fly2.game.logic;
 
 import fly2.game.logic.Weapon;
 import fly2.game.logic.PlanePlaneImpactStrategy;
-import fly2.game.logic.PlaneWorldItem;
 import fly2.unittest.TestWorldItemCollection;
 import junit.framework.TestCase;
 
@@ -15,13 +14,13 @@ public class PlanePlaneImpactStrategyTest extends TestCase {
 	}
 
 	public void testGetClasses() {
-		assertEquals(PlaneWorldItem.class, impactStrategy.getFirstObjectClass());
-		assertEquals(PlaneWorldItem.class, impactStrategy.getSecondObjectClass());
+		assertEquals(Plane.class, impactStrategy.getFirstObjectClass());
+		assertEquals(Plane.class, impactStrategy.getSecondObjectClass());
 	}
 
 	public void testActivateImpact() {
-		PlaneWorldItem plane1 = getPlane();
-		PlaneWorldItem plane2 = getPlane();
+		Plane plane1 = getPlane();
+		Plane plane2 = getPlane();
 
 		assertFalse(plane1.isDestroyed());
 		assertFalse(plane2.isDestroyed());
@@ -32,9 +31,9 @@ public class PlanePlaneImpactStrategyTest extends TestCase {
 		assertTrue(plane2.isDestroyed());
 	}
 
-	private PlaneWorldItem getPlane() {
+	private Plane getPlane() {
 		Weapon weapon = new Weapon(new TestWorldItemCollection());
-		PlaneWorldItem plane = new PlaneWorldItem(weapon);
+		Plane plane = new Plane(weapon);
 		plane.setHealth(1000);
 
 		return plane;

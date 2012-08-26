@@ -5,17 +5,17 @@ import fly2.phyzix.*;
 /**
  * Сталкновение самолета и пульки
  */
-public class PlaneBulletImpactStrategy implements ImpactStrategy<PlaneWorldItem, BulletWorldItem> {
+public class PlaneBulletImpactStrategy implements ImpactStrategy<Plane, Bullet> {
 
-	public Class<PlaneWorldItem> getFirstObjectClass() {
-		return PlaneWorldItem.class;
+	public Class<Plane> getFirstObjectClass() {
+		return Plane.class;
 	}
 
-	public Class<BulletWorldItem> getSecondObjectClass() {
-		return BulletWorldItem.class;
+	public Class<Bullet> getSecondObjectClass() {
+		return Bullet.class;
 	}
 
-	public void activateImpact(PlaneWorldItem plane, BulletWorldItem bullet) {
+	public void activateImpact(Plane plane, Bullet bullet) {
 		plane.damage(bullet.getDamage());
 		bullet.destroy();
 	}

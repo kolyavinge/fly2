@@ -7,7 +7,7 @@ import fly2.phyzix.ext.ReturnedOutOfWorldStrategy;
  * Если игрок вылетел за края - он возвращается обрато в мир.
  * Если он долетел до верхнего края - вызывается метод execute() объекта PlayerPlaneFinishLevelCallback.
  */
-public class PlayerPlaneOutOfWorldStrategy extends ReturnedOutOfWorldStrategy<PlaneWorldItem> {
+public class PlayerPlaneOutOfWorldStrategy extends ReturnedOutOfWorldStrategy<Plane> {
 
 	private CompleteLevelCallback callback;
 
@@ -19,7 +19,7 @@ public class PlayerPlaneOutOfWorldStrategy extends ReturnedOutOfWorldStrategy<Pl
 	}
 
 	@Override
-	public void activate(PlaneWorldItem plane, double worldWidth, double worldHeight) {
+	public void activate(Plane plane, double worldWidth, double worldHeight) {
 		if (plane.getY() >= worldHeight) {
 			callback.execute();
 		} else {

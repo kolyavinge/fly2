@@ -14,6 +14,12 @@ public class MoveableWorldItemTest extends TestCase {
 		worldItem.setSpeed(speed);
 	}
 
+	public void testNew() {
+		worldItem = new MoveableWorldItem();
+		assertEquals(0.0, worldItem.getSpeed());
+		assertEquals(_UNDEFINED, worldItem.getDirection());
+	}
+
 	public void testGettersSetters() {
 		assertEquals(speed, worldItem.getSpeed());
 	}
@@ -48,6 +54,22 @@ public class MoveableWorldItemTest extends TestCase {
 		worldItem.update();
 		assertEquals(0.0, worldItem.getX(), 0.001);
 		assertEquals(-worldItem.getSpeed(), worldItem.getY(), 0.001);
+	}
+
+	public void testMoveUndefined() {
+		worldItem.setPosition(0, 0);
+		try {
+			worldItem.update();
+		} catch (IllegalArgumentException exp) {
+		}
+	}
+
+	public void testNullDirection() {
+		try {
+			worldItem.setDirection(null);
+			fail();
+		} catch (NullPointerException exp) {
+		}
 	}
 
 	public void testNegativeSpeedValue() {

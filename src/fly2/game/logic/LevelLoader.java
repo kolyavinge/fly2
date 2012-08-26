@@ -28,31 +28,31 @@ public class LevelLoader {
 	}
 
 	private void loadLevels() {
-		final World world = new World(20.0, 100.0, new ImpactChecker());
+		final GameWorld world = new GameWorld(20.0, 100.0);
 
-		Weapon weapon = new Weapon(world);
-
-		final PlaneWorldItem plane = new PlaneWorldItem(weapon);
-		plane.setPosition((world.getWidth() - plane.getWidth()) / 2.0, 0);
-		plane.setHealth(10);
-
-		levels[0] = new LevelContext() {
-
-			public Plane getPlayerPlane() {
-				return plane;
-			}
-
-			public Iterable<Plane> getEnemyPlanes() {
-				return Collections.emptyList();
-			}
-
-			public int getEnemyPlanesCount() {
-				return 0;
-			}
-
-			public GameWorld getWorld() {
-				return new GameWorldAdapter(world);
-			}
-		};
+//		Weapon weapon = new Weapon(world);
+//
+//		final Plane plane = new Plane(weapon);
+//		plane.setPosition((world.getWidth() - plane.getWidth()) / 2.0, 0);
+//		plane.setHealth(10);
+//
+//		levels[0] = new LevelContext() {
+//
+//			public Plane getPlayerPlane() {
+//				return plane;
+//			}
+//
+//			public Iterable<fly2.game.frontend.Plane> getEnemyPlanes() {
+//				return Collections.emptyList();
+//			}
+//
+//			public int getEnemyPlanesCount() {
+//				return 0;
+//			}
+//
+//			public fly2.game.frontend.GameWorld getWorld() {
+//				return gameWorld;
+//			}
+//		};
 	}
 }

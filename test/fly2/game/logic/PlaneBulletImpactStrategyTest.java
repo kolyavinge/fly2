@@ -1,9 +1,9 @@
 package fly2.game.logic;
 
-import fly2.game.logic.BulletWorldItem;
+import fly2.game.logic.Bullet;
 import fly2.game.logic.Weapon;
 import fly2.game.logic.PlaneBulletImpactStrategy;
-import fly2.game.logic.PlaneWorldItem;
+import fly2.game.logic.PlaneTest;
 import fly2.unittest.*;
 import junit.framework.TestCase;
 
@@ -16,13 +16,13 @@ public class PlaneBulletImpactStrategyTest extends TestCase {
 	}
 
 	public void testGetClasses() {
-		assertEquals(PlaneWorldItem.class, impactStrategy.getFirstObjectClass());
-		assertEquals(BulletWorldItem.class, impactStrategy.getSecondObjectClass());
+		assertEquals(PlaneTest.class, impactStrategy.getFirstObjectClass());
+		assertEquals(Bullet.class, impactStrategy.getSecondObjectClass());
 	}
 
 	public void testActivateImpact() {
-		PlaneWorldItem plane = getPlaneWithHealth(10);
-		BulletWorldItem bullet = getBulletWithDamage(2);
+		Plane plane = getPlaneWithHealth(10);
+		Bullet bullet = getBulletWithDamage(2);
 
 		impactStrategy.activateImpact(plane, bullet);
 
@@ -30,16 +30,16 @@ public class PlaneBulletImpactStrategyTest extends TestCase {
 		assertTrue(bullet.isDestroyed());
 	}
 
-	private PlaneWorldItem getPlaneWithHealth(int health) {
+	private Plane getPlaneWithHealth(int health) {
 		Weapon weapon = new Weapon(new TestWorldItemCollection());
-		PlaneWorldItem plane = new PlaneWorldItem(weapon);
+		Plane plane = new Plane(weapon);
 		plane.setHealth(health);
 
 		return plane;
 	}
 
-	private BulletWorldItem getBulletWithDamage(int damage) {
-		BulletWorldItem bullet = new BulletWorldItem();
+	private Bullet getBulletWithDamage(int damage) {
+		Bullet bullet = new Bullet();
 		bullet.setDamage(damage);
 
 		return bullet;

@@ -1,20 +1,19 @@
 package fly2.game.logic;
 
 import fly2.game.logic.EnemyPlaneOutOfWorldStrategy;
-import fly2.game.logic.PlaneWorldItem;
 import fly2.unittest.BlankWeapon;
 import junit.framework.TestCase;
 
 public class EnemyPlaneOutOfWorldStrategyTest extends TestCase {
 
 	private EnemyPlaneOutOfWorldStrategy strategy;
-	private PlaneWorldItem plane;
+	private Plane plane;
 	private double worldWidth = 100.0;
 	private double worldHeight = 50.0;
 
 	public void setUp() {
 		strategy = new EnemyPlaneOutOfWorldStrategy();
-		plane = new PlaneWorldItem(new BlankWeapon());
+		plane = new Plane(new BlankWeapon());
 		plane.setHealth(1);
 	}
 

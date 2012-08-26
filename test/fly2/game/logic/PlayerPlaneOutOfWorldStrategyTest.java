@@ -1,6 +1,5 @@
 package fly2.game.logic;
 
-import fly2.game.logic.PlaneWorldItem;
 import fly2.game.logic.PlayerPlaneOutOfWorldStrategy;
 import fly2.unittest.BlankWeapon;
 import junit.framework.TestCase;
@@ -8,7 +7,7 @@ import junit.framework.TestCase;
 public class PlayerPlaneOutOfWorldStrategyTest extends TestCase {
 
 	private PlayerPlaneOutOfWorldStrategy strategy;
-	private PlaneWorldItem plane;
+	private Plane plane;
 	private double worldWidth = 100.0;
 	private double worldHeight = 50.0;
 	private CompleteLevelCallback callback;
@@ -17,7 +16,7 @@ public class PlayerPlaneOutOfWorldStrategyTest extends TestCase {
 	public void setUp() {
 		callback = getPlayerPlaneFinishLevelCallback();
 		strategy = new PlayerPlaneOutOfWorldStrategy(callback);
-		plane = new PlaneWorldItem(new BlankWeapon());
+		plane = new Plane(new BlankWeapon());
 		plane.setHealth(1);
 		executeCallbackFlag = false;
 	}
