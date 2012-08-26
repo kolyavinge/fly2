@@ -1,7 +1,7 @@
-package fly2.gamemodel.phyzix;
+package fly2.game.logic;
 
-import fly2.gamemodel.phyzix.EnemyPlaneOutOfWorldStrategy;
-import fly2.gamemodel.phyzix.PlaneWorldItem;
+import fly2.game.logic.EnemyPlaneOutOfWorldStrategy;
+import fly2.game.logic.PlaneWorldItem;
 import fly2.unittest.BlankWeapon;
 import junit.framework.TestCase;
 

@@ -1,8 +1,8 @@
-package fly2.gamemodel.phyzix;
+package fly2.game.logic;
 
-import fly2.gamemodel.phyzix.BulletWorldItem;
-import fly2.gamemodel.phyzix.DefaultWeapon;
-import fly2.gamemodel.phyzix.PlaneWorldItem;
+import fly2.game.logic.BulletWorldItem;
+import fly2.game.logic.Weapon;
+import fly2.game.logic.PlaneWorldItem;
 import fly2.phyzix.*;
 import fly2.unittest.*;
 import junit.framework.TestCase;
@@ -13,12 +13,12 @@ public class PlaneWorldItemTest extends TestCase {
 	private double height = 20.0;
 	private int health = 15;
 	private PlaneWorldItem plane;
-	private DefaultWeapon weapon;
+	private Weapon weapon;
 	private WorldItemCollection worldItems;
 
 	public void setUp() {
 		worldItems = new TestWorldItemCollection();
-		weapon = new DefaultWeapon(worldItems);
+		weapon = new Weapon(worldItems);
 		plane = new PlaneWorldItem(weapon);
 		plane.setSize(width, height);
 		plane.setHealth(health);

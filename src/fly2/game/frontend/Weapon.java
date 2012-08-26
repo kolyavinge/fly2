@@ -1,4 +1,4 @@
-package fly2.gamemodel;
+package fly2.game.frontend;
 
 public interface Weapon {
 

@@ -1,10 +1,10 @@
-package fly2.gamemodel.phyzix;
+package fly2.game.logic;
 
-import fly2.gamemodel.*;
+import fly2.game.frontend.*;
 import fly2.phyzix.*;
 import java.util.Collections;
 
-public class LevelLoader implements fly2.gamemodel.LevelLoader {
+public class LevelLoader {
 
 	private final static int levelsCount = 1;
 
@@ -30,7 +30,7 @@ public class LevelLoader implements fly2.gamemodel.LevelLoader {
 	private void loadLevels() {
 		final World world = new World(20.0, 100.0, new ImpactChecker());
 
-		DefaultWeapon weapon = new DefaultWeapon(world);
+		Weapon weapon = new Weapon(world);
 
 		final PlaneWorldItem plane = new PlaneWorldItem(weapon);
 		plane.setPosition((world.getWidth() - plane.getWidth()) / 2.0, 0);

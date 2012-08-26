@@ -1,6 +1,6 @@
 package fly2.unittest;
 
-import fly2.gamemodel.Weapon;
+import fly2.game.frontend.Weapon;
 
 public class BlankWeapon implements Weapon {
 

@@ -1,5 +1,6 @@
-package fly2.gamemodel.phyzix;
+package fly2.game.logic;
 
+import fly2.game.logic.GameWorldAdapter;
 import fly2.phyzix.ImpactChecker;
 import fly2.phyzix.World;
 import junit.framework.TestCase;

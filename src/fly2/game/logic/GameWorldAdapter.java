@@ -1,6 +1,6 @@
-package fly2.gamemodel.phyzix;
+package fly2.game.logic;
 
-import fly2.gamemodel.GameWorld;
+import fly2.game.frontend.GameWorld;
 import fly2.phyzix.World;
 
 public class GameWorldAdapter implements GameWorld {

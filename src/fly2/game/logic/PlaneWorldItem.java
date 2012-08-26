@@ -1,7 +1,7 @@
-package fly2.gamemodel.phyzix;
+package fly2.game.logic;
 
-import fly2.gamemodel.Plane;
-import fly2.gamemodel.Weapon;
+import fly2.game.frontend.Plane;
+import fly2.game.frontend.Weapon;
 import fly2.phyzix.*;
 import fly2.phyzix.ext.MoveableWorldItem;
 

@@ -1,14 +1,13 @@
-package fly2.gamemodel.phyzix;
+package fly2.game.logic;
 
-import fly2.common.*;
-import fly2.gamemodel.Weapon;
-import fly2.phyzix.*;
 import static fly2.common.Direction.*;
+import fly2.common.Direction;
+import fly2.phyzix.WorldItemCollection;
 
 /**
  * Оружие для самолета
  */
-public class DefaultWeapon implements Weapon {
+public class Weapon implements fly2.game.frontend.Weapon {
 
 	private double x, y;
 	private double bulletSize;
@@ -17,7 +16,7 @@ public class DefaultWeapon implements Weapon {
 	private Direction bulletDirection;
 	private WorldItemCollection worldItems;
 
-	public DefaultWeapon(WorldItemCollection worldItems) {
+	public Weapon(WorldItemCollection worldItems) {
 		if (worldItems == null)
 			throw new NullPointerException("worldItems");
 		this.worldItems = worldItems;

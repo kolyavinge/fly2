@@ -1,4 +1,4 @@
-package fly2.gamemodel.phyzix;
+package fly2.game.logic;
 
 import fly2.phyzix.*;
 import fly2.phyzix.ext.MoveableWorldItem;

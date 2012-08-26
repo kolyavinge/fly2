@@ -1,8 +1,9 @@
-package fly2.gamemodel.phyzix;
+package fly2.game.logic;
 
-import fly2.gamemodel.LevelContext;
-import fly2.gamemodel.Plane;
-import fly2.gamemodel.GameWorld;
+import fly2.game.frontend.GameWorld;
+import fly2.game.frontend.LevelContext;
+import fly2.game.frontend.Plane;
+import fly2.game.logic.LevelLoader;
 import junit.framework.TestCase;
 
 public class LeveLoaderTest extends TestCase {

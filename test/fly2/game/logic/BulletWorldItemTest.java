@@ -1,6 +1,6 @@
-package fly2.gamemodel.phyzix;
+package fly2.game.logic;
 
-import fly2.gamemodel.phyzix.BulletWorldItem;
+import fly2.game.logic.BulletWorldItem;
 import junit.framework.TestCase;
 
 public class BulletWorldItemTest extends TestCase {

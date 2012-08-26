@@ -1,9 +1,9 @@
-package fly2.gamemodel.phyzix;
+package fly2.game.logic;
 
-import fly2.gamemodel.phyzix.BulletWorldItem;
-import fly2.gamemodel.phyzix.DefaultWeapon;
-import fly2.gamemodel.phyzix.PlaneBulletImpactStrategy;
-import fly2.gamemodel.phyzix.PlaneWorldItem;
+import fly2.game.logic.BulletWorldItem;
+import fly2.game.logic.Weapon;
+import fly2.game.logic.PlaneBulletImpactStrategy;
+import fly2.game.logic.PlaneWorldItem;
 import fly2.unittest.*;
 import junit.framework.TestCase;
 
@@ -31,7 +31,7 @@ public class PlaneBulletImpactStrategyTest extends TestCase {
 	}
 
 	private PlaneWorldItem getPlaneWithHealth(int health) {
-		DefaultWeapon weapon = new DefaultWeapon(new TestWorldItemCollection());
+		Weapon weapon = new Weapon(new TestWorldItemCollection());
 		PlaneWorldItem plane = new PlaneWorldItem(weapon);
 		plane.setHealth(health);
 

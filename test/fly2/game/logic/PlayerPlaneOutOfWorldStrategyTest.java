@@ -1,8 +1,7 @@
-package fly2.gamemodel.phyzix;
+package fly2.game.logic;
 
-import fly2.gamemodel.PlayerCompleteLevelCallback;
-import fly2.gamemodel.phyzix.PlaneWorldItem;
-import fly2.gamemodel.phyzix.PlayerPlaneOutOfWorldStrategy;
+import fly2.game.logic.PlaneWorldItem;
+import fly2.game.logic.PlayerPlaneOutOfWorldStrategy;
 import fly2.unittest.BlankWeapon;
 import junit.framework.TestCase;
 
@@ -12,7 +11,7 @@ public class PlayerPlaneOutOfWorldStrategyTest extends TestCase {
 	private PlaneWorldItem plane;
 	private double worldWidth = 100.0;
 	private double worldHeight = 50.0;
-	private PlayerCompleteLevelCallback callback;
+	private CompleteLevelCallback callback;
 	private boolean executeCallbackFlag;
 
 	public void setUp() {
@@ -62,8 +61,8 @@ public class PlayerPlaneOutOfWorldStrategyTest extends TestCase {
 		}
 	}
 
-	private PlayerCompleteLevelCallback getPlayerPlaneFinishLevelCallback() {
-		return new PlayerCompleteLevelCallback() {
+	private CompleteLevelCallback getPlayerPlaneFinishLevelCallback() {
+		return new CompleteLevelCallback() {
 			public void execute() {
 				executeCallbackFlag = true;
 			}

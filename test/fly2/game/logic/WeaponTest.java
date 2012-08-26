@@ -1,26 +1,26 @@
-package fly2.gamemodel.phyzix;
+package fly2.game.logic;
 
 import fly2.common.*;
-import fly2.gamemodel.phyzix.BulletWorldItem;
-import fly2.gamemodel.phyzix.DefaultWeapon;
+import fly2.game.logic.BulletWorldItem;
+import fly2.game.logic.Weapon;
 import fly2.phyzix.*;
 import fly2.unittest.*;
 import junit.framework.TestCase;
 import static fly2.common.Direction.*;
 
-public class DefaultWeaponTest extends TestCase {
+public class WeaponTest extends TestCase {
 
 	private double x = 10.0, y = 20.0;
 	private double bulletSize = 8.0;
 	private Direction bulletDirection = UP;
 	private int bulletDamage = 15;
 	private double bulletSpeed = 50.0;
-	private DefaultWeapon weapon;
+	private Weapon weapon;
 	private WorldItemCollection worldItems;
 
 	public void setUp() {
 		worldItems = new TestWorldItemCollection();
-		weapon = new DefaultWeapon(worldItems);
+		weapon = new Weapon(worldItems);
 		weapon.setPosition(x, y);
 		weapon.setBulletSize(bulletSize);
 		weapon.setBulletDirection(bulletDirection);
@@ -39,7 +39,7 @@ public class DefaultWeaponTest extends TestCase {
 	}
 
 	public void testNew() {
-		weapon = new DefaultWeapon(worldItems);
+		weapon = new Weapon(worldItems);
 		assertEquals(0.0, weapon.getX());
 		assertEquals(0.0, weapon.getY());
 		assertEquals(1.0, weapon.getBulletSize());
@@ -80,7 +80,7 @@ public class DefaultWeaponTest extends TestCase {
 
 	public void testSetNullWorldItemCollection() {
 		try {
-			new DefaultWeapon(null);
+			new Weapon(null);
 			fail();
 		} catch (NullPointerException exp) {
 		}

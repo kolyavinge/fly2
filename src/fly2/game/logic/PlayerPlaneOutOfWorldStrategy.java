@@ -1,6 +1,5 @@
-package fly2.gamemodel.phyzix;
+package fly2.game.logic;
 
-import fly2.gamemodel.PlayerCompleteLevelCallback;
 import fly2.phyzix.ext.ReturnedOutOfWorldStrategy;
 
 /**
@@ -10,9 +9,9 @@ import fly2.phyzix.ext.ReturnedOutOfWorldStrategy;
  */
 public class PlayerPlaneOutOfWorldStrategy extends ReturnedOutOfWorldStrategy<PlaneWorldItem> {
 
-	private PlayerCompleteLevelCallback callback;
+	private CompleteLevelCallback callback;
 
-	public PlayerPlaneOutOfWorldStrategy(PlayerCompleteLevelCallback callback) {
+	public PlayerPlaneOutOfWorldStrategy(CompleteLevelCallback callback) {
 		if (callback == null)
 			throw new NullPointerException("callback");
 
