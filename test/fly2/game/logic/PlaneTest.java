@@ -47,18 +47,42 @@ public class PlaneTest extends TestCase {
 		// протестировано в классе Weapon
 	}
 
-	public void testMoveXPlaneWithWeapon() {
+	public void testSetPosition() {
+		plane.setPosition(0.0, 0.0);
+		weapon.setPosition(0.5, 1.0);
+
+		plane.setPosition(5.0, 8.0);
+
+		assertEquals(5.5, weapon.getX(), 0.001);
+		assertEquals(9.0, weapon.getY(), 0.001);
+	}
+
+	public void testMoveWithWeaponRight() {
 		weapon.setPosition(1.0, 1.0);
 		plane.moveX(2.0);
 		assertEquals(3.0, weapon.getX(), 0.001);
 		assertEquals(1.0, weapon.getY(), 0.001);
 	}
 
-	public void testMoveYPlaneWithWeapon() {
+	public void testMoveWithWeaponLeft() {
+		weapon.setPosition(10.0, 1.0);
+		plane.moveX(-2.0);
+		assertEquals(8.0, weapon.getX(), 0.001);
+		assertEquals(1.0, weapon.getY(), 0.001);
+	}
+
+	public void testMoveWithWeaponUp() {
 		weapon.setPosition(1.0, 1.0);
 		plane.moveY(2.0);
 		assertEquals(1.0, weapon.getX(), 0.001);
 		assertEquals(3.0, weapon.getY(), 0.001);
+	}
+
+	public void testMoveWithWeaponDown() {
+		weapon.setPosition(1.0, 10.0);
+		plane.moveY(-2.0);
+		assertEquals(1.0, weapon.getX(), 0.001);
+		assertEquals(8.0, weapon.getY(), 0.001);
 	}
 
 	public void testDamage() {
@@ -117,6 +141,11 @@ public class PlaneTest extends TestCase {
 		plane.damage(plane.getHealth());
 		assertTrue(plane.isDestroyed());
 	}
+	
+	public void testSetOwnerIdToWeapon() {
+		plane.setWeapon(weapon);
+		assertEquals(plane.getId(), weapon.getOwnerPlaneId());
+	}
 
 	public void testCreateWithNullWeapon() {
 		try {
@@ -131,6 +160,14 @@ public class PlaneTest extends TestCase {
 			plane = new Plane(null);
 			fail();
 		} catch (NullPointerException exp) {
+		}
+	}
+
+	public void testFireWithNullWeapon() {
+		plane = new Plane();
+		try {
+			plane.fire();
+		} catch (IllegalStateException exp) {
 		}
 	}
 

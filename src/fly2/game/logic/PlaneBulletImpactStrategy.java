@@ -16,7 +16,9 @@ public class PlaneBulletImpactStrategy implements ImpactStrategy<Plane, Bullet> 
 	}
 
 	public void activateImpact(Plane plane, Bullet bullet) {
-		plane.damage(bullet.getDamage());
-		bullet.destroy();
+		if (plane.getId() != bullet.getOwnerPlaneId()) {
+			plane.damage(bullet.getDamage());
+			bullet.destroy();
+		}
 	}
 }

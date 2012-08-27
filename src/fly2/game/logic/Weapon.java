@@ -15,13 +15,15 @@ public class Weapon implements fly2.game.frontend.Weapon {
 	private int bulletDamage;
 	private Direction bulletDirection;
 	private WorldItemCollection worldItems;
+	private int ownerPlaneId;
 
 	public Weapon(WorldItemCollection worldItems) {
 		if (worldItems == null)
 			throw new NullPointerException("worldItems");
+
 		this.worldItems = worldItems;
 		this.bulletSize = 1.0;
-		this.bulletDirection = LEFT;
+		this.bulletDirection = _UNDEFINED;
 	}
 
 	/**
@@ -34,6 +36,7 @@ public class Weapon implements fly2.game.frontend.Weapon {
 		bullet.setDirection(bulletDirection);
 		bullet.setSpeed(bulletSpeed);
 		bullet.setDamage(bulletDamage);
+		bullet.setOwnerPlaneId(ownerPlaneId);
 		worldItems.addItem(bullet);
 	}
 
@@ -100,5 +103,13 @@ public class Weapon implements fly2.game.frontend.Weapon {
 
 	public WorldItemCollection getWorldItems() {
 		return worldItems;
+	}
+
+	public int getOwnerPlaneId() {
+		return ownerPlaneId;
+	}
+
+	public void setOwnerPlaneId(int ownerPlaneId) {
+		this.ownerPlaneId = ownerPlaneId;
 	}
 }

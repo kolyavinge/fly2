@@ -15,6 +15,7 @@ public class WeaponTest extends TestCase {
 	private Direction bulletDirection = UP;
 	private int bulletDamage = 15;
 	private double bulletSpeed = 50.0;
+	private int ownerPlaneId = 123;
 	private Weapon weapon;
 	private WorldItemCollection worldItems;
 
@@ -26,6 +27,7 @@ public class WeaponTest extends TestCase {
 		weapon.setBulletDirection(bulletDirection);
 		weapon.setBulletSpeed(bulletSpeed);
 		weapon.setBulletDamage(bulletDamage);
+		weapon.setOwnerPlaneId(ownerPlaneId);
 	}
 
 	public void testGettersSetters() {
@@ -36,6 +38,7 @@ public class WeaponTest extends TestCase {
 		assertEquals(bulletDamage, weapon.getBulletDamage());
 		assertEquals(bulletSpeed, weapon.getBulletSpeed());
 		assertSame(worldItems, weapon.getWorldItems());
+		assertSame(ownerPlaneId, weapon.getOwnerPlaneId());
 	}
 
 	public void testNew() {
@@ -43,7 +46,7 @@ public class WeaponTest extends TestCase {
 		assertEquals(0.0, weapon.getX());
 		assertEquals(0.0, weapon.getY());
 		assertEquals(1.0, weapon.getBulletSize());
-		assertEquals(LEFT, weapon.getBulletDirection());
+		assertEquals(_UNDEFINED, weapon.getBulletDirection());
 		assertEquals(0, weapon.getBulletDamage());
 		assertEquals(0.0, weapon.getBulletSpeed());
 		assertSame(worldItems, weapon.getWorldItems());
@@ -62,6 +65,7 @@ public class WeaponTest extends TestCase {
 		assertEquals(bulletDirection, bullet.getDirection());
 		assertEquals(bulletSpeed, bullet.getSpeed());
 		assertEquals(bulletDamage, bullet.getDamage());
+		assertEquals(ownerPlaneId, bullet.getOwnerPlaneId());
 	}
 
 	public void moveX() {

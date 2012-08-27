@@ -10,6 +10,7 @@ public class Bullet extends MoveableWorldItem implements Destroyable {
 
 	private int damage;
 	private boolean isDestroyed;
+	private int ownerPlaneId;
 
 	public Bullet() {
 		isDestroyed = false;
@@ -32,5 +33,13 @@ public class Bullet extends MoveableWorldItem implements Destroyable {
 
 	public boolean isDestroyed() {
 		return isDestroyed;
+	}
+
+	public int getOwnerPlaneId() {
+		return ownerPlaneId;
+	}
+
+	public void setOwnerPlaneId(int ownerPlaneId) {
+		this.ownerPlaneId = ownerPlaneId;
 	}
 }

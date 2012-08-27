@@ -15,6 +15,4 @@ public interface Plane extends Updateable, Destroyable {
 	int getHealth();
 
 	Weapon getWeapon();
-
-	void fire();
 }

@@ -11,10 +11,4 @@ public interface Weapon {
 	double getBulletSize();
 
 	double getBulletSpeed();
-
-	void fire();
-
-	void moveX(double value);
-
-	void moveY(double value);
 }

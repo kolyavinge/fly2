@@ -1,15 +1,27 @@
 package fly2.game.logic;
 
-import fly2.game.frontend.Weapon;
 import fly2.phyzix.ext.MoveableWorldItem;
 
 public class Plane extends MoveableWorldItem implements fly2.game.frontend.Plane {
 
+	private static int lastId = 1;
+	
 	private int health;
 	private Weapon weapon;
+	private int id;
 
 	public Plane(Weapon weapon) {
+		id = lastId++;
 		setWeapon(weapon);
+	}
+
+	public Plane() {
+		id = lastId++;
+		// weapon = new NullWeapon();
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public Weapon getWeapon() {
@@ -21,6 +33,7 @@ public class Plane extends MoveableWorldItem implements fly2.game.frontend.Plane
 			throw new NullPointerException("weapon");
 
 		this.weapon = weapon;
+		this.weapon.setOwnerPlaneId(id);
 	}
 
 	public int getHealth() {
@@ -53,18 +66,45 @@ public class Plane extends MoveableWorldItem implements fly2.game.frontend.Plane
 	}
 
 	public void fire() {
+		if (weapon == null)
+			throw new IllegalStateException("Plane weapon was null");
+
 		weapon.fire();
+	}
+
+	@Override
+	public void setX(double x) {
+		double oldX = getX();
+		super.setX(x);
+		if (weapon != null) {
+			double newX = getX();
+			double deltaX = newX - oldX;
+			weapon.moveX(deltaX);
+		}
+	}
+
+	@Override
+	public void setY(double y) {
+		double oldY = getY();
+		super.setY(y);
+		if (weapon != null) {
+			double newY = getY();
+			double deltaY = newY - oldY;
+			weapon.moveY(deltaY);
+		}
 	}
 
 	@Override
 	public void moveX(double value) {
 		super.moveX(value);
-		weapon.moveX(value);
+		if (weapon != null)
+			weapon.moveX(value);
 	}
 
 	@Override
 	public void moveY(double value) {
 		super.moveY(value);
-		weapon.moveY(value);
+		if (weapon != null)
+			weapon.moveY(value);
 	}
 }

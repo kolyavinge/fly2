@@ -29,17 +29,17 @@ public class WorldItem {
 		this.y = y;
 	}
 
-	public void setPosition(double x, double y) {
+	public final void setPosition(double x, double y) {
 		setX(x);
 		setY(y);
 	}
 
-	public double getMiddleX() {
-		return x + (width / 2.0);
+	public final double getMiddleX() {
+		return getX() + (getWidth() / 2.0);
 	}
 
-	public double getMiddleY() {
-		return y + (height / 2.0);
+	public final double getMiddleY() {
+		return getY() + (getHeight() / 2.0);
 	}
 
 	public void moveX(double value) {
@@ -70,7 +70,7 @@ public class WorldItem {
 		this.height = height;
 	}
 
-	public void setSize(double width, double height) {
+	public final void setSize(double width, double height) {
 		setWidth(width);
 		setHeight(height);
 	}

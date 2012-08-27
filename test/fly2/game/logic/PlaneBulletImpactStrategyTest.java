@@ -1,22 +1,18 @@
 package fly2.game.logic;
 
-import fly2.game.logic.Bullet;
-import fly2.game.logic.Weapon;
-import fly2.game.logic.PlaneBulletImpactStrategy;
-import fly2.game.logic.PlaneTest;
-import fly2.unittest.*;
+import fly2.unittest.TestWorldItemCollection;
 import junit.framework.TestCase;
 
 public class PlaneBulletImpactStrategyTest extends TestCase {
 
-	PlaneBulletImpactStrategy impactStrategy;
+	private PlaneBulletImpactStrategy impactStrategy;
 
 	public void setUp() {
 		impactStrategy = new PlaneBulletImpactStrategy();
 	}
 
 	public void testGetClasses() {
-		assertEquals(PlaneTest.class, impactStrategy.getFirstObjectClass());
+		assertEquals(Plane.class, impactStrategy.getFirstObjectClass());
 		assertEquals(Bullet.class, impactStrategy.getSecondObjectClass());
 	}
 
@@ -28,6 +24,17 @@ public class PlaneBulletImpactStrategyTest extends TestCase {
 
 		assertEquals(8, plane.getHealth());
 		assertTrue(bullet.isDestroyed());
+	}
+	
+	public void testOwnerBullet() {
+		Plane plane = getPlaneWithHealth(10);
+		Bullet bullet = getBulletWithDamage(2);
+		bullet.setOwnerPlaneId(plane.getId());
+
+		impactStrategy.activateImpact(plane, bullet);
+
+		assertEquals(10, plane.getHealth());
+		assertFalse(bullet.isDestroyed());
 	}
 
 	private Plane getPlaneWithHealth(int health) {
