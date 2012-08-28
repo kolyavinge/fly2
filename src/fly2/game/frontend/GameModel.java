@@ -1,9 +1,9 @@
 package fly2.game.frontend;
 
 /**
- * Информация об игровом уровне
+ * Модель игры
  */
-public interface LevelContext {
+public interface GameModel {
 
 	/**
 	 * Самолет игрока для данного уровня

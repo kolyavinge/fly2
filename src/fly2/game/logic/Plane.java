@@ -4,19 +4,18 @@ import fly2.phyzix.ext.MoveableWorldItem;
 
 public class Plane extends MoveableWorldItem implements fly2.game.frontend.Plane {
 
+	// TODO: генерацию id-шника можно вынести в отдельный класс
 	private static int lastId = 1;
 	
 	private int health;
 	private Weapon weapon;
-	private int id;
+	private int id = lastId++;
 
 	public Plane(Weapon weapon) {
-		id = lastId++;
 		setWeapon(weapon);
 	}
 
 	public Plane() {
-		id = lastId++;
 		// weapon = new NullWeapon();
 	}
 

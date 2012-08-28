@@ -87,4 +87,12 @@ public class GameWorldTest extends TestCase {
 		gameWorld.update();
 		assertEquals(0, gameWorld.getBulletsCount());
 	}
+
+	public void testGetEnemyPlanes() {
+		assertEquals(0, gameWorld.getEnemyPlanes().size());
+		assertEquals(0, gameWorld.getEnemyPlanesCount());
+		gameWorld.createEnemyPlane();
+		assertEquals(1, gameWorld.getEnemyPlanes().size());
+		assertEquals(1, gameWorld.getEnemyPlanesCount());
+	}
 }

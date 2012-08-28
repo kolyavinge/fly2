@@ -1,6 +1,11 @@
 package fly2.game.logic;
 
-import fly2.phyzix.*;
+import fly2.phyzix.World;
+import fly2.phyzix.WorldItem;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public final class GameWorld implements fly2.game.frontend.GameWorld {
 
@@ -24,11 +29,31 @@ public final class GameWorld implements fly2.game.frontend.GameWorld {
 	public double getHeight() {
 		return world.getHeight();
 	}
-	
+
 	public int getBulletsCount() {
 		int count = 0;
 		for (WorldItem item : world.getItems()) {
 			if (item instanceof Bullet)
+				count++;
+		}
+
+		return count;
+	}
+
+	public Collection<Plane> getEnemyPlanes() {
+		List<Plane> enemyPlanes = new ArrayList<Plane>();
+		for (WorldItem item : world.getItems()) {
+			if ((item instanceof Plane) && (item != playerPlane))
+				enemyPlanes.add((Plane) item);
+		}
+
+		return enemyPlanes;
+	}
+
+	public int getEnemyPlanesCount() {
+		int count = 0;
+		for (WorldItem item : world.getItems()) {
+			if ((item instanceof Plane) && (item != playerPlane))
 				count++;
 		}
 
