@@ -40,6 +40,27 @@ public final class GameWorld implements fly2.game.frontend.GameWorld {
 		return count;
 	}
 
+	public Collection<Bullet> getBullets() {
+		List<Bullet> bullets = new ArrayList<Bullet>();
+		for (WorldItem item : world.getItems()) {
+			if ((item instanceof Bullet))
+				bullets.add((Bullet) item);
+		}
+
+		return bullets;
+	}
+
+	public Plane getPlayerPlane() {
+		return playerPlane;
+	}
+
+	public Plane createEnemyPlane() {
+		Plane enemy = planeFactory.makeEnemy();
+		world.addItem(enemy);
+
+		return enemy;
+	}
+
 	public Collection<Plane> getEnemyPlanes() {
 		List<Plane> enemyPlanes = new ArrayList<Plane>();
 		for (WorldItem item : world.getItems()) {
@@ -58,17 +79,6 @@ public final class GameWorld implements fly2.game.frontend.GameWorld {
 		}
 
 		return count;
-	}
-
-	public Plane getPlayerPlane() {
-		return playerPlane;
-	}
-
-	public Plane createEnemyPlane() {
-		Plane enemy = planeFactory.makeEnemy();
-		world.addItem(enemy);
-
-		return enemy;
 	}
 
 	public void update() {

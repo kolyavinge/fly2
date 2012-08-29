@@ -1,6 +1,8 @@
 package fly2.game.frontend;
 
-public interface Plane {
+import fly2.common.Direction;
+
+public interface Bullet {
 
 	double getX();
 
@@ -9,14 +11,16 @@ public interface Plane {
 	double getMiddleX();
 
 	double getMiddleY();
-	
+
 	double getWidth();
-	
+
 	double getHeight();
 
-	int getHealth();
-
-	Weapon getWeapon();
-	
 	boolean isDestroyed();
+
+	Direction getDirection();
+
+	int getDamage();
+
+	double getSpeed();
 }

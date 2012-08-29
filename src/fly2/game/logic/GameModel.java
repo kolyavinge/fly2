@@ -1,7 +1,6 @@
 package fly2.game.logic;
 
 import fly2.game.frontend.GameModelFactory;
-
 import java.util.*;
 
 public class GameModel implements fly2.game.frontend.GameModel {
@@ -15,7 +14,11 @@ public class GameModel implements fly2.game.frontend.GameModel {
 	public GameModel() {
 		gameWorld = new GameWorld(25.0, 100.0);
 	}
-
+	
+	public fly2.game.frontend.GameWorld getWorld() {
+		return gameWorld;
+	}
+	
 	public fly2.game.frontend.Plane getPlayerPlane() {
 		return gameWorld.getPlayerPlane();
 	}
@@ -28,7 +31,11 @@ public class GameModel implements fly2.game.frontend.GameModel {
 		return gameWorld.getEnemyPlanesCount();
 	}
 
-	public fly2.game.frontend.GameWorld getWorld() {
-		return gameWorld;
+	public Iterable<fly2.game.frontend.Bullet> getBullets() {
+		return Collections.<fly2.game.frontend.Bullet> unmodifiableCollection(gameWorld.getBullets());
+	}
+
+	public int getBulletsCount() {
+		return gameWorld.getBulletsCount();
 	}
 }

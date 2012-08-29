@@ -1,5 +1,6 @@
 package fly2.unittest;
 
+import fly2.game.frontend.Bullet;
 import fly2.game.frontend.GameModel;
 import fly2.game.frontend.GameWorld;
 import fly2.game.frontend.Plane;
@@ -20,5 +21,13 @@ public class TestGameModel implements GameModel {
 
 	public GameWorld getWorld() {
 		return null;
+	}
+
+	public Iterable<Bullet> getBullets() {
+		return null;
+	}
+
+	public int getBulletsCount() {
+		return 0;
 	}
 }
