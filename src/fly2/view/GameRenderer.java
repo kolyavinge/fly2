@@ -1,39 +1,47 @@
 package fly2.view;
 
+import static javax.microedition.khronos.opengles.GL10.*;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.GLU;
+import android.opengl.GLUtils;
+import fly2.app.R;
 import fly2.game.frontend.GameModel;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
+import java.io.*;
+import java.nio.*;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
-import static javax.microedition.khronos.opengles.GL10.*;
 
 public class GameRenderer implements Renderer {
 
+	private Resources resources;
 	private GameModel gameModel;
-	private FloatBuffer triangleBuffer;
+	private FloatBuffer planeVertexBuffer;
+	private FloatBuffer planeTextureBuffer;
+	private int[] planeTextureId = new int[1];
 
-	private float[] planePoints = {
+	private float[] planeVertexArray = {
 
 			// нос
 
 			0f, 0f,
-			31f, 31f,
 			13f, 3f,
-
-			0f, 0f,
-			47f, 64f,
 			31f, 31f,
 
 			0f, 0f,
-			58f, 105f,
+			31f, 31f,
 			47f, 64f,
 
 			0f, 0f,
+			47f, 64f,
+			58f, 105f,
+
+			0f, 0f,
 			58f, 105f,
 			63f, 165f,
 
@@ -46,8 +54,8 @@ public class GameRenderer implements Renderer {
 			66f, 400f,
 
 			0f, 0f,
-			0f, 400f,
 			66f, 400f,
+			0f, 400f,
 
 			// крыло
 
@@ -91,6 +99,10 @@ public class GameRenderer implements Renderer {
 
 			0f, 767f,
 			122f, 767f,
+			94f, 779f,
+			
+			0f, 767f,
+			94f, 779f,
 			79f, 804f,
 
 			0f, 767f,
@@ -144,36 +156,63 @@ public class GameRenderer implements Renderer {
 			0f, 1346f,
 	};
 
-	public GameRenderer(GameModel gameModel) {
+	public GameRenderer(Resources resources, GameModel gameModel) {
+		
+		this.resources = resources;
+		
 		if (gameModel == null)
 			throw new NullPointerException("gameModel");
 
 		this.gameModel = gameModel;
 
-		for (int i = 0; i < planePoints.length - 1; i += 2) {
-			planePoints[i] /= 772f;
-			planePoints[i + 1] /= 1346f;
+		for (int i = 0; i < planeVertexArray.length - 1; i += 2) {
+			planeVertexArray[i] /= 2f * 772f;
+			planeVertexArray[i] += 0.5f;
+			planeVertexArray[i + 1] /= 1346f;
 		}
 
-		ByteBuffer bb = ByteBuffer.allocateDirect(2 * 4 * planePoints.length);
+		ByteBuffer bb = ByteBuffer.allocateDirect(2 * 4 * planeVertexArray.length);
 		bb.order(ByteOrder.nativeOrder());
-		triangleBuffer = bb.asFloatBuffer();
-		triangleBuffer.put(planePoints);
+		planeVertexBuffer = bb.asFloatBuffer();
+		planeVertexBuffer.put(planeVertexArray);
 
-		for (int i = 0; i < planePoints.length - 1; i += 2) {
-			planePoints[i] *= -1;
+		ByteBuffer tbb = ByteBuffer.allocateDirect(2 * 4 * planeVertexArray.length);
+		tbb.order(ByteOrder.nativeOrder());
+		planeTextureBuffer = tbb.asFloatBuffer();
+		planeTextureBuffer.put(planeVertexArray);
+
+		for (int i = 0; i < planeVertexArray.length - 1; i += 2) {
+			planeVertexArray[i] = 1f - planeVertexArray[i];
 		}
 
-		triangleBuffer.put(planePoints);
+		for (int i = 0; i < planeVertexArray.length - 1; i += 6) {
+			float t = planeVertexArray[i + 2];
+			float k = planeVertexArray[i + 3];
+			planeVertexArray[i + 2] = planeVertexArray[i + 4];
+			planeVertexArray[i + 3] = planeVertexArray[i + 5];
+			planeVertexArray[i + 4] = t;
+			planeVertexArray[i + 5] = k;
+		}
 
-		triangleBuffer.position(0);
+		planeVertexBuffer.put(planeVertexArray);
+		planeVertexBuffer.position(0);
+		
+		planeTextureBuffer.put(planeVertexArray);
+		planeTextureBuffer.position(0);
 	}
 
 	public void onDrawFrame(GL10 gl) {
 		gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		gl.glEnableClientState(GL_VERTEX_ARRAY);
-		gl.glVertexPointer(2, GL_FLOAT, 0, triangleBuffer);
-		gl.glDrawArrays(GL_TRIANGLES, 0, planePoints.length);
+		gl.glVertexPointer(2, GL_FLOAT, 0, planeVertexBuffer);
+
+		gl.glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		gl.glTexCoordPointer(2, GL_FLOAT, 0, planeTextureBuffer);
+
+		gl.glDrawArrays(GL_TRIANGLES, 0, planeVertexArray.length);
+
+		gl.glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		gl.glDisableClientState(GL_VERTEX_ARRAY);
 	}
 
@@ -195,5 +234,32 @@ public class GameRenderer implements Renderer {
 		gl.glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		gl.glShadeModel(GL_SMOOTH);
 		gl.glDisable(GL_DITHER);
+		gl.glFrontFace(GL_CCW);
+		gl.glEnable(GL_CULL_FACE);
+		gl.glCullFace(GL_BACK);
+		loadTexture(gl, resources);
+		gl.glEnable(GL_TEXTURE_2D);
+	}
+
+	public void loadTexture(GL10 gl, Resources resources) {
+		gl.glGenTextures(1, planeTextureId, 0);
+
+		gl.glBindTexture(GL_TEXTURE_2D, planeTextureId[0]);
+		gl.glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		gl.glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		InputStream istream = resources.openRawResource(R.drawable.plane21);
+		Bitmap bitmap;
+		try {
+			bitmap = BitmapFactory.decodeStream(istream);
+		} finally {
+			try {
+				istream.close();
+			} catch (IOException e) {
+			}
+		}
+
+		GLUtils.texImage2D(GL_TEXTURE_2D, 0, bitmap, 0);
+		bitmap.recycle();
 	}
 }

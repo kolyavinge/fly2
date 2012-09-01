@@ -14,7 +14,7 @@ public class Fly2Activity extends Activity {
 		super.onCreate(savedInstanceState);
 		GLSurfaceView view = new GLSurfaceView(this);
 		GameModel gameModel = GameModelFactory.getInstance().createModel();
-		GameRenderer gameRenderer = new GameRenderer(gameModel);
+		GameRenderer gameRenderer = new GameRenderer(this.getResources(), gameModel);
 		view.setRenderer(gameRenderer);
 		setContentView(view);
 	}
