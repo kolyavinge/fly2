@@ -14,6 +14,6 @@ public class LightBitmapFactory implements GameBitmapFactory {
 	}
 
 	public Bitmap getPlayerPlaneBitmap() {
-		return BitmapFactory.decodeResource(resources, R.drawable.plane21);
+		return BitmapFactory.decodeResource(resources, R.drawable.plane22);
 	}
 }

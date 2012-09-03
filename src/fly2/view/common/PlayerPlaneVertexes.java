@@ -5,7 +5,7 @@ public final class PlayerPlaneVertexes {
 	private PlayerPlaneVertexes() {
 	}
 
-	public static float[] getVertexes() {
+	public static float[] getVertexes2d() {
 		if (vertexes == null)
 			createFullVertexes();
 

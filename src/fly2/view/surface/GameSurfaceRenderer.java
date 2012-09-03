@@ -10,6 +10,7 @@ import fly2.view.common.MeshFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -17,23 +18,33 @@ import javax.microedition.khronos.opengles.GL10;
 public class GameSurfaceRenderer implements GLSurfaceView.Renderer {
 
 	private GameModel gameModel;
+	private BackgroundView background;
 	private Collection<View> viewCollection;
 	private GameBitmapFactory bitmapFactory;
 	private ViewFactory viewFactory;
 
-	public GameSurfaceRenderer(GameModel gameModel, GameBitmapFactory bitmapFactory) {
-		if (gameModel == null)
-			throw new NullPointerException("gameModel");
-
+	public GameSurfaceRenderer(GameModel gameModel, GameBitmapFactory bitmapFactory, BackgroundView background) {
 		this.gameModel = gameModel;
 		this.bitmapFactory = bitmapFactory;
+		this.background = background;
 		this.viewCollection = new ArrayList<View>();
 	}
 
 	public void onDrawFrame(GL10 gl) {
 		gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		for (View view : viewCollection) {
-			view.draw(gl);
+		background.draw(gl);
+		drawViewsAndRemoveDestroyed(gl);
+	}
+
+	private void drawViewsAndRemoveDestroyed(GL10 gl) {
+		Iterator<View> iter = viewCollection.iterator();
+		while (iter.hasNext()) {
+			View view = iter.next();
+			if (view.isDestroyed() == false) {
+				view.draw(gl);
+			} else {
+				iter.remove();
+			}
 		}
 	}
 
@@ -42,27 +53,26 @@ public class GameSurfaceRenderer implements GLSurfaceView.Renderer {
 		gl.glMatrixMode(GL_PROJECTION);
 		gl.glLoadIdentity();
 		GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 10.0f);
+		GLU.gluLookAt(gl, 7f, 2.0f, 9.0f, 7f, 2.0f, 0f, 0f, 1.0f, 0.0f);
 		gl.glMatrixMode(GL_MODELVIEW);
 		gl.glLoadIdentity();
-		GLU.gluLookAt(gl, 0f, 0.5f, 1.5f, 0f, 0.5f, 0f, 0f, 1.0f, 0.0f);
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		initGLOptions(gl);
+		initGL(gl);
 		createViewFactory(gl);
+		createGameObjectViews();
+	}
+
+	private void createGameObjectViews() {
 		Plane plane = gameModel.getPlayerPlane();
 		PlayerPlaneView playerPlaneView = viewFactory.getPlayerPlaneView(plane);
-		this.viewCollection.add(playerPlaneView);
+		viewCollection.add(playerPlaneView);
 	}
 
-	private void createViewFactory(GL10 gl) {
-		MeshFactory meshFactory = new MeshFactory(gl, bitmapFactory);
-		viewFactory = new ViewFactory(meshFactory);
-	}
-
-	private void initGLOptions(GL10 gl) {
+	private void initGL(GL10 gl) {
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		gl.glClearDepthf(10.0f);
+		gl.glClearDepthf(1.0f);
 		gl.glEnable(GL_DEPTH_TEST);
 		gl.glDepthFunc(GL_LEQUAL);
 		gl.glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -71,6 +81,10 @@ public class GameSurfaceRenderer implements GLSurfaceView.Renderer {
 		gl.glFrontFace(GL_CCW);
 		gl.glEnable(GL_CULL_FACE);
 		gl.glCullFace(GL_BACK);
-		//		gl.glEnable(GL_TEXTURE_2D);
+	}
+
+	private void createViewFactory(GL10 gl) {
+		MeshFactory meshFactory = new MeshFactory(gl, bitmapFactory);
+		viewFactory = new ViewFactory(meshFactory);
 	}
 }

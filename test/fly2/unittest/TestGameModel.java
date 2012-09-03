@@ -4,6 +4,7 @@ import fly2.game.frontend.Bullet;
 import fly2.game.frontend.GameModel;
 import fly2.game.frontend.GameWorld;
 import fly2.game.frontend.Plane;
+import fly2.game.frontend.PlayerPlaneActions;
 
 public class TestGameModel implements GameModel {
 
@@ -30,4 +31,9 @@ public class TestGameModel implements GameModel {
 	public int getBulletsCount() {
 		return 0;
 	}
+
+	public PlayerPlaneActions getPlayerPlaneActions() {
+		return null;
+	}
+	
 }

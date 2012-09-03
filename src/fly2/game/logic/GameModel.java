@@ -5,9 +5,11 @@ import java.util.*;
 public class GameModel implements fly2.game.frontend.GameModel {
 
 	private GameWorld gameWorld;
+	private PlayerPlaneActions playerPlaneActions;
 
 	public GameModel() {
 		gameWorld = new GameWorld(25.0, 100.0);
+		playerPlaneActions = new PlayerPlaneActions(gameWorld.getPlayerPlane());
 	}
 
 	public fly2.game.frontend.GameWorld getWorld() {
@@ -32,5 +34,9 @@ public class GameModel implements fly2.game.frontend.GameModel {
 
 	public int getBulletsCount() {
 		return gameWorld.getBulletsCount();
+	}
+
+	public fly2.game.frontend.PlayerPlaneActions getPlayerPlaneActions() {
+		return playerPlaneActions;
 	}
 }

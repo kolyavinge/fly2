@@ -16,4 +16,6 @@ public interface GameModel {
 	Iterable<Bullet> getBullets();
 
 	int getBulletsCount();
+	
+	PlayerPlaneActions getPlayerPlaneActions();
 }

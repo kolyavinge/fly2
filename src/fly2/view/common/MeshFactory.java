@@ -7,16 +7,10 @@ import javax.microedition.khronos.opengles.GL10;
 public class MeshFactory {
 
 	private GL10 gl;
-	private Mesh playerPlane;
 	private GameBitmapFactory bitmapFactory;
+	private Mesh playerPlane;
 
 	public MeshFactory(GL10 gl, GameBitmapFactory bitmapFactory) {
-		if (gl == null)
-			throw new NullPointerException("gl");
-
-		if (bitmapFactory == null)
-			throw new NullPointerException("bitmapFactory");
-
 		this.gl = gl;
 		this.bitmapFactory = bitmapFactory;
 	}
@@ -31,7 +25,7 @@ public class MeshFactory {
 	private void createPlayerPlaneMesh() {
 		Bitmap bitmap = bitmapFactory.getPlayerPlaneBitmap();
 		int textureId = TextureLoader.fromBitmap(gl, bitmap);
-		playerPlane = new Mesh(PlayerPlaneVertexes.getVertexes(), PlayerPlaneVertexes.getVertexes(), textureId);
+		playerPlane = new Mesh(PlayerPlaneVertexes.getVertexes2d(), PlayerPlaneVertexes.getVertexes2d(), textureId);
 		bitmap.recycle();
 	}
 }
