@@ -4,5 +4,7 @@ import android.graphics.Bitmap;
 
 public interface GameBitmapFactory {
 
+	Bitmap getBackgroundBitmap();
+
 	Bitmap getPlayerPlaneBitmap();
 }

@@ -1,26 +1,34 @@
 package fly2.view.surface;
 
 import fly2.game.frontend.Plane;
-import fly2.view.common.Mesh;
+import fly2.view.common.Mesh2d;
 import javax.microedition.khronos.opengles.GL10;
 
 public class PlayerPlaneView implements View<Plane> {
 
 	private Plane plane;
-	private Mesh mesh;
+	private Mesh2d mesh;
 
-	public PlayerPlaneView(Plane plane, Mesh mesh) {
+	public PlayerPlaneView(Plane plane, Mesh2d mesh) {
 		this.plane = plane;
 		this.mesh = mesh;
 	}
 
 	public void draw(GL10 gl) {
 		gl.glPushMatrix();
+		
 		double x = plane.getX() + plane.getWidth();
 		double y = plane.getY() + plane.getHeight();
 		gl.glTranslatef((float) x, (float) y, 0f);
+		
 		gl.glRotatef(180.0f, 0f, 0f, 1f);
+		
+		float width = (float) plane.getWidth();
+		float height = (float) plane.getHeight();
+		gl.glScalef(width, height, 0f);
+		
 		mesh.draw(gl);
+		
 		gl.glPopMatrix();
 	}
 

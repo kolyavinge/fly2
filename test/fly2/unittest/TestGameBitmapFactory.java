@@ -6,6 +6,10 @@ import fly2.view.common.GameBitmapFactory;
 
 public class TestGameBitmapFactory implements GameBitmapFactory {
 
+	public Bitmap getBackgroundBitmap() {
+		return BitmapFactory.decodeFile("fly2/test/test_image.png");
+	}
+
 	public Bitmap getPlayerPlaneBitmap() {
 		return BitmapFactory.decodeFile("fly2/test/test_image.png");
 	}

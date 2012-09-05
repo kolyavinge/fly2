@@ -23,17 +23,20 @@ public class GameSurfaceRenderer implements GLSurfaceView.Renderer {
 	private GameBitmapFactory bitmapFactory;
 	private ViewFactory viewFactory;
 
-	public GameSurfaceRenderer(GameModel gameModel, GameBitmapFactory bitmapFactory, BackgroundView background) {
+	public GameSurfaceRenderer(GameModel gameModel, GameBitmapFactory bitmapFactory) {
 		this.gameModel = gameModel;
 		this.bitmapFactory = bitmapFactory;
-		this.background = background;
 		this.viewCollection = new ArrayList<View>();
 	}
 
 	public void onDrawFrame(GL10 gl) {
 		gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		gl.glPushMatrix();
+		float shiftX = (float) gameModel.getWorld().getWidth() / 2f;
+		gl.glTranslatef(-shiftX, 0f, 0f);
 		background.draw(gl);
 		drawViewsAndRemoveDestroyed(gl);
+		gl.glPopMatrix();
 	}
 
 	private void drawViewsAndRemoveDestroyed(GL10 gl) {
@@ -52,22 +55,17 @@ public class GameSurfaceRenderer implements GLSurfaceView.Renderer {
 		gl.glViewport(0, 0, width, height);
 		gl.glMatrixMode(GL_PROJECTION);
 		gl.glLoadIdentity();
-		GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 10.0f);
-		GLU.gluLookAt(gl, 7f, 2.0f, 9.0f, 7f, 2.0f, 0f, 0f, 1.0f, 0.0f);
+		GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 100.0f);
+		GLU.gluLookAt(gl, 0f, 4f, 13.0f, 0f, 4f, 0f, 0f, 1f, 0f);
 		gl.glMatrixMode(GL_MODELVIEW);
 		gl.glLoadIdentity();
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		initGL(gl);
+		createBackground(gl);
 		createViewFactory(gl);
 		createGameObjectViews();
-	}
-
-	private void createGameObjectViews() {
-		Plane plane = gameModel.getPlayerPlane();
-		PlayerPlaneView playerPlaneView = viewFactory.getPlayerPlaneView(plane);
-		viewCollection.add(playerPlaneView);
 	}
 
 	private void initGL(GL10 gl) {
@@ -83,8 +81,25 @@ public class GameSurfaceRenderer implements GLSurfaceView.Renderer {
 		gl.glCullFace(GL_BACK);
 	}
 
+	private void createGameObjectViews() {
+		Plane plane = gameModel.getPlayerPlane();
+		PlayerPlaneView playerPlaneView = viewFactory.getPlayerPlaneView(plane);
+		viewCollection.add(playerPlaneView);
+	}
+
 	private void createViewFactory(GL10 gl) {
 		MeshFactory meshFactory = new MeshFactory(gl, bitmapFactory);
 		viewFactory = new ViewFactory(meshFactory);
+	}
+
+	private void createBackground(GL10 gl) {
+		float width = (float) gameModel.getWorld().getWidth();
+		float height = (float) gameModel.getWorld().getHeight();
+
+		this.background = new FlatBackgroundView(
+				gl,
+				bitmapFactory.getBackgroundBitmap(),
+				width,
+				height);
 	}
 }

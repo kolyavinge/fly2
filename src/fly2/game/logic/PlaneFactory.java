@@ -17,7 +17,7 @@ public class PlaneFactory {
 		Weapon gun = weaponFactory.makeGun();
 
 		Plane player = new Plane(gun);
-		player.setSize(5.0, 6.0);
+		player.setSize(3.5, 3.0);
 		player.setDirection(UP);
 		player.setHealth(10);
 
@@ -31,7 +31,7 @@ public class PlaneFactory {
 		Weapon gun = weaponFactory.makeGun();
 
 		Plane enemy = new Plane(gun);
-		enemy.setSize(5.0, 6.0);
+		enemy.setSize(3.5, 3.0);
 		enemy.setDirection(DOWN);
 		enemy.setHealth(1);
 

@@ -8,14 +8,14 @@ public class MeshFactory {
 
 	private GL10 gl;
 	private GameBitmapFactory bitmapFactory;
-	private Mesh playerPlane;
+	private Mesh2d playerPlane;
 
 	public MeshFactory(GL10 gl, GameBitmapFactory bitmapFactory) {
 		this.gl = gl;
 		this.bitmapFactory = bitmapFactory;
 	}
 
-	public Mesh getPlayerPlaneMesh() {
+	public Mesh2d getPlayerPlaneMesh() {
 		if (playerPlane == null)
 			createPlayerPlaneMesh();
 
@@ -25,7 +25,7 @@ public class MeshFactory {
 	private void createPlayerPlaneMesh() {
 		Bitmap bitmap = bitmapFactory.getPlayerPlaneBitmap();
 		int textureId = TextureLoader.fromBitmap(gl, bitmap);
-		playerPlane = new Mesh(PlayerPlaneVertexes.getVertexes2d(), PlayerPlaneVertexes.getVertexes2d(), textureId);
+		playerPlane = new Mesh2d(PlayerPlaneVertexes.getVertexes2d(), PlayerPlaneVertexes.getVertexes2d(), textureId);
 		bitmap.recycle();
 	}
 }

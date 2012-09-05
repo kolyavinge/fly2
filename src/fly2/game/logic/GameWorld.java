@@ -2,6 +2,7 @@ package fly2.game.logic;
 
 import fly2.phyzix.World;
 import fly2.phyzix.WorldItem;
+import fly2.phyzix.ext.ReturnedOutOfWorldStrategy;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,12 +15,28 @@ public final class GameWorld implements fly2.game.frontend.GameWorld {
 	private PlaneFactory planeFactory;
 
 	public GameWorld(double width, double height) {
+		initWorld(width, height);
+		initPlaneFactory();
+		initPlayerPlane();
+	}
+
+	private void initPlayerPlane() {
+		playerPlane = planeFactory.makePlayer();
+		playerPlane.setPosition(
+				(world.getWidth() - playerPlane.getWidth()) / 2.0,
+				0.0);
+		world.addItem(playerPlane);
+		world.registerOutOfWorldStrategy(playerPlane, new ReturnedOutOfWorldStrategy<WorldItem>());
+	}
+
+	private void initPlaneFactory() {
+		planeFactory = new PlaneFactory(new WeaponFactory(world));
+	}
+
+	private void initWorld(double width, double height) {
 		world = new World(width, height);
 		world.registerImpactStrategy(new PlaneBulletImpactStrategy());
 		world.registerImpactStrategy(new PlanePlaneImpactStrategy());
-		planeFactory = new PlaneFactory(new WeaponFactory(world));
-		playerPlane = planeFactory.makePlayer();
-		world.addItem(playerPlane);
 	}
 
 	public double getWidth() {

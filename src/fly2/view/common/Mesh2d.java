@@ -7,14 +7,14 @@ import java.nio.Buffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public class Mesh {
+public class Mesh2d {
 
 	private float[] vertexes;
 	private int textureId;
 	private Buffer vertexBuffer;
 	private Buffer textureBuffer;
 
-	public Mesh(float[] vertexes, float[] textureVertexes, int textureId) {
+	public Mesh2d(float[] vertexes, float[] textureVertexes, int textureId) {
 		this.vertexes = vertexes;
 		this.textureId = textureId;
 		vertexBuffer = BufferBuilder.asFloat(vertexes);

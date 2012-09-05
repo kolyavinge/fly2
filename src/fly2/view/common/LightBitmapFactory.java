@@ -13,6 +13,10 @@ public class LightBitmapFactory implements GameBitmapFactory {
 		this.resources = resources;
 	}
 
+	public Bitmap getBackgroundBitmap() {
+		return BitmapFactory.decodeResource(resources, R.drawable.back_1);
+	}
+
 	public Bitmap getPlayerPlaneBitmap() {
 		return BitmapFactory.decodeResource(resources, R.drawable.plane22);
 	}

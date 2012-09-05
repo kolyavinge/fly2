@@ -1,7 +1,7 @@
 package fly2.view.surface;
 
 import fly2.game.frontend.Plane;
-import fly2.view.common.Mesh;
+import fly2.view.common.Mesh2d;
 import fly2.view.common.MeshFactory;
 
 public class ViewFactory {
@@ -16,7 +16,7 @@ public class ViewFactory {
 	}
 
 	public PlayerPlaneView getPlayerPlaneView(Plane plane) {
-		Mesh mesh = meshFactory.getPlayerPlaneMesh();
+		Mesh2d mesh = meshFactory.getPlayerPlaneMesh();
 		return new PlayerPlaneView(plane, mesh);
 	}
 }

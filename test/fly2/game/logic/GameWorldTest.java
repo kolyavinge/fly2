@@ -88,6 +88,34 @@ public class GameWorldTest extends TestCase {
 		assertEquals(0, gameWorld.getBulletsCount());
 	}
 
+	public void testPlayerPlaneOutOfWorldLeft() {
+		Plane player = gameWorld.getPlayerPlane();
+		player.setPosition(-1.0, 1.0);
+		player.setSpeed(0.0);
+
+		gameWorld.update();
+
+		assertEquals(0.0, player.getX(), 0.001);
+		assertEquals(1.0, player.getY(), 0.001);
+	}
+
+	public void testPlayerPlaneOutOfWorldRight() {
+		Plane player = gameWorld.getPlayerPlane();
+		player.setPosition(gameWorld.getWidth() + 10.0, 1.0);
+		player.setSpeed(0.0);
+
+		gameWorld.update();
+
+		assertEquals(gameWorld.getWidth() - player.getWidth(), player.getX(), 0.001);
+		assertEquals(1.0, player.getY(), 0.001);
+	}
+	
+	public void testStartPlayerPosition() {
+		Plane player = gameWorld.getPlayerPlane();
+		assertEquals(worldWidth / 2.0, player.getMiddleX(), 0.001);
+		assertEquals(0.0, player.getY(), 0.001);
+	}
+
 	public void testGetEnemyPlanes() {
 		assertEquals(0, gameWorld.getEnemyPlanes().size());
 		assertEquals(0, gameWorld.getEnemyPlanesCount());
