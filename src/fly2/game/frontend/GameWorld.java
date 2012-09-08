@@ -5,6 +5,4 @@ public interface GameWorld {
 	double getWidth();
 	
 	double getHeight();
-	
-	void update();
 }

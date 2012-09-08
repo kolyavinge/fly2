@@ -1,4 +1,4 @@
-package fly2.view.common;
+package fly2.game.view;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;

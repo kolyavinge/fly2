@@ -1,8 +1,8 @@
-package fly2.view.surface;
+package fly2.game.view;
 
 import android.graphics.Bitmap;
-import fly2.view.common.Mesh2d;
-import fly2.view.common.TextureLoader;
+import fly2.view.Mesh2d;
+import fly2.view.TextureLoader;
 
 import javax.microedition.khronos.opengles.GL10;
 

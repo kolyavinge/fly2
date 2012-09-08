@@ -18,4 +18,6 @@ public interface GameModel {
 	int getBulletsCount();
 	
 	PlayerPlaneActions getPlayerPlaneActions();
+	
+	void update();
 }

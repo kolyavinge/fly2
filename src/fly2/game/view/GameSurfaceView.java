@@ -1,11 +1,9 @@
-package fly2.view.surface;
+package fly2.game.view;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.view.KeyEvent;
 import fly2.game.frontend.GameModel;
-import fly2.view.common.GameBitmapFactory;
-import fly2.view.common.LightBitmapFactory;
 
 public class GameSurfaceView extends GLSurfaceView {
 

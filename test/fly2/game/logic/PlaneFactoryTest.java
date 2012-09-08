@@ -21,6 +21,7 @@ public class PlaneFactoryTest extends TestCase {
 		assertEquals(3.0, player.getHeight());
 		assertEquals(UP, player.getDirection());
 		assertEquals(10, player.getHealth());
+		assertEquals(0.01, player.getSpeed());
 		Weapon weapon = player.getWeapon();
 		assertNotNull(weapon);
 		assertEquals(UP, weapon.getBulletDirection());
@@ -36,6 +37,7 @@ public class PlaneFactoryTest extends TestCase {
 		assertEquals(3.0, enemy.getHeight());
 		assertEquals(DOWN, enemy.getDirection());
 		assertEquals(1, enemy.getHealth());
+		assertEquals(0.01, enemy.getSpeed());
 		Weapon weapon = enemy.getWeapon();
 		assertNotNull(weapon);
 		assertEquals(DOWN, weapon.getBulletDirection());

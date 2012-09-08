@@ -1,8 +1,8 @@
-package fly2.view.surface;
+package fly2.game.view;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public interface View<TGameModelObject> {
+public interface GameObjectView<TGameModelObject> {
 
 	TGameModelObject getGameModelObject();
 	

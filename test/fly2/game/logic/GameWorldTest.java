@@ -110,6 +110,15 @@ public class GameWorldTest extends TestCase {
 		assertEquals(1.0, player.getY(), 0.001);
 	}
 	
+	public void testPlayerPlaneFly() {
+		Plane player = gameWorld.getPlayerPlane();
+		assertTrue(player.getSpeed() > 0.0);
+		double oldY = player.getY();
+		gameWorld.update();
+		double newY = player.getY();
+		assertEquals(newY - oldY, player.getSpeed(), 0.001);
+	}
+	
 	public void testStartPlayerPosition() {
 		Plane player = gameWorld.getPlayerPlane();
 		assertEquals(worldWidth / 2.0, player.getMiddleX(), 0.001);

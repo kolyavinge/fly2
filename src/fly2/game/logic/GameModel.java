@@ -12,6 +12,10 @@ public class GameModel implements fly2.game.frontend.GameModel {
 		playerPlaneActions = new PlayerPlaneActions(gameWorld.getPlayerPlane());
 	}
 
+	public void update() {
+		gameWorld.update();
+	}
+
 	public fly2.game.frontend.GameWorld getWorld() {
 		return gameWorld;
 	}

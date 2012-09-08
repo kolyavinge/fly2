@@ -1,12 +1,10 @@
-package fly2.view.surface;
+package fly2.game.view;
 
 import static javax.microedition.khronos.opengles.GL10.*;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import fly2.game.frontend.GameModel;
 import fly2.game.frontend.Plane;
-import fly2.view.common.GameBitmapFactory;
-import fly2.view.common.MeshFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,30 +17,42 @@ public class GameSurfaceRenderer implements GLSurfaceView.Renderer {
 
 	private GameModel gameModel;
 	private BackgroundView background;
-	private Collection<View> viewCollection;
+	private Collection<GameObjectView> viewCollection;
 	private GameBitmapFactory bitmapFactory;
-	private ViewFactory viewFactory;
+	private PlayerPlaneView playerPlaneView;
+	private GameObjectViewFactory viewFactory;
+	private Camera camera;
 
 	public GameSurfaceRenderer(GameModel gameModel, GameBitmapFactory bitmapFactory) {
 		this.gameModel = gameModel;
 		this.bitmapFactory = bitmapFactory;
-		this.viewCollection = new ArrayList<View>();
+		this.viewCollection = new ArrayList<GameObjectView>();
 	}
 
 	public void onDrawFrame(GL10 gl) {
 		gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		gl.glPushMatrix();
+
 		float shiftX = (float) gameModel.getWorld().getWidth() / 2f;
 		gl.glTranslatef(-shiftX, 0f, 0f);
+
+		camera.look();
+		GLU.gluLookAt(gl,
+				(float) camera.getLookX(), (float) camera.getLookY(), 13f,
+				(float) camera.getLookX(), (float) camera.getLookY(), 0f,
+				0f, 1f, 0f);
+
 		background.draw(gl);
 		drawViewsAndRemoveDestroyed(gl);
+
 		gl.glPopMatrix();
 	}
 
 	private void drawViewsAndRemoveDestroyed(GL10 gl) {
-		Iterator<View> iter = viewCollection.iterator();
+		Iterator<GameObjectView> iter = viewCollection.iterator();
 		while (iter.hasNext()) {
-			View view = iter.next();
+			GameObjectView view = iter.next();
 			if (view.isDestroyed() == false) {
 				view.draw(gl);
 			} else {
@@ -56,7 +66,6 @@ public class GameSurfaceRenderer implements GLSurfaceView.Renderer {
 		gl.glMatrixMode(GL_PROJECTION);
 		gl.glLoadIdentity();
 		GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 100.0f);
-		GLU.gluLookAt(gl, 0f, 4f, 13.0f, 0f, 4f, 0f, 0f, 1f, 0f);
 		gl.glMatrixMode(GL_MODELVIEW);
 		gl.glLoadIdentity();
 	}
@@ -66,6 +75,7 @@ public class GameSurfaceRenderer implements GLSurfaceView.Renderer {
 		createBackground(gl);
 		createViewFactory(gl);
 		createGameObjectViews();
+		createCamera();
 	}
 
 	private void initGL(GL10 gl) {
@@ -83,20 +93,27 @@ public class GameSurfaceRenderer implements GLSurfaceView.Renderer {
 
 	private void createGameObjectViews() {
 		Plane plane = gameModel.getPlayerPlane();
-		PlayerPlaneView playerPlaneView = viewFactory.getPlayerPlaneView(plane);
+		playerPlaneView = viewFactory.getPlayerPlaneView(plane);
 		viewCollection.add(playerPlaneView);
 	}
 
 	private void createViewFactory(GL10 gl) {
-		MeshFactory meshFactory = new MeshFactory(gl, bitmapFactory);
-		viewFactory = new ViewFactory(meshFactory);
+		GameObjectMeshFactory meshFactory = new GameObjectMeshFactory(gl, bitmapFactory);
+		viewFactory = new GameObjectViewFactory(meshFactory);
+	}
+
+	private void createCamera() {
+		camera = new Camera();
+		camera.setCameraWidth(10.0);
+		camera.setWorldWidth(gameModel.getWorld().getWidth());
+		camera.setObservableObject(playerPlaneView);
 	}
 
 	private void createBackground(GL10 gl) {
 		float width = (float) gameModel.getWorld().getWidth();
 		float height = (float) gameModel.getWorld().getHeight();
 
-		this.background = new FlatBackgroundView(
+		background = new FlatBackgroundView(
 				gl,
 				bitmapFactory.getBackgroundBitmap(),
 				width,

@@ -1,4 +1,4 @@
-package fly2.view.common;
+package fly2.view;
 
 import static javax.microedition.khronos.opengles.GL10.*;
 import fly2.common.BufferBuilder;

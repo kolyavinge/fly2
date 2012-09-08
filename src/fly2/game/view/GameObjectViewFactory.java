@@ -1,14 +1,13 @@
-package fly2.view.surface;
+package fly2.game.view;
 
 import fly2.game.frontend.Plane;
-import fly2.view.common.Mesh2d;
-import fly2.view.common.MeshFactory;
+import fly2.view.Mesh2d;
 
-public class ViewFactory {
+public class GameObjectViewFactory {
 
-	private MeshFactory meshFactory;
+	private GameObjectMeshFactory meshFactory;
 
-	public ViewFactory(MeshFactory meshFactory) {
+	public GameObjectViewFactory(GameObjectMeshFactory meshFactory) {
 		if (meshFactory == null)
 			throw new NullPointerException("meshFactory");
 

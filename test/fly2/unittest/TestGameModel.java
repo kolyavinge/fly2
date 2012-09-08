@@ -12,6 +12,9 @@ public class TestGameModel implements GameModel {
 		return null;
 	}
 
+	public void update() {
+	}
+
 	public Iterable<Plane> getEnemyPlanes() {
 		return null;
 	}

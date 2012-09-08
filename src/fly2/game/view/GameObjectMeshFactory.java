@@ -1,16 +1,18 @@
-package fly2.view.common;
+package fly2.game.view;
 
+import fly2.view.Mesh2d;
+import fly2.view.TextureLoader;
 import android.graphics.Bitmap;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public class MeshFactory {
+public class GameObjectMeshFactory {
 
 	private GL10 gl;
 	private GameBitmapFactory bitmapFactory;
 	private Mesh2d playerPlane;
 
-	public MeshFactory(GL10 gl, GameBitmapFactory bitmapFactory) {
+	public GameObjectMeshFactory(GL10 gl, GameBitmapFactory bitmapFactory) {
 		this.gl = gl;
 		this.bitmapFactory = bitmapFactory;
 	}

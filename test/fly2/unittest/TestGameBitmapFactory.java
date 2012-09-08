@@ -2,7 +2,7 @@ package fly2.unittest;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import fly2.view.common.GameBitmapFactory;
+import fly2.game.view.GameBitmapFactory;
 
 public class TestGameBitmapFactory implements GameBitmapFactory {
 

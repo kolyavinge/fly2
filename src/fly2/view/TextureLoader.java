@@ -1,4 +1,4 @@
-package fly2.view.common;
+package fly2.view;
 
 import android.graphics.Bitmap;
 import android.opengl.GLUtils;
