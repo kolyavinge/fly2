@@ -15,8 +15,8 @@ public class Fly2Activity extends Activity {
 		super.onCreate(savedInstanceState);
 		GameModel gameModel = GameModelFactory.getInstance().createModel();
 		GameSurfaceView gameView = new GameSurfaceView(gameModel, this);
-		gameTimer = new GameTimer(gameModel, gameView);
 		setContentView(gameView);
+		gameTimer = new GameTimer(gameModel);
 		gameTimer.run();
 	}
 }
