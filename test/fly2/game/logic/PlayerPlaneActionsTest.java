@@ -5,12 +5,14 @@ import junit.framework.TestCase;
 
 public class PlayerPlaneActionsTest extends TestCase {
 
+	private GameWorld gameWorld;
 	private Plane plane;
 	private PlayerPlaneActions actions;
 
 	public void setUp() {
-		plane = new Plane();
-		actions = new PlayerPlaneActions(plane);
+		gameWorld = new GameWorld(100, 100);
+		plane = gameWorld.getPlayerPlane();
+		actions = new PlayerPlaneActions(gameWorld, plane);
 	}
 
 	public void testMoveLeft() {
@@ -27,9 +29,31 @@ public class PlayerPlaneActionsTest extends TestCase {
 		assertEquals(20.0, plane.getY(), 0.001);
 	}
 
+	public void testMoveLeftOutOfWorld() {
+		plane.setPosition(0, 20.0);
+		actions.moveLeft();
+		assertEquals(0.0, plane.getX(), 0.001);
+		assertEquals(20.0, plane.getY(), 0.001);
+	}
+
+	public void testMoveRightOutOfWorld() {
+		plane.setPosition(gameWorld.getWidth() - plane.getWidth(), 20.0);
+		actions.moveRight();
+		assertEquals(gameWorld.getWidth() - plane.getWidth(), plane.getX(), 0.001);
+		assertEquals(20.0, plane.getY(), 0.001);
+	}
+	
+	public void testGameWorldPlane() {
+		try {
+			new PlayerPlaneActions(null, new Plane());
+			fail();
+		} catch (NullPointerException exp) {
+		}
+	}
+
 	public void testNullPlane() {
 		try {
-			new PlayerPlaneActions(null);
+			new PlayerPlaneActions(gameWorld, null);
 			fail();
 		} catch (NullPointerException exp) {
 		}

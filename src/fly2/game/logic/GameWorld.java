@@ -98,6 +98,10 @@ public final class GameWorld implements fly2.game.frontend.GameWorld {
 
 		return count;
 	}
+	
+	public void checkOutOfWorld(Plane plane) {
+		world.activateOutOfWorld(plane);
+	}
 
 	public void update() {
 		world.updateItems();

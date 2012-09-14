@@ -9,7 +9,7 @@ public class GameModel implements fly2.game.frontend.GameModel {
 
 	public GameModel() {
 		gameWorld = new GameWorld(20.0, 50.0);
-		playerPlaneActions = new PlayerPlaneActions(gameWorld.getPlayerPlane());
+		playerPlaneActions = new PlayerPlaneActions(gameWorld, gameWorld.getPlayerPlane());
 	}
 
 	public void update() {

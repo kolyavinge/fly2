@@ -3,8 +3,7 @@ package fly2.game.enemy;
 import static fly2.common.Direction.*;
 import android.test.InstrumentationTestCase;
 import fly2.common.Direction;
-import fly2.game.logic.Plane;
-
+import fly2.game.logic.*;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -14,14 +13,14 @@ public class EnemyBrainTest extends InstrumentationTestCase {
 	private static final int NO_FIRE = 2;
 
 	private EnemyBrain brain;
-	private fly2.game.logic.GameWorld gameWorld;
+	private GameWorld gameWorld;
 	private Plane player;
 	private Plane enemy;
 	private StepResult stepResult;
 
 	public void setUp() {
 		stepResult = new StepResult();
-		gameWorld = new fly2.game.logic.GameWorld(100, 200);
+		gameWorld = new GameWorld(100, 200);
 		player = gameWorld.getPlayerPlane();
 		brain = new EnemyBrain(getInstrumentation().getContext());
 	}
