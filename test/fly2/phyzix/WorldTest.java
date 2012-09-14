@@ -1,13 +1,9 @@
 package fly2.phyzix;
 
-import java.util.*;
+import fly2.unittest.UpdateableWorldItem;
+import fly2.unittest.WorldTestCase;
 
-import fly2.phyzix.ImpactChecker;
-import fly2.phyzix.NoSuchWorldItemImpactStrategy;
-import fly2.phyzix.OutOfWorldStrategy;
-import fly2.phyzix.World;
-import fly2.phyzix.WorldItem;
-import fly2.unittest.*;
+import java.util.Iterator;
 
 public class WorldTest extends WorldTestCase {
 
@@ -102,7 +98,7 @@ public class WorldTest extends WorldTestCase {
 		assertFalse(world.inWorld(item));
 	}
 
-	public void testOutOfWorld() {
+	public void testActivateOutOfWorldItems() {
 		final boolean flag[] = new boolean[] { false };
 		OutOfWorldStrategy strategy = new OutOfWorldStrategy<WorldItem>() {
 			public void activate(WorldItem item, double worldWidth, double worldHeight) {
@@ -115,16 +111,42 @@ public class WorldTest extends WorldTestCase {
 		assertTrue(flag[0]);
 	}
 
-	public void testOutOfWorldWithoutStrategies() {
+	public void testActivateOutOfWorldItemsWithoutStrategies() {
 		WorldItem itemInWorld = addWorldItem(10.0, 10.0, 1.0, 1.0);
-		addWorldItem(-10, 20, 1, 1);
-		addWorldItem(10, -20, 1, 1);
-		addWorldItem(10, 20, 30000, 1);
-		addWorldItem(10, 20, 1, 400000);
+		WorldItem item1 = addWorldItem(-10, 20, 1, 1);
+		WorldItem item2 = addWorldItem(10, -20, 1, 1);
+		WorldItem item3 = addWorldItem(10, 20, 30000, 1);
+		WorldItem item4 = addWorldItem(10, 20, 1, 400000);
 		assertEquals(5, world.getItemsCount());
+		
 		world.activateOutOfWorldItems();
-		assertEquals(1, world.getItemsCount());
-		assertSame(itemInWorld, world.getItems().iterator().next());
+		
+		assertEquals(5, world.getItemsCount());
+		assertFalse(itemInWorld.isDestroyed());
+		assertTrue(item1.isDestroyed());
+		assertTrue(item2.isDestroyed());
+		assertTrue(item3.isDestroyed());
+		assertTrue(item4.isDestroyed());
+	}
+	
+	public void testActiveOutOfWorld() {
+		WorldItem itemInWorld = addWorldItem(10.0, 10.0, 1.0, 1.0);
+		WorldItem item1 = addWorldItem(-10, 20, 1, 1);
+		WorldItem item2 = addWorldItem(10, -20, 1, 1);
+		WorldItem item3 = addWorldItem(10, 20, 30000, 1);
+		WorldItem item4 = addWorldItem(10, 20, 1, 400000);
+		
+		world.activateOutOfWorld(itemInWorld);
+		world.activateOutOfWorld(item1);
+		world.activateOutOfWorld(item2);
+		world.activateOutOfWorld(item3);
+		world.activateOutOfWorld(item4);
+		
+		assertFalse(itemInWorld.isDestroyed());
+		assertTrue(item1.isDestroyed());
+		assertTrue(item2.isDestroyed());
+		assertTrue(item3.isDestroyed());
+		assertTrue(item4.isDestroyed());
 	}
 
 	public void testUpdateItems() {
@@ -195,9 +217,9 @@ public class WorldTest extends WorldTestCase {
 
 	public void testImpactWithDestoyedItem() {
 		// один из объектов уничтожен
-		addDestroyableWorldItem(11, 11, 1, 1).destroy();
+		addWorldItem(11, 11, 1, 1).destroy();
 		addWorldItem(10, 10, 1, 1);
-		world.registerImpactStrategy(new DestroyableWorldItemImpactStrategy());
+		world.registerImpactStrategy(new TestImpactStrategy());
 		activateImpactFlag = false;
 		world.setRaiseErrorIfImpactStrategyNotFound(true);
 		world.activateItemsImpact();
@@ -225,9 +247,9 @@ public class WorldTest extends WorldTestCase {
 	}
 
 	public void testRemoveAllDestroyedItems() {
-		DestroyableWorldItem item1 = addDestroyableWorldItem();
+		WorldItem item1 = addWorldItem();
 		item1.destroy();
-		DestroyableWorldItem item2 = addDestroyableWorldItem();
+		WorldItem item2 = addWorldItem();
 		assertEquals(2, world.getItemsCount());
 		world.removeDestroyedItems();
 		assertEquals(1, world.getItemsCount());

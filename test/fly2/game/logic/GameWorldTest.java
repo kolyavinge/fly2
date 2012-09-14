@@ -1,6 +1,7 @@
 package fly2.game.logic;
 
 import junit.framework.TestCase;
+import static fly2.common.Direction.*;
 
 public class GameWorldTest extends TestCase {
 
@@ -92,9 +93,7 @@ public class GameWorldTest extends TestCase {
 		Plane player = gameWorld.getPlayerPlane();
 		player.setPosition(-1.0, 1.0);
 		player.setSpeed(0.0);
-
 		gameWorld.update();
-
 		assertEquals(0.0, player.getX(), 0.001);
 		assertEquals(1.0, player.getY(), 0.001);
 	}
@@ -103,22 +102,51 @@ public class GameWorldTest extends TestCase {
 		Plane player = gameWorld.getPlayerPlane();
 		player.setPosition(gameWorld.getWidth() + 10.0, 1.0);
 		player.setSpeed(0.0);
-
 		gameWorld.update();
-
 		assertEquals(gameWorld.getWidth() - player.getWidth(), player.getX(), 0.001);
 		assertEquals(1.0, player.getY(), 0.001);
 	}
-	
+
+	public void testEnemyPlaneOutOfWorldLeft() {
+		Plane enemy = gameWorld.createEnemyPlane();
+		enemy.setPosition(-1.0, 1.0);
+		enemy.setSpeed(0.0);
+		gameWorld.update();
+		assertEquals(0.0, enemy.getX(), 0.001);
+		assertEquals(1.0, enemy.getY(), 0.001);
+	}
+
+	public void testEnemyPlaneOutOfWorldRight() {
+		Plane enemy = gameWorld.createEnemyPlane();
+		enemy.setPosition(gameWorld.getWidth() + 10.0, 1.0);
+		enemy.setSpeed(0.0);
+		gameWorld.update();
+		assertEquals(gameWorld.getWidth() - enemy.getWidth(), enemy.getX(), 0.001);
+		assertEquals(1.0, enemy.getY(), 0.001);
+	}
+
 	public void testPlayerPlaneFly() {
 		Plane player = gameWorld.getPlayerPlane();
 		assertTrue(player.getSpeed() > 0.0);
+		assertEquals(UP, player.getDirection());
 		double oldY = player.getY();
 		gameWorld.update();
 		double newY = player.getY();
 		assertEquals(newY - oldY, player.getSpeed(), 0.001);
 	}
-	
+
+	public void testEnemyPlaneFly() {
+		Plane enemy = gameWorld.createEnemyPlane();
+		enemy.setPosition(0.0, 10.0);
+		assertTrue(enemy.getSpeed() > 0.0);
+		assertEquals(DOWN, enemy.getDirection());
+		double oldY = enemy.getY();
+		gameWorld.update();
+		double newY = enemy.getY();
+		// бот летит вниз => разность (newY - oldY) будет отрицательной
+		assertEquals(newY - oldY, -enemy.getSpeed(), 0.001);
+	}
+
 	public void testStartPlayerPosition() {
 		Plane player = gameWorld.getPlayerPlane();
 		assertEquals(worldWidth / 2.0, player.getMiddleX(), 0.001);

@@ -24,22 +24,6 @@ public class WorldTestCase extends TestCase {
 		return item;
 	}
 
-	protected DestroyableWorldItem addDestroyableWorldItem() {
-		DestroyableWorldItem item = new DestroyableWorldItem();
-		world.addItem(item);
-
-		return item;
-	}
-
-	protected DestroyableWorldItem addDestroyableWorldItem(double x, double y, double width, double height) {
-		DestroyableWorldItem item = new DestroyableWorldItem();
-		item.setPosition(x, y);
-		item.setSize(width, height);
-		world.addItem(item);
-
-		return item;
-	}
-
 	protected WorldItem addWorldItem(double x, double y, double width, double height) {
 		WorldItem item = new WorldItem();
 		item.setPosition(x, y);
@@ -47,6 +31,10 @@ public class WorldTestCase extends TestCase {
 		world.addItem(item);
 
 		return item;
+	}
+
+	protected WorldItem addWorldItem() {
+		return addWorldItem(0, 0, 1, 1);
 	}
 
 	public class TestImpactStrategy implements ImpactStrategy<WorldItem, WorldItem> {
@@ -60,21 +48,6 @@ public class WorldTestCase extends TestCase {
 		}
 
 		public void activateImpact(WorldItem left, WorldItem right) {
-			activateImpactFlag = true;
-		}
-	}
-
-	public class DestroyableWorldItemImpactStrategy implements ImpactStrategy<DestroyableWorldItem, WorldItem> {
-
-		public Class<DestroyableWorldItem> getFirstObjectClass() {
-			return DestroyableWorldItem.class;
-		}
-
-		public Class<WorldItem> getSecondObjectClass() {
-			return WorldItem.class;
-		}
-
-		public void activateImpact(DestroyableWorldItem left, WorldItem right) {
 			activateImpactFlag = true;
 		}
 	}

@@ -3,9 +3,6 @@ package fly2.phyzix;
 import java.util.*;
 import fly2.common.*;
 
-/**
- * Игровой мир. Обновляет объекты и запускает логику соударения.
- */
 public final class World implements WorldItemCollection {
 
 	private double width, height;
@@ -72,8 +69,14 @@ public final class World implements WorldItemCollection {
 	public void activateItemsImpact() {
 		Collection<WorldItemTuple> impactedItems = impactChecker.checkImpact(worldItems);
 		for (WorldItemTuple t : impactedItems) {
-			if (notDestroyed(t.getFirst()) && notDestroyed(t.getSecond()) && inWorld(t.getFirst()) && inWorld(t.getSecond()))
+			WorldItem first = t.getFirst();
+			WorldItem second = t.getSecond();
+			if (first.isDestroyed() == false &&
+					second.isDestroyed() == false &&
+					inWorld(first) &&
+					inWorld(second)) {
 				activateImpactStrategyOrRaiseError(t.getFirst(), t.getSecond());
+			}
 		}
 	}
 
@@ -97,7 +100,7 @@ public final class World implements WorldItemCollection {
 		Iterator<WorldItem> iterator = worldItems.iterator();
 		while (iterator.hasNext()) {
 			WorldItem item = iterator.next();
-			if (isDestroyed(item))
+			if (item.isDestroyed())
 				iterator.remove();
 		}
 	}
@@ -106,12 +109,16 @@ public final class World implements WorldItemCollection {
 		Iterator<WorldItem> iterator = worldItems.iterator();
 		while (iterator.hasNext()) {
 			WorldItem item = iterator.next();
-			if (inWorld(item) == false) {
-				if (outOfWorldStrategies.containsKey(item)) {
-					outOfWorldStrategies.get(item).activate(item, width, height);
-				} else {
-					iterator.remove();
-				}
+			activateOutOfWorld(item);
+		}
+	}
+
+	public void activateOutOfWorld(WorldItem item) {
+		if (inWorld(item) == false) {
+			if (outOfWorldStrategies.containsKey(item)) {
+				outOfWorldStrategies.get(item).activate(item, width, height);
+			} else {
+				item.destroy();
 			}
 		}
 	}
@@ -120,13 +127,5 @@ public final class World implements WorldItemCollection {
 		return Geometry.innerRect(
 				0.0, 0.0, width, height,
 				item.getX(), item.getY(), item.getWidth(), item.getHeight());
-	}
-
-	private boolean notDestroyed(WorldItem item) {
-		return isDestroyed(item) == false;
-	}
-
-	private boolean isDestroyed(WorldItem item) {
-		return (item instanceof Destroyable) && ((Destroyable) item).isDestroyed();
 	}
 }

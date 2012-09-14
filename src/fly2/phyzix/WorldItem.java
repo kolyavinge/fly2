@@ -7,10 +7,12 @@ public class WorldItem {
 
 	private double x, y;
 	private double width, height;
+	private boolean destroyed;
 
 	public WorldItem() {
 		x = y = 0.0;
 		width = height = 1.0;
+		destroyed = false;
 	}
 
 	public double getX() {
@@ -48,6 +50,14 @@ public class WorldItem {
 
 	public void moveY(double value) {
 		y += value;
+	}
+
+	public boolean isDestroyed() {
+		return destroyed;
+	}
+
+	public void destroy() {
+		destroyed = true;
 	}
 
 	public double getWidth() {

@@ -19,6 +19,7 @@ public class WorldItemTest extends TestCase {
 		assertEquals(1.0, worldItem.getHeight());
 		assertEquals(0.5, worldItem.getMiddleX());
 		assertEquals(0.5, worldItem.getMiddleY());
+		assertFalse(worldItem.isDestroyed());
 	}
 
 	public void testSetXY() {
@@ -106,5 +107,11 @@ public class WorldItemTest extends TestCase {
 		worldItem.moveY(moveValue);
 		assertEquals(10.0, worldItem.getX(), 0.001);
 		assertEquals(20.0 + moveValue, worldItem.getY(), 0.001);
+	}
+	
+	public void testDestroy() {
+		assertFalse(worldItem.isDestroyed());
+		worldItem.destroy();
+		assertTrue(worldItem.isDestroyed());
 	}
 }

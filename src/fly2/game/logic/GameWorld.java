@@ -26,7 +26,7 @@ public final class GameWorld implements fly2.game.frontend.GameWorld {
 				(world.getWidth() - playerPlane.getWidth()) / 2.0,
 				0.0);
 		world.addItem(playerPlane);
-		world.registerOutOfWorldStrategy(playerPlane, new ReturnedOutOfWorldStrategy<WorldItem>());
+		world.registerOutOfWorldStrategy(playerPlane, new ReturnedOutOfWorldStrategy<Plane>());
 	}
 
 	private void initPlaneFactory() {
@@ -73,6 +73,7 @@ public final class GameWorld implements fly2.game.frontend.GameWorld {
 
 	public Plane createEnemyPlane() {
 		Plane enemy = planeFactory.makeEnemy();
+		world.registerOutOfWorldStrategy(enemy, new ReturnedOutOfWorldStrategy<Plane>());
 		world.addItem(enemy);
 
 		return enemy;

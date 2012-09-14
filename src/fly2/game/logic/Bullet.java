@@ -1,12 +1,11 @@
 package fly2.game.logic;
 
-import fly2.phyzix.*;
 import fly2.phyzix.ext.MoveableWorldItem;
 
 /**
  * Пуля
  */
-public class Bullet extends MoveableWorldItem implements fly2.game.frontend.Bullet, Destroyable {
+public class Bullet extends MoveableWorldItem implements fly2.game.frontend.Bullet {
 
 	private int damage;
 	private boolean isDestroyed;
