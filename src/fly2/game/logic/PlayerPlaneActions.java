@@ -18,12 +18,12 @@ public class PlayerPlaneActions implements fly2.game.frontend.PlayerPlaneActions
 
 	public void moveLeft() {
 		playerPlane.moveX(-1.0);
-		gameWorld.checkOutOfWorld(playerPlane);
+		gameWorld.returnToWorld(playerPlane);
 	}
 
 	public void moveRight() {
 		playerPlane.moveX(1.0);
-		gameWorld.checkOutOfWorld(playerPlane);
+		gameWorld.returnToWorld(playerPlane);
 	}
 
 	public void fire() {

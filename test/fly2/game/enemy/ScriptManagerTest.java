@@ -4,26 +4,26 @@ import junit.framework.TestCase;
 
 public class ScriptManagerTest extends TestCase {
 
-	private ScriptManager builder;
+	private ScriptManager manager;
 	private TestGlobalObject testObject;
 
 	public void setUp() {
-		builder = new ScriptManager();
+		manager = new ScriptManager();
 		testObject = new TestGlobalObject();
-		builder.define("testObject", testObject);
+		manager.define("testObject", testObject);
 	}
 
 	public void testCallPublicMethod() {
 		TestGlobalObject testObject = new TestGlobalObject();
 		assertFalse(testObject.publicMethodIsTestExecuted());
-		builder.define("testObject", testObject);
-		builder.evaluate("testObject.publicMethod();");
+		manager.define("testObject", testObject);
+		manager.evaluate("testObject.publicMethod();");
 		assertTrue(testObject.publicMethodIsTestExecuted());
 	}
 
 	public void testCallProtectedMethod() {
 		try {
-			builder.evaluate("testObject.protectedMethod();");
+			manager.evaluate("testObject.protectedMethod();");
 			fail();
 		} catch (org.mozilla.javascript.EcmaError exp) {
 		}
@@ -31,7 +31,7 @@ public class ScriptManagerTest extends TestCase {
 
 	public void testCallPrivateMethod() {
 		try {
-			builder.evaluate("testObject.privateMethod();");
+			manager.evaluate("testObject.privateMethod();");
 			fail();
 		} catch (org.mozilla.javascript.EcmaError exp) {
 		}
@@ -39,13 +39,13 @@ public class ScriptManagerTest extends TestCase {
 
 	public void testAssignmentPublicField() {
 		assertEquals(0, testObject.publicField);
-		builder.evaluate("testObject.publicField = 789;");
+		manager.evaluate("testObject.publicField = 789;");
 		assertEquals(789, testObject.publicField);
 	}
 	
 	public void testAssignmentPrivateField() {
 		try {
-			builder.evaluate("testObject.privateField = 789;");
+			manager.evaluate("testObject.privateField = 789;");
 			fail();
 		} catch (org.mozilla.javascript.EvaluatorException exp) {
 		}
@@ -53,7 +53,7 @@ public class ScriptManagerTest extends TestCase {
 
 	public void testEvaluateWithIllegalSource() {
 		try {
-			builder.evaluate("illegal source");
+			manager.evaluate("illegal source");
 			fail();
 		} catch (org.mozilla.javascript.EvaluatorException exp) {
 		}

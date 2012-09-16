@@ -1,18 +1,22 @@
 package fly2.game.enemy;
 
-import static fly2.common.Direction.*;
+import static fly2.common.Direction._UNDEFINED;
+import android.content.res.AssetManager;
 import android.test.InstrumentationTestCase;
 import fly2.common.Direction;
-import fly2.game.logic.*;
+import fly2.common.android.ResourceFileReader;
+import fly2.game.logic.GameWorld;
+import fly2.game.logic.Plane;
+
 import java.util.Collection;
 import java.util.Collections;
 
-public class EnemyBrainTest extends InstrumentationTestCase {
+public class NormalEnemyBrainTest extends InstrumentationTestCase {
 
 	private static final int FIRE = 1;
 	private static final int NO_FIRE = 2;
 
-	private EnemyBrain brain;
+	private NormalEnemyBrain brain;
 	private GameWorld gameWorld;
 	private Plane player;
 	private Plane enemy;
@@ -22,20 +26,48 @@ public class EnemyBrainTest extends InstrumentationTestCase {
 		stepResult = new StepResult();
 		gameWorld = new GameWorld(100, 200);
 		player = gameWorld.getPlayerPlane();
-		brain = new EnemyBrain(getInstrumentation().getContext());
+		brain = new NormalEnemyBrain(getResourceFileReader());
 	}
 
-	public void testFireNear() {
+	public void testFireNearPlanes() {
 		player.setPosition(0, 0);
 		enemy = createEnemyPlane();
 		enemy.setPosition(0, 4.0 * enemy.getHeight());
 		assertFireAndDirection(FIRE, _UNDEFINED);
 	}
 
-	public void testFireFar() {
+	public void testFireNearPlanes2() {
+		player.setPosition(0, 0);
+		enemy = createEnemyPlane();
+		enemy.setPosition(player.getWidth() / 2.0, 4.0 * enemy.getHeight());
+		assertFireAndDirection(FIRE, _UNDEFINED);
+	}
+
+	public void testFireNearPlanes3() {
+		player.setPosition(20.0, 0.0);
+		enemy = createEnemyPlane();
+		enemy.setPosition(20.0 - player.getWidth() / 2.0, 4.0 * enemy.getHeight());
+		assertFireAndDirection(FIRE, _UNDEFINED);
+	}
+
+	public void testNoFireFarPlanes() {
 		player.setPosition(0, 0);
 		enemy = createEnemyPlane();
 		enemy.setPosition(0, 5.0 * enemy.getHeight());
+		assertFireAndDirection(NO_FIRE, _UNDEFINED);
+	}
+
+	public void testNoFireFarPlanes2() {
+		player.setPosition(0, 0);
+		enemy = createEnemyPlane();
+		enemy.setPosition(player.getWidth(), 4.0 * enemy.getHeight());
+		assertFireAndDirection(NO_FIRE, _UNDEFINED);
+	}
+
+	public void testNoFireFarPlanes3() {
+		player.setPosition(20.0, 0.0);
+		enemy = createEnemyPlane();
+		enemy.setPosition(20.0 - player.getWidth(), 4.0 * enemy.getHeight());
 		assertFireAndDirection(NO_FIRE, _UNDEFINED);
 	}
 
@@ -65,5 +97,12 @@ public class EnemyBrainTest extends InstrumentationTestCase {
 		}
 
 		assertEquals(_UNDEFINED, stepResult.getMoveDirection());
+	}
+
+	private ResourceFileReader getResourceFileReader() {
+		AssetManager assetManager = getInstrumentation().getContext().getAssets();
+		ResourceFileReader resourceFileReader = new ResourceFileReader(assetManager);
+
+		return resourceFileReader;
 	}
 }

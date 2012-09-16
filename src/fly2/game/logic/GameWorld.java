@@ -99,7 +99,8 @@ public final class GameWorld implements fly2.game.frontend.GameWorld {
 		return count;
 	}
 	
-	public void checkOutOfWorld(Plane plane) {
+	/** Возвращает самолет в пределы мира, если он из него выпадает */
+	public void returnToWorld(Plane plane) {
 		world.activateOutOfWorld(plane);
 	}
 

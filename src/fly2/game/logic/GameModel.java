@@ -24,7 +24,7 @@ public class GameModel implements fly2.game.frontend.GameModel {
 		return gameWorld.getPlayerPlane();
 	}
 
-	public Collection<fly2.game.frontend.Plane> getEnemyPlanes() {
+	public Iterable<fly2.game.frontend.Plane> getEnemyPlanes() {
 		return Collections.<fly2.game.frontend.Plane> unmodifiableCollection(gameWorld.getEnemyPlanes());
 	}
 
