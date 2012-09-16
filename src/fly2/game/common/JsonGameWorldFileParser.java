@@ -8,7 +8,7 @@ public class JsonGameWorldFileParser extends GameWorldFileParser {
 
 	public JsonGameWorldFileParser(String fileContent) {
 		if (fileContent == null)
-			throw new NullPointerException("fileContent");
+			throw new NullPointerException("fileContent is null");
 
 		this.fileContent = fileContent;
 	}

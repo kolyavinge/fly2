@@ -1,14 +1,18 @@
 package fly2.game.logic;
 
-import java.util.*;
+import fly2.game.common.ResourceFileReader;
+
+import java.util.Collections;
 
 public class GameModel implements fly2.game.frontend.GameModel {
 
 	private GameWorld gameWorld;
+	private GameWorldFactory gameWorldFactory;
 	private PlayerPlaneActions playerPlaneActions;
 
-	public GameModel() {
-		gameWorld = new GameWorld(20.0, 50.0);
+	public GameModel(ResourceFileReader fileReader) {
+		gameWorldFactory = new GameWorldFactory(fileReader);
+		gameWorld = gameWorldFactory.makeWorld(0);
 		playerPlaneActions = new PlayerPlaneActions(gameWorld, gameWorld.getPlayerPlane());
 	}
 

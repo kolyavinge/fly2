@@ -2,6 +2,8 @@ package fly2.game.common;
 
 public class GameWorldFileParserException extends RuntimeException {
 
+	private static final long serialVersionUID = -1547001387051389747L;
+
 	public GameWorldFileParserException() {
 		super();
 	}

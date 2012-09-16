@@ -1,6 +1,6 @@
 package fly2.game.enemy;
 
-import fly2.common.android.ResourceFileReader;
+import fly2.game.common.ResourceFileReader;
 
 import java.io.IOException;
 

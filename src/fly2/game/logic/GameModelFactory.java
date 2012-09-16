@@ -1,5 +1,7 @@
 package fly2.game.logic;
 
+import fly2.game.common.ResourceFileReader;
+
 public final class GameModelFactory {
 
 	private static final GameModelFactory instance;
@@ -15,7 +17,7 @@ public final class GameModelFactory {
 	private GameModelFactory() {
 	}
 
-	public fly2.game.frontend.GameModel createModel() {
-		return new GameModel();
+	public fly2.game.frontend.GameModel createModel(ResourceFileReader fileReader) {
+		return new GameModel(fileReader);
 	}
 }

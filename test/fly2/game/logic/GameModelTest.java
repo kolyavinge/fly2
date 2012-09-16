@@ -1,20 +1,25 @@
 package fly2.game.logic;
 
-import junit.framework.TestCase;
+import android.test.InstrumentationTestCase;
+import fly2.unittest.TestResourceFileReader;
 
-public class GameModelTest extends TestCase {
+public class GameModelTest extends InstrumentationTestCase {
 
 	private GameModel gameModel;
+	private TestResourceFileReader fileReader;
 
 	public void setUp() {
-		gameModel = new GameModel();
+		fileReader = new TestResourceFileReader();
 	}
 
 	public void testNew() {
-		gameModel = new GameModel();
+		fileReader.put("world_0", "{\"world\":{\"width\":123, \"height\":789, \"enemies\":[]}}");
+		gameModel = new GameModel(fileReader);
 		assertNotNull(gameModel.getWorld());
-		assertTrue(gameModel.getWorld().getWidth() > 0);
-		assertTrue(gameModel.getWorld().getHeight() > 0);
+		assertEquals(123.0, gameModel.getWorld().getWidth(), 0.001);
+		assertEquals(789.0, gameModel.getWorld().getHeight(), 0.001);
 		assertNotNull(gameModel.getPlayerPlane());
+		assertEquals(0, gameModel.getEnemyPlanesCount());
+		assertEquals(0, gameModel.getBulletsCount());
 	}
 }

@@ -2,7 +2,7 @@ package fly2.game.logic;
 
 import android.content.res.AssetManager;
 import android.test.InstrumentationTestCase;
-import fly2.common.android.ResourceFileReader;
+import fly2.app.AssetFileReader;
 
 import java.util.Iterator;
 
@@ -14,7 +14,7 @@ public class GameWorldFactoryTest extends InstrumentationTestCase {
 
 	public void setUp() {
 		AssetManager assetManager = getInstrumentation().getContext().getAssets();
-		ResourceFileReader reader = new ResourceFileReader(assetManager);
+		AssetFileReader reader = new AssetFileReader(assetManager);
 		factory = new GameWorldFactory(reader);
 	}
 

@@ -3,8 +3,8 @@ package fly2.game.enemy;
 import static fly2.common.Direction._UNDEFINED;
 import android.content.res.AssetManager;
 import android.test.InstrumentationTestCase;
+import fly2.app.AssetFileReader;
 import fly2.common.Direction;
-import fly2.common.android.ResourceFileReader;
 import fly2.game.logic.GameWorld;
 import fly2.game.logic.Plane;
 
@@ -99,9 +99,9 @@ public class NormalEnemyBrainTest extends InstrumentationTestCase {
 		assertEquals(_UNDEFINED, stepResult.getMoveDirection());
 	}
 
-	private ResourceFileReader getResourceFileReader() {
+	private AssetFileReader getResourceFileReader() {
 		AssetManager assetManager = getInstrumentation().getContext().getAssets();
-		ResourceFileReader resourceFileReader = new ResourceFileReader(assetManager);
+		AssetFileReader resourceFileReader = new AssetFileReader(assetManager);
 
 		return resourceFileReader;
 	}

@@ -2,8 +2,8 @@ package fly2.game.common;
 
 import android.content.res.AssetManager;
 import android.test.InstrumentationTestCase;
+import fly2.app.AssetFileReader;
 import fly2.common.Tuple;
-import fly2.common.android.ResourceFileReader;
 import fly2.unittest.TestGameWorldFileParserHandler;
 
 import java.io.IOException;
@@ -16,8 +16,7 @@ public class JsonGameWorldFileParserTest extends InstrumentationTestCase {
 	private Iterator<Tuple<Double, Double>> enemyIterator;
 
 	public void setUp() throws IOException {
-		AssetManager assetManager = getInstrumentation().getContext().getAssets();
-		ResourceFileReader reader = new ResourceFileReader(assetManager);
+		ResourceFileReader reader = getFileReader();
 		parser = new JsonGameWorldFileParser(reader.getFileText("testWorld"));
 		handler = new TestGameWorldFileParserHandler();
 		parser.setHandler(handler);
@@ -32,7 +31,7 @@ public class JsonGameWorldFileParserTest extends InstrumentationTestCase {
 		assertEnemy(35, 70);
 	}
 
-	public void testNullFileContent() {
+	public void testNullJson() {
 		try {
 			new JsonGameWorldFileParser(null);
 			fail();
@@ -40,7 +39,7 @@ public class JsonGameWorldFileParserTest extends InstrumentationTestCase {
 		}
 	}
 
-	public void testEmptyFileContent() {
+	public void testEmptyJson() {
 		try {
 			parser = new JsonGameWorldFileParser("");
 			handler = new TestGameWorldFileParserHandler();
@@ -50,8 +49,8 @@ public class JsonGameWorldFileParserTest extends InstrumentationTestCase {
 		} catch (GameWorldFileParserException exp) {
 		}
 	}
-	
-	public void testNotJsonFileContent() {
+
+	public void testNotJson() {
 		try {
 			parser = new JsonGameWorldFileParser("this is not a json");
 			handler = new TestGameWorldFileParserHandler();
@@ -80,5 +79,10 @@ public class JsonGameWorldFileParserTest extends InstrumentationTestCase {
 		Tuple<Double, Double> enemy = enemyIterator.next();
 		assertEquals(x, enemy.getFirst(), 0.001);
 		assertEquals(y, enemy.getSecond(), 0.001);
+	}
+
+	private ResourceFileReader getFileReader() {
+		AssetManager assetManager = getInstrumentation().getContext().getAssets();
+		return new AssetFileReader(assetManager);
 	}
 }

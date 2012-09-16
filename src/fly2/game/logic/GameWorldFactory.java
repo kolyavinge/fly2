@@ -1,9 +1,9 @@
 package fly2.game.logic;
 
-import fly2.common.android.ResourceFileReader;
 import fly2.game.common.GameWorldFileParser;
 import fly2.game.common.GameWorldFileParserHandler;
 import fly2.game.common.JsonGameWorldFileParser;
+import fly2.game.common.ResourceFileReader;
 
 import java.io.IOException;
 
