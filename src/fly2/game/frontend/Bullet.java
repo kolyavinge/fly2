@@ -18,9 +18,9 @@ public interface Bullet {
 
 	boolean isDestroyed();
 
-	Direction getDirection();
+	Direction getFlyDirection();
 
 	int getDamage();
 
-	double getSpeed();
+	double getFlySpeed();
 }

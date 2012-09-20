@@ -13,7 +13,7 @@ public class GameModel implements fly2.game.frontend.GameModel {
 	public GameModel(ResourceFileReader fileReader) {
 		gameWorldFactory = new GameWorldFactory(fileReader);
 		gameWorld = gameWorldFactory.makeWorld(0);
-		playerPlaneActions = new PlayerPlaneActions(gameWorld, gameWorld.getPlayerPlane());
+		playerPlaneActions = new PlayerPlaneActions(gameWorld.getPlayerPlane());
 	}
 
 	public void update() {

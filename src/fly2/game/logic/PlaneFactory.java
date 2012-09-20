@@ -2,15 +2,17 @@ package fly2.game.logic;
 
 import static fly2.common.Direction.*;
 
-public class PlaneFactory {
+public final class PlaneFactory {
 
-	private WeaponFactory weaponFactory;
+	private static final PlaneFactory instance = new PlaneFactory();
 
-	public PlaneFactory(WeaponFactory weaponFactory) {
-		if (weaponFactory == null)
-			throw new NullPointerException("weaponFactory");
+	public static PlaneFactory getInstance() {
+		return instance;
+	}
 
-		this.weaponFactory = weaponFactory;
+	private WeaponFactory weaponFactory = WeaponFactory.getInstance();
+
+	private PlaneFactory() {
 	}
 
 	public Plane makePlayer() {
@@ -18,9 +20,9 @@ public class PlaneFactory {
 
 		Plane player = new Plane(gun);
 		player.setSize(2.0, 1.5);
-		player.setDirection(UP);
+		player.setFlyDirection(UP);
 		player.setHealth(10);
-		player.setSpeed(0.01);
+		player.setFlySpeed(0.01);
 
 		gun.setBulletDirection(UP);
 		gun.setPosition(player.getMiddleX(), player.getY() + player.getHeight());
@@ -33,9 +35,9 @@ public class PlaneFactory {
 
 		Plane enemy = new Plane(gun);
 		enemy.setSize(2.0, 1.5);
-		enemy.setDirection(DOWN);
+		enemy.setFlyDirection(DOWN);
 		enemy.setHealth(1);
-		enemy.setSpeed(0.01);
+		enemy.setFlySpeed(0.01);
 
 		gun.setBulletDirection(DOWN);
 		gun.setPosition(enemy.getMiddleX(), enemy.getY() + enemy.getHeight());

@@ -1,18 +1,14 @@
 package fly2.game.logic;
 
-import fly2.phyzix.WorldItemCollection;
-import fly2.unittest.TestWorldItemCollection;
-import junit.framework.TestCase;
 import static fly2.common.Direction.*;
+import junit.framework.TestCase;
 
 public class WeaponFactoryTest extends TestCase {
 
 	private WeaponFactory weaponFactory;
-	private WorldItemCollection worldItemCollection;
 
 	public void setUp() {
-		worldItemCollection = new TestWorldItemCollection();
-		weaponFactory = new WeaponFactory(worldItemCollection);
+		weaponFactory = WeaponFactory.getInstance();
 	}
 
 	public void testMakeGun() {

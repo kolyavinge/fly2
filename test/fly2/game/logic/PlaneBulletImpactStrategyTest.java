@@ -1,6 +1,5 @@
 package fly2.game.logic;
 
-import fly2.unittest.TestWorldItemCollection;
 import junit.framework.TestCase;
 
 public class PlaneBulletImpactStrategyTest extends TestCase {
@@ -38,8 +37,7 @@ public class PlaneBulletImpactStrategyTest extends TestCase {
 	}
 
 	private Plane getPlaneWithHealth(int health) {
-		Weapon weapon = new Weapon(new TestWorldItemCollection());
-		Plane plane = new Plane(weapon);
+		Plane plane = new Plane();
 		plane.setHealth(health);
 
 		return plane;

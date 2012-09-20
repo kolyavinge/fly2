@@ -1,10 +1,6 @@
 package fly2.game.logic;
 
-import fly2.game.logic.Bullet;
-import fly2.game.logic.Weapon;
-import fly2.game.logic.Plane;
-import fly2.phyzix.*;
-import fly2.unittest.*;
+import fly2.unittest.TestPlaneListener;
 import junit.framework.TestCase;
 
 public class PlaneTest extends TestCase {
@@ -14,14 +10,15 @@ public class PlaneTest extends TestCase {
 	private int health = 15;
 	private Plane plane;
 	private Weapon weapon;
-	private WorldItemCollection worldItems;
+	private TestPlaneListener planeListener;
 
 	public void setUp() {
-		worldItems = new TestWorldItemCollection();
-		weapon = new Weapon(worldItems);
+		planeListener = new TestPlaneListener();
+		weapon = new Weapon();
 		plane = new Plane(weapon);
 		plane.setSize(width, height);
 		plane.setHealth(health);
+		plane.setListener(planeListener);
 	}
 
 	public void testNew() {
@@ -29,20 +26,24 @@ public class PlaneTest extends TestCase {
 		assertEquals(0, plane.getHealth());
 		assertTrue(plane.isDestroyed());
 		assertSame(weapon, plane.getWeapon());
+		assertNotNull(plane.getListener());
+		assertTrue(plane.getListener() instanceof DefaultPlaneListener);
 	}
 
 	public void testSettersGetters() {
 		assertEquals(health, plane.getHealth());
 		assertFalse(plane.isDestroyed());
 		assertSame(weapon, plane.getWeapon());
+		assertSame(planeListener, plane.getListener());
 	}
 
 	public void testFire() {
 		plane.setWeapon(weapon);
 		plane.fire();
-		assertEquals(1, worldItems.getItemsCount());
-		WorldItem item = getFirstItem(worldItems);
-		assertTrue(item instanceof Bullet);
+		assertTrue(planeListener.onFireHasCall);
+		assertNotNull(planeListener.plane);
+		assertNotNull(planeListener.bullet);
+		assertSame(plane, planeListener.plane);
 		// убеждаемся что пулька создалась, все остальное
 		// протестировано в классе Weapon
 	}
@@ -141,7 +142,7 @@ public class PlaneTest extends TestCase {
 		plane.damage(plane.getHealth());
 		assertTrue(plane.isDestroyed());
 	}
-	
+
 	public void testSetOwnerIdToWeapon() {
 		plane.setWeapon(weapon);
 		assertEquals(plane.getId(), weapon.getOwnerPlaneId());
@@ -171,7 +172,11 @@ public class PlaneTest extends TestCase {
 		}
 	}
 
-	private WorldItem getFirstItem(WorldItemCollection itemCollection) {
-		return itemCollection.getItems().iterator().next();
+	public void testNullListener() {
+		try {
+			plane.setListener(null);
+			fail();
+		} catch (NullPointerException exp) {
+		}
 	}
 }

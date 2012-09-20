@@ -1,17 +1,18 @@
 package fly2.game.logic;
 
-import fly2.phyzix.WorldItemCollection;
+public final class WeaponFactory {
 
-public class WeaponFactory {
+	private static final WeaponFactory instance = new WeaponFactory();
 
-	private WorldItemCollection worldItemCollection;
+	public static WeaponFactory getInstance() {
+		return instance;
+	}
 
-	public WeaponFactory(WorldItemCollection worldItemCollection) {
-		this.worldItemCollection = worldItemCollection;
+	private WeaponFactory() {
 	}
 
 	public Weapon makeGun() {
-		Weapon gun = new Weapon(worldItemCollection);
+		Weapon gun = new Weapon();
 		gun.setBulletDamage(1);
 		gun.setBulletSize(0.5);
 		gun.setBulletSpeed(1.0);

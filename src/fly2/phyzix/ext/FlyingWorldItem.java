@@ -6,31 +6,31 @@ import fly2.phyzix.WorldItem;
 import static fly2.common.Direction.*;
 
 /**
- * Перемащаемый игровой объект.
+ * Летaющий игровой объект.
  * Отличается от простого WorldItem-a тем, что имеет скорость и направление движения.
  */
-public class MoveableWorldItem extends WorldItem implements Updateable {
+public class FlyingWorldItem extends WorldItem implements Updateable {
 
-	private double speed;
-	private Direction direction;
+	private double flySpeed;
+	private Direction flyDirection;
 
-	public MoveableWorldItem() {
-		this.direction = _UNDEFINED;
+	public FlyingWorldItem() {
+		this.flyDirection = _UNDEFINED;
 	}
 
 	public void update() {
-		switch (direction) {
+		switch (flyDirection) {
 		case LEFT:
-			moveX(-speed);
+			moveX(-flySpeed);
 			break;
 		case RIGHT:
-			moveX(speed);
+			moveX(flySpeed);
 			break;
 		case UP:
-			moveY(speed);
+			moveY(flySpeed);
 			break;
 		case DOWN:
-			moveY(-speed);
+			moveY(-flySpeed);
 			break;
 		case _UNDEFINED:
 			throw new IllegalArgumentException("Direction was undefined. Type: " + getClass().getName());
@@ -39,25 +39,25 @@ public class MoveableWorldItem extends WorldItem implements Updateable {
 		}
 	}
 
-	public double getSpeed() {
-		return speed;
+	public double getFlySpeed() {
+		return flySpeed;
 	}
 
-	public void setSpeed(double speed) {
+	public void setFlySpeed(double speed) {
 		if (speed < 0)
 			throw new IllegalArgumentException("speed");
 
-		this.speed = speed;
+		this.flySpeed = speed;
 	}
 
-	public Direction getDirection() {
-		return direction;
+	public Direction getFlyDirection() {
+		return flyDirection;
 	}
 
-	public void setDirection(Direction direction) {
+	public void setFlyDirection(Direction direction) {
 		if (direction == null)
 			throw new NullPointerException("direction");
 
-		this.direction = direction;
+		this.flyDirection = direction;
 	}
 }

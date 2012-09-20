@@ -1,14 +1,15 @@
 package fly2.game.logic;
 
-import fly2.phyzix.ext.MoveableWorldItem;
+import fly2.phyzix.ext.FlyingWorldItem;
 
-public class Plane extends MoveableWorldItem implements fly2.game.frontend.Plane {
+public class Plane extends FlyingWorldItem implements fly2.game.frontend.Plane {
 
 	// TODO: генерацию id-шника можно вынести в отдельный класс
 	private static int lastId = 1;
-	
+
 	private int health;
 	private Weapon weapon;
+	private PlaneListener listener = new DefaultPlaneListener();
 	private int id = lastId++;
 
 	public Plane(Weapon weapon) {
@@ -16,11 +17,22 @@ public class Plane extends MoveableWorldItem implements fly2.game.frontend.Plane
 	}
 
 	public Plane() {
-		// weapon = new NullWeapon();
+		weapon = new NullWeapon();
 	}
 
 	public int getId() {
 		return id;
+	}
+
+	public PlaneListener getListener() {
+		return listener;
+	}
+
+	public void setListener(PlaneListener listener) {
+		if (listener == null)
+			throw new NullPointerException("listener");
+
+		this.listener = listener;
 	}
 
 	public Weapon getWeapon() {
@@ -65,10 +77,8 @@ public class Plane extends MoveableWorldItem implements fly2.game.frontend.Plane
 	}
 
 	public void fire() {
-		if (weapon == null)
-			throw new IllegalStateException("Plane weapon was null");
-
-		weapon.fire();
+		Bullet bullet = weapon.fire();
+		listener.onFire(this, bullet);
 	}
 
 	@Override

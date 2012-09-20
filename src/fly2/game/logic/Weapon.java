@@ -1,8 +1,7 @@
 package fly2.game.logic;
 
-import static fly2.common.Direction.*;
+import static fly2.common.Direction._UNDEFINED;
 import fly2.common.Direction;
-import fly2.phyzix.WorldItemCollection;
 
 /**
  * Оружие для самолета
@@ -14,14 +13,9 @@ public class Weapon implements fly2.game.frontend.Weapon {
 	private double bulletSpeed;
 	private int bulletDamage;
 	private Direction bulletDirection;
-	private WorldItemCollection worldItems;
 	private int ownerPlaneId;
 
-	public Weapon(WorldItemCollection worldItems) {
-		if (worldItems == null)
-			throw new NullPointerException("worldItems");
-
-		this.worldItems = worldItems;
+	public Weapon() {
 		this.bulletSize = 1.0;
 		this.bulletDirection = _UNDEFINED;
 	}
@@ -29,15 +23,16 @@ public class Weapon implements fly2.game.frontend.Weapon {
 	/**
 	 * Создает в игровом мире новую пульку с заданными параметрами.
 	 */
-	public void fire() {
+	public Bullet fire() {
 		Bullet bullet = new Bullet();
 		bullet.setPosition(x - bulletSize / 2.0, y - bulletSize / 2.0);
 		bullet.setSize(bulletSize, bulletSize);
-		bullet.setDirection(bulletDirection);
-		bullet.setSpeed(bulletSpeed);
+		bullet.setFlyDirection(bulletDirection);
+		bullet.setFlySpeed(bulletSpeed);
 		bullet.setDamage(bulletDamage);
 		bullet.setOwnerPlaneId(ownerPlaneId);
-		worldItems.addItem(bullet);
+		
+		return bullet;
 	}
 
 	public void moveX(double value) {
@@ -99,10 +94,6 @@ public class Weapon implements fly2.game.frontend.Weapon {
 
 	public void setBulletDirection(Direction bulletDirection) {
 		this.bulletDirection = bulletDirection;
-	}
-
-	public WorldItemCollection getWorldItems() {
-		return worldItems;
 	}
 
 	public int getOwnerPlaneId() {

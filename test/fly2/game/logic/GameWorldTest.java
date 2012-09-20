@@ -22,7 +22,7 @@ public class GameWorldTest extends TestCase {
 		Plane player = gameWorld.getPlayerPlane();
 		player.setPosition(0.0, 0.0);
 		player.setSize(1.0, 1.0);
-		player.setSpeed(0.0);
+		player.setFlySpeed(0.0);
 
 		Weapon playerWeapon = player.getWeapon();
 		playerWeapon.setPosition(0.5, 1.0);
@@ -33,7 +33,7 @@ public class GameWorldTest extends TestCase {
 		Plane enemy = gameWorld.createEnemyPlane();
 		enemy.setPosition(0.0, 21.0);
 		enemy.setSize(1.0, 1.0);
-		enemy.setSpeed(0.0);
+		enemy.setFlySpeed(0.0);
 
 		int playerInitHealth = player.getHealth();
 		int enemyInitHealth = enemy.getHealth();
@@ -55,12 +55,12 @@ public class GameWorldTest extends TestCase {
 		Plane player = gameWorld.getPlayerPlane();
 		player.setPosition(0.0, 0.0);
 		player.setSize(1.0, 10.0);
-		player.setSpeed(10.0);
+		player.setFlySpeed(10.0);
 
 		Plane enemy = gameWorld.createEnemyPlane();
 		enemy.setPosition(0.0, 50.0);
 		enemy.setSize(1.0, 10.0);
-		enemy.setSpeed(10.0);
+		enemy.setFlySpeed(10.0);
 
 		gameWorld.update();
 		assertFalse(player.isDestroyed());
@@ -74,7 +74,7 @@ public class GameWorldTest extends TestCase {
 	public void testBulletOutOfWorld() {
 		Plane player = gameWorld.getPlayerPlane();
 		player.setPosition(0.0, 0.0);
-		player.setSpeed(0.0);
+		player.setFlySpeed(0.0);
 
 		Weapon playerWeapon = player.getWeapon();
 		playerWeapon.setPosition(0.5, 1.0);
@@ -92,7 +92,7 @@ public class GameWorldTest extends TestCase {
 	public void testPlayerPlaneOutOfWorldLeft() {
 		Plane player = gameWorld.getPlayerPlane();
 		player.setPosition(-1.0, 1.0);
-		player.setSpeed(0.0);
+		player.setFlySpeed(0.0);
 		gameWorld.update();
 		assertEquals(0.0, player.getX(), 0.001);
 		assertEquals(1.0, player.getY(), 0.001);
@@ -101,7 +101,7 @@ public class GameWorldTest extends TestCase {
 	public void testPlayerPlaneOutOfWorldRight() {
 		Plane player = gameWorld.getPlayerPlane();
 		player.setPosition(gameWorld.getWidth() + 10.0, 1.0);
-		player.setSpeed(0.0);
+		player.setFlySpeed(0.0);
 		gameWorld.update();
 		assertEquals(gameWorld.getWidth() - player.getWidth(), player.getX(), 0.001);
 		assertEquals(1.0, player.getY(), 0.001);
@@ -110,7 +110,7 @@ public class GameWorldTest extends TestCase {
 	public void testEnemyPlaneOutOfWorldLeft() {
 		Plane enemy = gameWorld.createEnemyPlane();
 		enemy.setPosition(-1.0, 1.0);
-		enemy.setSpeed(0.0);
+		enemy.setFlySpeed(0.0);
 		gameWorld.update();
 		assertEquals(0.0, enemy.getX(), 0.001);
 		assertEquals(1.0, enemy.getY(), 0.001);
@@ -119,7 +119,7 @@ public class GameWorldTest extends TestCase {
 	public void testEnemyPlaneOutOfWorldRight() {
 		Plane enemy = gameWorld.createEnemyPlane();
 		enemy.setPosition(gameWorld.getWidth() + 10.0, 1.0);
-		enemy.setSpeed(0.0);
+		enemy.setFlySpeed(0.0);
 		gameWorld.update();
 		assertEquals(gameWorld.getWidth() - enemy.getWidth(), enemy.getX(), 0.001);
 		assertEquals(1.0, enemy.getY(), 0.001);
@@ -127,24 +127,34 @@ public class GameWorldTest extends TestCase {
 
 	public void testPlayerPlaneFly() {
 		Plane player = gameWorld.getPlayerPlane();
-		assertTrue(player.getSpeed() > 0.0);
-		assertEquals(UP, player.getDirection());
+		assertTrue(player.getFlySpeed() > 0.0);
+		assertEquals(UP, player.getFlyDirection());
 		double oldY = player.getY();
 		gameWorld.update();
 		double newY = player.getY();
-		assertEquals(newY - oldY, player.getSpeed(), 0.001);
+		assertEquals(newY - oldY, player.getFlySpeed(), 0.001);
 	}
 
 	public void testEnemyPlaneFly() {
 		Plane enemy = gameWorld.createEnemyPlane();
 		enemy.setPosition(0.0, 10.0);
-		assertTrue(enemy.getSpeed() > 0.0);
-		assertEquals(DOWN, enemy.getDirection());
+		assertTrue(enemy.getFlySpeed() > 0.0);
+		assertEquals(DOWN, enemy.getFlyDirection());
 		double oldY = enemy.getY();
 		gameWorld.update();
 		double newY = enemy.getY();
 		// бот летит вниз => разность (newY - oldY) будет отрицательной
-		assertEquals(newY - oldY, -enemy.getSpeed(), 0.001);
+		assertEquals(newY - oldY, -enemy.getFlySpeed(), 0.001);
+	}
+	
+	public void testGetPlayerPlane() {
+		Plane player = gameWorld.getPlayerPlane();
+		assertSame(gameWorld, player.getListener());
+	}
+	
+	public void testCreateEnemyPlane() {
+		Plane enemy = gameWorld.createEnemyPlane();
+		assertSame(gameWorld, enemy.getListener());
 	}
 
 	public void testStartPlayerPosition() {

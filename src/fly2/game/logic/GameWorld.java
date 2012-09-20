@@ -6,17 +6,16 @@ import fly2.phyzix.ext.ReturnedOutOfWorldStrategy;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
-public final class GameWorld implements fly2.game.frontend.GameWorld {
+public final class GameWorld implements fly2.game.frontend.GameWorld, PlaneListener {
 
 	private World world;
 	private Plane playerPlane;
 	private PlaneFactory planeFactory;
 
 	public GameWorld(double width, double height) {
+		this.planeFactory = PlaneFactory.getInstance();
 		initWorld(width, height);
-		initPlaneFactory();
 		initPlayerPlane();
 	}
 
@@ -25,18 +24,19 @@ public final class GameWorld implements fly2.game.frontend.GameWorld {
 		playerPlane.setPosition(
 				(world.getWidth() - playerPlane.getWidth()) / 2.0,
 				0.0);
+		playerPlane.setListener(this);
 		world.addItem(playerPlane);
 		world.registerOutOfWorldStrategy(playerPlane, new ReturnedOutOfWorldStrategy<Plane>());
-	}
-
-	private void initPlaneFactory() {
-		planeFactory = new PlaneFactory(new WeaponFactory(world));
 	}
 
 	private void initWorld(double width, double height) {
 		world = new World(width, height);
 		world.registerImpactStrategy(new PlaneBulletImpactStrategy());
 		world.registerImpactStrategy(new PlanePlaneImpactStrategy());
+	}
+
+	public PlaneFactory getPlaneFactory() {
+		return planeFactory;
 	}
 
 	public double getWidth() {
@@ -58,7 +58,7 @@ public final class GameWorld implements fly2.game.frontend.GameWorld {
 	}
 
 	public Collection<Bullet> getBullets() {
-		List<Bullet> bullets = new ArrayList<Bullet>();
+		Collection<Bullet> bullets = new ArrayList<Bullet>();
 		for (WorldItem item : world.getItems()) {
 			if ((item instanceof Bullet))
 				bullets.add((Bullet) item);
@@ -73,6 +73,7 @@ public final class GameWorld implements fly2.game.frontend.GameWorld {
 
 	public Plane createEnemyPlane() {
 		Plane enemy = planeFactory.makeEnemy();
+		enemy.setListener(this);
 		world.registerOutOfWorldStrategy(enemy, new ReturnedOutOfWorldStrategy<Plane>());
 		world.addItem(enemy);
 
@@ -80,7 +81,7 @@ public final class GameWorld implements fly2.game.frontend.GameWorld {
 	}
 
 	public Collection<Plane> getEnemyPlanes() {
-		List<Plane> enemyPlanes = new ArrayList<Plane>();
+		Collection<Plane> enemyPlanes = new ArrayList<Plane>();
 		for (WorldItem item : world.getItems()) {
 			if ((item instanceof Plane) && (item != playerPlane))
 				enemyPlanes.add((Plane) item);
@@ -98,16 +99,15 @@ public final class GameWorld implements fly2.game.frontend.GameWorld {
 
 		return count;
 	}
-	
-	/** Возвращает самолет в пределы мира, если он из него выпадает */
-	public void returnToWorld(Plane plane) {
-		world.activateOutOfWorld(plane);
-	}
 
 	public void update() {
 		world.updateItems();
 		world.activateOutOfWorldItems();
 		world.activateItemsImpact();
 		world.removeDestroyedItems();
+	}
+
+	public void onFire(Plane plane, Bullet bullet) {
+		world.addItem(bullet);
 	}
 }

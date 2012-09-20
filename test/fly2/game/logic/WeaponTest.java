@@ -1,12 +1,9 @@
 package fly2.game.logic;
 
-import fly2.common.*;
-import fly2.game.logic.Bullet;
-import fly2.game.logic.Weapon;
-import fly2.phyzix.*;
-import fly2.unittest.*;
+import static fly2.common.Direction.UP;
+import static fly2.common.Direction._UNDEFINED;
+import fly2.common.Direction;
 import junit.framework.TestCase;
-import static fly2.common.Direction.*;
 
 public class WeaponTest extends TestCase {
 
@@ -17,11 +14,9 @@ public class WeaponTest extends TestCase {
 	private double bulletSpeed = 50.0;
 	private int ownerPlaneId = 123;
 	private Weapon weapon;
-	private WorldItemCollection worldItems;
 
 	public void setUp() {
-		worldItems = new TestWorldItemCollection();
-		weapon = new Weapon(worldItems);
+		weapon = new Weapon();
 		weapon.setPosition(x, y);
 		weapon.setBulletSize(bulletSize);
 		weapon.setBulletDirection(bulletDirection);
@@ -37,33 +32,27 @@ public class WeaponTest extends TestCase {
 		assertEquals(bulletDirection, weapon.getBulletDirection());
 		assertEquals(bulletDamage, weapon.getBulletDamage());
 		assertEquals(bulletSpeed, weapon.getBulletSpeed());
-		assertSame(worldItems, weapon.getWorldItems());
 		assertSame(ownerPlaneId, weapon.getOwnerPlaneId());
 	}
 
 	public void testNew() {
-		weapon = new Weapon(worldItems);
+		weapon = new Weapon();
 		assertEquals(0.0, weapon.getX());
 		assertEquals(0.0, weapon.getY());
 		assertEquals(1.0, weapon.getBulletSize());
 		assertEquals(_UNDEFINED, weapon.getBulletDirection());
 		assertEquals(0, weapon.getBulletDamage());
 		assertEquals(0.0, weapon.getBulletSpeed());
-		assertSame(worldItems, weapon.getWorldItems());
 	}
 
 	public void testFire() {
-		weapon.fire();
-		assertEquals(1, worldItems.getItemsCount());
-		WorldItem item = getFirstWorldItem();
-		assertTrue(item instanceof Bullet);
-		Bullet bullet = (Bullet) item;
+		Bullet bullet = weapon.fire();
 		assertEquals(x, bullet.getMiddleX());
 		assertEquals(y, bullet.getMiddleY());
 		assertEquals(bulletSize, bullet.getWidth());
 		assertEquals(bulletSize, bullet.getHeight());
-		assertEquals(bulletDirection, bullet.getDirection());
-		assertEquals(bulletSpeed, bullet.getSpeed());
+		assertEquals(bulletDirection, bullet.getFlyDirection());
+		assertEquals(bulletSpeed, bullet.getFlySpeed());
 		assertEquals(bulletDamage, bullet.getDamage());
 		assertEquals(ownerPlaneId, bullet.getOwnerPlaneId());
 	}
@@ -80,17 +69,5 @@ public class WeaponTest extends TestCase {
 		weapon.moveY(2.0);
 		assertEquals(1.0, weapon.getX(), 0.001);
 		assertEquals(3.0, weapon.getY(), 0.001);
-	}
-
-	public void testSetNullWorldItemCollection() {
-		try {
-			new Weapon(null);
-			fail();
-		} catch (NullPointerException exp) {
-		}
-	}
-
-	private WorldItem getFirstWorldItem() {
-		return worldItems.getItems().iterator().next();
 	}
 }

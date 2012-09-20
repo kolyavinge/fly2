@@ -44,11 +44,11 @@ public class WorldItem {
 		return getY() + (getHeight() / 2.0);
 	}
 
-	public void moveX(double value) {
+	protected void moveX(double value) {
 		x += value;
 	}
 
-	public void moveY(double value) {
+	protected void moveY(double value) {
 		y += value;
 	}
 

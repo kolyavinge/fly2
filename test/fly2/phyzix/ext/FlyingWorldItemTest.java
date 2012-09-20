@@ -1,59 +1,59 @@
 package fly2.phyzix.ext;
 
-import fly2.phyzix.ext.MoveableWorldItem;
+import fly2.phyzix.ext.FlyingWorldItem;
 import junit.framework.TestCase;
 import static fly2.common.Direction.*;
 
-public class MoveableWorldItemTest extends TestCase {
+public class FlyingWorldItemTest extends TestCase {
 
-	private MoveableWorldItem worldItem;
+	private FlyingWorldItem worldItem;
 	private double speed = 10.0;
 
 	public void setUp() {
-		worldItem = new MoveableWorldItem();
-		worldItem.setSpeed(speed);
+		worldItem = new FlyingWorldItem();
+		worldItem.setFlySpeed(speed);
 	}
 
 	public void testNew() {
-		worldItem = new MoveableWorldItem();
-		assertEquals(0.0, worldItem.getSpeed());
-		assertEquals(_UNDEFINED, worldItem.getDirection());
+		worldItem = new FlyingWorldItem();
+		assertEquals(0.0, worldItem.getFlySpeed());
+		assertEquals(_UNDEFINED, worldItem.getFlyDirection());
 	}
 
 	public void testGettersSetters() {
-		assertEquals(speed, worldItem.getSpeed());
+		assertEquals(speed, worldItem.getFlySpeed());
 	}
 
 	public void testMoveLeft() {
 		worldItem.setPosition(0, 0);
-		worldItem.setDirection(LEFT);
+		worldItem.setFlyDirection(LEFT);
 		worldItem.update();
-		assertEquals(-worldItem.getSpeed(), worldItem.getX(), 0.001);
+		assertEquals(-worldItem.getFlySpeed(), worldItem.getX(), 0.001);
 		assertEquals(0.0, worldItem.getY(), 0.001);
 	}
 
 	public void testMoveRight() {
 		worldItem.setPosition(0, 0);
-		worldItem.setDirection(RIGHT);
+		worldItem.setFlyDirection(RIGHT);
 		worldItem.update();
-		assertEquals(worldItem.getSpeed(), worldItem.getX(), 0.001);
+		assertEquals(worldItem.getFlySpeed(), worldItem.getX(), 0.001);
 		assertEquals(0.0, worldItem.getY(), 0.001);
 	}
 
 	public void testMoveUp() {
 		worldItem.setPosition(0, 0);
-		worldItem.setDirection(UP);
+		worldItem.setFlyDirection(UP);
 		worldItem.update();
 		assertEquals(0.0, worldItem.getX(), 0.001);
-		assertEquals(worldItem.getSpeed(), worldItem.getY(), 0.001);
+		assertEquals(worldItem.getFlySpeed(), worldItem.getY(), 0.001);
 	}
 
 	public void testMoveDown() {
 		worldItem.setPosition(0, 0);
-		worldItem.setDirection(DOWN);
+		worldItem.setFlyDirection(DOWN);
 		worldItem.update();
 		assertEquals(0.0, worldItem.getX(), 0.001);
-		assertEquals(-worldItem.getSpeed(), worldItem.getY(), 0.001);
+		assertEquals(-worldItem.getFlySpeed(), worldItem.getY(), 0.001);
 	}
 
 	public void testMoveUndefined() {
@@ -66,7 +66,7 @@ public class MoveableWorldItemTest extends TestCase {
 
 	public void testNullDirection() {
 		try {
-			worldItem.setDirection(null);
+			worldItem.setFlyDirection(null);
 			fail();
 		} catch (NullPointerException exp) {
 		}
@@ -74,7 +74,7 @@ public class MoveableWorldItemTest extends TestCase {
 
 	public void testNegativeSpeedValue() {
 		try {
-			worldItem.setSpeed(-1.0);
+			worldItem.setFlySpeed(-1.0);
 			fail();
 		} catch (IllegalArgumentException exp) {
 		}
