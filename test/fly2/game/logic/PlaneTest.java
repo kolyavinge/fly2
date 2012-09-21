@@ -8,6 +8,7 @@ public class PlaneTest extends TestCase {
 	private double width = 10.0;
 	private double height = 20.0;
 	private int health = 15;
+	private double moveSpeed = 12.0;
 	private Plane plane;
 	private Weapon weapon;
 	private TestPlaneListener planeListener;
@@ -18,12 +19,14 @@ public class PlaneTest extends TestCase {
 		plane = new Plane(weapon);
 		plane.setSize(width, height);
 		plane.setHealth(health);
+		plane.setMoveSpeed(moveSpeed);
 		plane.setListener(planeListener);
 	}
 
 	public void testNew() {
 		plane = new Plane(weapon);
 		assertEquals(0, plane.getHealth());
+		assertEquals(0, plane.getMoveSpeed(), 0.001);
 		assertTrue(plane.isDestroyed());
 		assertSame(weapon, plane.getWeapon());
 		assertNotNull(plane.getListener());
@@ -32,6 +35,7 @@ public class PlaneTest extends TestCase {
 
 	public void testSettersGetters() {
 		assertEquals(health, plane.getHealth());
+		assertEquals(moveSpeed, plane.getMoveSpeed(), 0.001);
 		assertFalse(plane.isDestroyed());
 		assertSame(weapon, plane.getWeapon());
 		assertSame(planeListener, plane.getListener());
@@ -40,7 +44,7 @@ public class PlaneTest extends TestCase {
 	public void testFire() {
 		plane.setWeapon(weapon);
 		plane.fire();
-		assertTrue(planeListener.onFireHasCall);
+		assertTrue(planeListener.onFireCall);
 		assertNotNull(planeListener.plane);
 		assertNotNull(planeListener.bullet);
 		assertSame(plane, planeListener.plane);
@@ -85,6 +89,32 @@ public class PlaneTest extends TestCase {
 		assertEquals(1.0, weapon.getX(), 0.001);
 		assertEquals(8.0, weapon.getY(), 0.001);
 	}
+	
+	public void testMoveLeft() {
+		weapon.setPosition(0, 10.0);
+		plane.moveLeft();
+		assertEquals(-plane.getMoveSpeed(), plane.getX(), 0.001);
+	}
+	
+	public void testMoveRight() {
+		weapon.setPosition(0, 10.0);
+		plane.moveRight();
+		assertEquals(plane.getMoveSpeed(), plane.getX(), 0.001);
+	}
+
+	public void testRaiseOnMoveLeftEvent() {
+		assertFalse(planeListener.onMoveLeftCall);
+		plane.moveLeft();
+		assertTrue(planeListener.onMoveLeftCall);
+		assertSame(plane, planeListener.plane);
+	}
+
+	public void testRaiseOnMoveRightEvent() {
+		assertFalse(planeListener.onMoveRightCall);
+		plane.moveRight();
+		assertTrue(planeListener.onMoveRightCall);
+		assertSame(plane, planeListener.plane);
+	}
 
 	public void testDamage() {
 		assertEquals(health, plane.getHealth());
@@ -116,6 +146,17 @@ public class PlaneTest extends TestCase {
 		assertEquals(health, plane.getHealth());
 	}
 
+	public void testIsDestroyed() {
+		assertFalse(plane.isDestroyed());
+		plane.damage(plane.getHealth());
+		assertTrue(plane.isDestroyed());
+	}
+
+	public void testSetOwnerIdToWeapon() {
+		plane.setWeapon(weapon);
+		assertEquals(plane.getId(), weapon.getOwnerPlaneId());
+	}
+
 	public void testNegativeDamage() {
 		try {
 			plane.damage(-1);
@@ -137,15 +178,12 @@ public class PlaneTest extends TestCase {
 		}
 	}
 
-	public void testIsDestroyed() {
-		assertFalse(plane.isDestroyed());
-		plane.damage(plane.getHealth());
-		assertTrue(plane.isDestroyed());
-	}
-
-	public void testSetOwnerIdToWeapon() {
-		plane.setWeapon(weapon);
-		assertEquals(plane.getId(), weapon.getOwnerPlaneId());
+	public void testNegativeMoveSpeed() {
+		try {
+			plane.setMoveSpeed(-1.0);
+			fail();
+		} catch (IllegalArgumentException exp) {
+		}
 	}
 
 	public void testCreateWithNullWeapon() {

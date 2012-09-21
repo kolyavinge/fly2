@@ -7,6 +7,7 @@ public class Plane extends FlyingWorldItem implements fly2.game.frontend.Plane {
 	// TODO: генерацию id-шника можно вынести в отдельный класс
 	private static int lastId = 1;
 
+	private double moveSpeed;
 	private int health;
 	private Weapon weapon;
 	private PlaneListener listener = new DefaultPlaneListener();
@@ -47,6 +48,17 @@ public class Plane extends FlyingWorldItem implements fly2.game.frontend.Plane {
 		this.weapon.setOwnerPlaneId(id);
 	}
 
+	public double getMoveSpeed() {
+		return moveSpeed;
+	}
+
+	public void setMoveSpeed(double moveSpeed) {
+		if (moveSpeed < 0)
+			throw new IllegalArgumentException("moveSpeed");
+		
+		this.moveSpeed = moveSpeed;
+	}
+
 	public int getHealth() {
 		return health;
 	}
@@ -71,7 +83,6 @@ public class Plane extends FlyingWorldItem implements fly2.game.frontend.Plane {
 			throw new IllegalArgumentException("damageValue");
 
 		health -= damageValue;
-
 		if (health < 0)
 			health = 0;
 	}
@@ -85,6 +96,7 @@ public class Plane extends FlyingWorldItem implements fly2.game.frontend.Plane {
 	public void setX(double x) {
 		double oldX = getX();
 		super.setX(x);
+
 		if (weapon != null) {
 			double newX = getX();
 			double deltaX = newX - oldX;
@@ -104,16 +116,31 @@ public class Plane extends FlyingWorldItem implements fly2.game.frontend.Plane {
 	}
 
 	@Override
-	public void moveX(double value) {
+	protected void moveX(double value) {
 		super.moveX(value);
+
 		if (weapon != null)
 			weapon.moveX(value);
+
+		if (value < 0) {
+			listener.onMoveLeft(this);
+		} else if (value > 0) {
+			listener.onMoveRight(this);
+		}
 	}
 
 	@Override
-	public void moveY(double value) {
+	protected void moveY(double value) {
 		super.moveY(value);
 		if (weapon != null)
 			weapon.moveY(value);
+	}
+
+	public void moveLeft() {
+		moveX(-moveSpeed);
+	}
+
+	public void moveRight() {
+		moveX(moveSpeed);
 	}
 }

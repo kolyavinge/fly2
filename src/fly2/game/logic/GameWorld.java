@@ -107,7 +107,19 @@ public final class GameWorld implements fly2.game.frontend.GameWorld, PlaneListe
 		world.removeDestroyedItems();
 	}
 
+	/* PlaneListener */
+
+	public void onMoveLeft(Plane plane) {
+		world.activateOutOfWorld(plane);
+	}
+
+	public void onMoveRight(Plane plane) {
+		world.activateOutOfWorld(plane);
+	}
+
 	public void onFire(Plane plane, Bullet bullet) {
 		world.addItem(bullet);
 	}
+
+	/* PlaneListener */
 }

@@ -107,6 +107,24 @@ public class GameWorldTest extends TestCase {
 		assertEquals(1.0, player.getY(), 0.001);
 	}
 
+	public void testPlayerPlaneOutOfWorldLeft2() {
+		Plane player = gameWorld.getPlayerPlane();
+		player.setPosition(2.0, 10.0);
+		player.setMoveSpeed(10.0);
+		player.moveLeft();
+		assertEquals(0.0, player.getX(), 0.001);
+		assertEquals(10.0, player.getY(), 0.001);
+	}
+
+	public void testPlayerPlaneOutOfWorldRight2() {
+		Plane player = gameWorld.getPlayerPlane();
+		player.setPosition(2.0, 10.0);
+		player.setMoveSpeed(gameWorld.getWidth());
+		player.moveRight();
+		assertEquals(gameWorld.getWidth() - player.getWidth(), player.getX(), 0.001);
+		assertEquals(10.0, player.getY(), 0.001);
+	}
+
 	public void testEnemyPlaneOutOfWorldLeft() {
 		Plane enemy = gameWorld.createEnemyPlane();
 		enemy.setPosition(-1.0, 1.0);
@@ -123,6 +141,24 @@ public class GameWorldTest extends TestCase {
 		gameWorld.update();
 		assertEquals(gameWorld.getWidth() - enemy.getWidth(), enemy.getX(), 0.001);
 		assertEquals(1.0, enemy.getY(), 0.001);
+	}
+
+	public void testEnemyPlaneOutOfWorldLeft2() {
+		Plane enemy = gameWorld.createEnemyPlane();
+		enemy.setPosition(2.0, 10.0);
+		enemy.setMoveSpeed(10.0);
+		enemy.moveLeft();
+		assertEquals(0.0, enemy.getX(), 0.001);
+		assertEquals(10.0, enemy.getY(), 0.001);
+	}
+
+	public void testEnemyPlaneOutOfWorldRight2() {
+		Plane enemy = gameWorld.createEnemyPlane();
+		enemy.setPosition(2.0, 10.0);
+		enemy.setMoveSpeed(gameWorld.getWidth());
+		enemy.moveRight();
+		assertEquals(gameWorld.getWidth() - enemy.getWidth(), enemy.getX(), 0.001);
+		assertEquals(10.0, enemy.getY(), 0.001);
 	}
 
 	public void testPlayerPlaneFly() {
@@ -146,12 +182,12 @@ public class GameWorldTest extends TestCase {
 		// бот летит вниз => разность (newY - oldY) будет отрицательной
 		assertEquals(newY - oldY, -enemy.getFlySpeed(), 0.001);
 	}
-	
+
 	public void testGetPlayerPlane() {
 		Plane player = gameWorld.getPlayerPlane();
 		assertSame(gameWorld, player.getListener());
 	}
-	
+
 	public void testCreateEnemyPlane() {
 		Plane enemy = gameWorld.createEnemyPlane();
 		assertSame(gameWorld, enemy.getListener());

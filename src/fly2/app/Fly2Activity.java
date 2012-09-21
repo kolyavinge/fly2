@@ -24,9 +24,11 @@ public class Fly2Activity extends Activity {
 		gameTimer.run();
 	}
 
-	private void createGameSurface(GameModel gameModel) {
+	private GameSurfaceView createGameSurface(GameModel gameModel) {
 		GameSurfaceView gameView = new GameSurfaceView(gameModel, this);
 		setContentView(gameView);
+
+		return gameView;
 	}
 
 	private GameModel createGameModel() {
