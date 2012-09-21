@@ -23,6 +23,7 @@ public final class PlaneFactory {
 		player.setFlyDirection(UP);
 		player.setHealth(10);
 		player.setFlySpeed(0.01);
+		player.setMoveSpeed(1.0);
 
 		gun.setBulletDirection(UP);
 		gun.setPosition(player.getMiddleX(), player.getY() + player.getHeight());
@@ -38,6 +39,7 @@ public final class PlaneFactory {
 		enemy.setFlyDirection(DOWN);
 		enemy.setHealth(1);
 		enemy.setFlySpeed(0.01);
+		enemy.setMoveSpeed(0.5);
 
 		gun.setBulletDirection(DOWN);
 		gun.setPosition(enemy.getMiddleX(), enemy.getY() + enemy.getHeight());

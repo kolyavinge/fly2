@@ -5,12 +5,16 @@ import static fly2.common.Direction.*;
 
 public class GameWorldTest extends TestCase {
 
-	private GameWorld gameWorld;
 	private final double worldWidth = 100.0;
 	private final double worldHeight = 200.0;
+	private GameWorld gameWorld;
+	private Plane player;
+	private Weapon playerWeapon;
 
 	public void setUp() {
 		gameWorld = new GameWorld(worldWidth, worldHeight);
+		player = gameWorld.getPlayerPlane();
+		playerWeapon = player.getWeapon();
 	}
 
 	public void testSize() {
@@ -19,12 +23,10 @@ public class GameWorldTest extends TestCase {
 	}
 
 	public void testPlayerBulletDamageEnemyPlane() {
-		Plane player = gameWorld.getPlayerPlane();
 		player.setPosition(0.0, 0.0);
 		player.setSize(1.0, 1.0);
 		player.setFlySpeed(0.0);
 
-		Weapon playerWeapon = player.getWeapon();
 		playerWeapon.setPosition(0.5, 1.0);
 		playerWeapon.setBulletSize(1.0);
 		playerWeapon.setBulletSpeed(10.0);
@@ -52,7 +54,6 @@ public class GameWorldTest extends TestCase {
 	}
 
 	public void testPlanesImpact() {
-		Plane player = gameWorld.getPlayerPlane();
 		player.setPosition(0.0, 0.0);
 		player.setSize(1.0, 10.0);
 		player.setFlySpeed(10.0);
@@ -72,11 +73,9 @@ public class GameWorldTest extends TestCase {
 	}
 
 	public void testBulletOutOfWorld() {
-		Plane player = gameWorld.getPlayerPlane();
 		player.setPosition(0.0, 0.0);
 		player.setFlySpeed(0.0);
 
-		Weapon playerWeapon = player.getWeapon();
 		playerWeapon.setPosition(0.5, 1.0);
 		playerWeapon.setBulletSpeed(worldHeight / 2.0);
 
@@ -90,7 +89,6 @@ public class GameWorldTest extends TestCase {
 	}
 
 	public void testPlayerPlaneOutOfWorldLeft() {
-		Plane player = gameWorld.getPlayerPlane();
 		player.setPosition(-1.0, 1.0);
 		player.setFlySpeed(0.0);
 		gameWorld.update();
@@ -99,7 +97,6 @@ public class GameWorldTest extends TestCase {
 	}
 
 	public void testPlayerPlaneOutOfWorldRight() {
-		Plane player = gameWorld.getPlayerPlane();
 		player.setPosition(gameWorld.getWidth() + 10.0, 1.0);
 		player.setFlySpeed(0.0);
 		gameWorld.update();
@@ -108,7 +105,6 @@ public class GameWorldTest extends TestCase {
 	}
 
 	public void testPlayerPlaneOutOfWorldLeft2() {
-		Plane player = gameWorld.getPlayerPlane();
 		player.setPosition(2.0, 10.0);
 		player.setMoveSpeed(10.0);
 		player.moveLeft();
@@ -117,7 +113,6 @@ public class GameWorldTest extends TestCase {
 	}
 
 	public void testPlayerPlaneOutOfWorldRight2() {
-		Plane player = gameWorld.getPlayerPlane();
 		player.setPosition(2.0, 10.0);
 		player.setMoveSpeed(gameWorld.getWidth());
 		player.moveRight();
@@ -162,7 +157,6 @@ public class GameWorldTest extends TestCase {
 	}
 
 	public void testPlayerPlaneFly() {
-		Plane player = gameWorld.getPlayerPlane();
 		assertTrue(player.getFlySpeed() > 0.0);
 		assertEquals(UP, player.getFlyDirection());
 		double oldY = player.getY();
@@ -194,7 +188,6 @@ public class GameWorldTest extends TestCase {
 	}
 
 	public void testStartPlayerPosition() {
-		Plane player = gameWorld.getPlayerPlane();
 		assertEquals(worldWidth / 2.0, player.getMiddleX(), 0.001);
 		assertEquals(0.0, player.getY(), 0.001);
 	}
