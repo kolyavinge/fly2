@@ -3,7 +3,7 @@ package fly2.phyzix;
 import java.util.*;
 import fly2.common.*;
 
-public final class World implements WorldItemCollection {
+public final class World {
 
 	private double width, height;
 	private List<WorldItem> worldItems;
