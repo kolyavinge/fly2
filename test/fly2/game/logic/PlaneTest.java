@@ -16,19 +16,21 @@ public class PlaneTest extends TestCase {
 	public void setUp() {
 		planeListener = new TestPlaneListener();
 		weapon = new Weapon();
-		plane = new Plane(weapon);
+		plane = new Plane();
 		plane.setSize(width, height);
 		plane.setHealth(health);
 		plane.setMoveSpeed(moveSpeed);
 		plane.setListener(planeListener);
+		plane.setWeapon(weapon);
 	}
 
 	public void testNew() {
-		plane = new Plane(weapon);
+		plane = new Plane();
 		assertEquals(0, plane.getHealth());
 		assertEquals(0, plane.getMoveSpeed(), 0.001);
 		assertTrue(plane.isDestroyed());
-		assertSame(weapon, plane.getWeapon());
+		assertNotNull(plane.getWeapon());
+		assertTrue(plane.getWeapon() instanceof NullWeapon);
 		assertNotNull(plane.getListener());
 		assertTrue(plane.getListener() instanceof DefaultPlaneListener);
 	}
@@ -189,14 +191,6 @@ public class PlaneTest extends TestCase {
 	public void testCreateWithNullWeapon() {
 		try {
 			plane.setWeapon(null);
-			fail();
-		} catch (NullPointerException exp) {
-		}
-	}
-
-	public void testSetNullWeapon() {
-		try {
-			plane = new Plane(null);
 			fail();
 		} catch (NullPointerException exp) {
 		}

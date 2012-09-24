@@ -13,10 +13,6 @@ public class Plane extends FlyingWorldItem implements fly2.game.frontend.Plane {
 	private PlaneListener listener = new DefaultPlaneListener();
 	private int id = lastId++;
 
-	public Plane(Weapon weapon) {
-		setWeapon(weapon);
-	}
-
 	public Plane() {
 		weapon = new NullWeapon();
 	}

@@ -7,11 +7,11 @@ import java.util.Collections;
 public class GameModel implements fly2.game.frontend.GameModel {
 
 	private GameWorld gameWorld;
-	private GameWorldFactory gameWorldFactory;
+//	private GameWorldFactory gameWorldFactory;
 	private PlayerPlaneActions playerPlaneActions;
 
 	public GameModel(ResourceFileReader fileReader) {
-		gameWorldFactory = new GameWorldFactory(fileReader);
+		GameWorldFactory gameWorldFactory = new GameWorldFactory(fileReader);
 		gameWorld = gameWorldFactory.makeWorld(0);
 		playerPlaneActions = new PlayerPlaneActions(gameWorld.getPlayerPlane());
 	}

@@ -34,12 +34,4 @@ public class StepResultTest extends TestCase {
 		stepResult.fire();
 		assertTrue(stepResult.isFire());
 	}
-
-	public void testReset() {
-		stepResult.moveLeft();
-		stepResult.fire();
-		stepResult.reset();
-		assertEquals(_UNDEFINED, stepResult.getMoveDirection());
-		assertFalse(stepResult.isFire());
-	}
 }

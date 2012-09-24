@@ -1,6 +1,8 @@
 package fly2.game.common;
 
-import org.json.*;
+import fly2.game.logic.PlaneFactory;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class JsonGameWorldFileParser extends GameWorldFileParser {
 
@@ -20,6 +22,10 @@ public class JsonGameWorldFileParser extends GameWorldFileParser {
 		double gameWorldWidth = world.getDouble("width");
 		double gameWorldHeight = world.getDouble("height");
 		handler.createGameWorld(gameWorldWidth, gameWorldHeight);
+
+		String planeFactoryClassName = world.getString("planeFactory");
+		PlaneFactory planeFactory = (PlaneFactory) Class.forName(planeFactoryClassName).newInstance();
+		handler.createPlaneFactory(planeFactory);
 
 		JSONArray enemies = world.getJSONArray("enemies");
 		for (int i = 0; i < enemies.length(); i++) {

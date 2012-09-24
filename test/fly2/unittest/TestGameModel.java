@@ -38,5 +38,4 @@ public class TestGameModel implements GameModel {
 	public PlayerPlaneActions getPlayerPlaneActions() {
 		return null;
 	}
-	
 }

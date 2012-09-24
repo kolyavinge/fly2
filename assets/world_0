@@ -3,6 +3,8 @@
     
         "width": 20, "height": 150,
         
+        "planeFactory": "fly2.game.logic.GamePlaneFactory",
+        
         "enemies": [
             {"x": 10,  "y":  30},
             {"x": 15,  "y":  40},

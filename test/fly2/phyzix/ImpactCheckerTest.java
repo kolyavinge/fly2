@@ -11,7 +11,7 @@ public class ImpactCheckerTest extends TestCase {
 
 	private ImpactChecker impactChecker;
 	private Collection<WorldItemTuple> result;
-	private List<WorldItem> worldItems;
+	private ArrayList<WorldItem> worldItems;
 
 	public void setUp() {
 		impactChecker = new ImpactChecker();

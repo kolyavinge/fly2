@@ -13,7 +13,14 @@ public class GameModelTest extends InstrumentationTestCase {
 	}
 
 	public void testNew() {
-		fileReader.put("world_0", "{\"world\":{\"width\":123, \"height\":789, \"enemies\":[]}}");
+		final String fileContent = "{" +
+				"'world': {" +
+					"'width': 123, 'height': 789," +
+					"'planeFactory': 'fly2.unittest.TestPlaneFactory'," +
+                    "'enemies': []" +
+				"}" +
+	    "}";
+		fileReader.put("world_0", fileContent);
 		gameModel = new GameModel(fileReader);
 		assertNotNull(gameModel.getWorld());
 		assertEquals(123.0, gameModel.getWorld().getWidth(), 0.001);

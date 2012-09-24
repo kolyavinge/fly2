@@ -1,6 +1,7 @@
 {
     "world": {
         "width": 20, "height": 100,
+        "planeFactory": "fly2.unittest.TestPlaneFactory",
         "enemies": [
             {"x": 1,  "y": 30},
             {"x": 20, "y": 50},

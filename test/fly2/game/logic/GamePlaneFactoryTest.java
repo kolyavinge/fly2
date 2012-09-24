@@ -3,12 +3,12 @@ package fly2.game.logic;
 import static fly2.common.Direction.*;
 import junit.framework.TestCase;
 
-public class PlaneFactoryTest extends TestCase {
+public class GamePlaneFactoryTest extends TestCase {
 
-	private PlaneFactory planeFactory;
+	private GamePlaneFactory planeFactory;
 
 	public void setUp() {
-		planeFactory = PlaneFactory.getInstance();
+		planeFactory = new GamePlaneFactory();
 	}
 
 	public void testMakePlayer() {

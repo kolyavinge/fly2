@@ -3,13 +3,14 @@ package fly2.game.enemy;
 import fly2.common.Direction;
 import static fly2.common.Direction.*;
 
-public class StepResult {
+public final class StepResult {
 
 	private boolean fireFlag;
 	private Direction moveDirection;
 
 	public StepResult() {
-		init();
+		fireFlag = false;
+		moveDirection = _UNDEFINED;
 	}
 	
 	public boolean isFire() {
@@ -30,14 +31,5 @@ public class StepResult {
 
 	public void moveRight() {
 		moveDirection = RIGHT;
-	}
-
-	public void reset() {
-		init();
-	}
-
-	private void init() {
-		fireFlag = false;
-		moveDirection = _UNDEFINED;
 	}
 }

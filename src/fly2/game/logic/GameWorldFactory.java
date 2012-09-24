@@ -13,6 +13,7 @@ public class GameWorldFactory implements GameWorldFileParserHandler {
 
 	private GameWorld gameWorld;
 	private ResourceFileReader reader;
+	private PlaneFactory planeFactory;
 
 	public GameWorldFactory(ResourceFileReader reader) {
 		if (reader == null)
@@ -62,16 +63,23 @@ public class GameWorldFactory implements GameWorldFileParserHandler {
 	}
 
 	/* GameWorldFileParserHandler */
-
 	public void createGameWorld(double width, double height) {
 		gameWorld = new GameWorld(width, height);
 	}
 
+	public void createPlaneFactory(PlaneFactory factory) {
+		planeFactory = factory;
+		Plane player = planeFactory.makePlayer();
+		gameWorld.setPlayerPlane(player);
+	}
+
 	public void createEnemyPlane(double x, double y) {
 		if (gameWorld == null)
-			throw new GameWorldFactoryException("World was not created");
+			throw new GameWorldFactoryException("GameWorld not created");
 
-		Plane enemy = gameWorld.createEnemyPlane();
+		Plane enemy = planeFactory.makeEnemy();
 		enemy.setPosition(x, y);
+		gameWorld.addEnemyPlane(enemy);
 	}
+	/* GameWorldFileParserHandler */
 }

@@ -5,6 +5,7 @@ import android.test.InstrumentationTestCase;
 import fly2.app.AssetFileReader;
 import fly2.common.Tuple;
 import fly2.unittest.TestGameWorldFileParserHandler;
+import fly2.unittest.TestPlaneFactory;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -25,6 +26,7 @@ public class JsonGameWorldFileParserTest extends InstrumentationTestCase {
 	public void testParse() {
 		parse();
 		assertGameWorld(20, 100);
+		assertPlaneFactory(TestPlaneFactory.class);
 		assertEnemiesCount(3);
 		assertEnemy(1, 30);
 		assertEnemy(20, 50);
@@ -69,6 +71,10 @@ public class JsonGameWorldFileParserTest extends InstrumentationTestCase {
 	private void assertGameWorld(double width, double height) {
 		assertEquals(width, handler.getGameWorldWidth(), 0.001);
 		assertEquals(height, handler.getGameWorldHeight(), 0.001);
+	}
+
+	private void assertPlaneFactory(Class planeFactoryClass) {
+		assertEquals(planeFactoryClass.getName(), handler.getPlaneFactory().getClass().getName());
 	}
 
 	private void assertEnemiesCount(int count) {

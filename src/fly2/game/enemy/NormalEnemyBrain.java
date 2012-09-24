@@ -1,38 +1,33 @@
 package fly2.game.enemy;
 
-import fly2.game.common.ResourceFileReader;
+import fly2.game.frontend.Plane;
 
-import java.io.IOException;
+public class NormalEnemyBrain implements EnemyBrain {
 
-public class NormalEnemyBrain extends EnemyBrain {
+	private EnemyBrainContext context;
 
-	private static final String brainScriptFileName = "brain.js";
-
-	private ScriptManager script;
-	private String scriptText;
-
-	public NormalEnemyBrain(ResourceFileReader fileReader) {
-		readScriptFileText(fileReader);
-		script = new ScriptManager();
+	public void setContext(EnemyBrainContext context) {
+		if (context == null)
+			throw new NullPointerException("context");
+			
+		this.context = context;
 	}
 
-	@Override
-	public void activate() {
-		script.define("world", getGameWorld());
-		script.define("player", getPlayer());
-		script.define("enemy", getEnemy());
-		script.define("enemies", getEnemyPlanes());
-		script.define("bullets", getBullets());
-		script.define("stepResult", getStepResult());
-
-		script.evaluate(scriptText);
-	}
-
-	private void readScriptFileText(ResourceFileReader fileReader) {
-		try {
-			scriptText = fileReader.getFileText(brainScriptFileName);
-		} catch (IOException ioexp) {
-			throw new RuntimeException("Can't read file " + brainScriptFileName);
+	public StepResult activate() {
+		if (context == null)
+			throw new IllegalStateException("context not set");
+		
+		Plane player = context.getPlayer();
+		Plane enemy = context.getEnemy();
+		
+		StepResult stepResult = new StepResult();
+		
+		double dx = player.getX() - enemy.getX();
+		double dy = player.getY() - enemy.getY();
+		if ((Math.abs(dx) <= enemy.getWidth() / 2) && (Math.abs(dy) <= 4 * enemy.getHeight())) {
+			stepResult.fire();
 		}
+
+		return stepResult;
 	}
 }

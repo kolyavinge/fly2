@@ -6,7 +6,7 @@ import fly2.common.*;
 public final class World {
 
 	private double width, height;
-	private List<WorldItem> worldItems;
+	private Collection<WorldItem> worldItems;
 	private Map<WorldItem, OutOfWorldStrategy> outOfWorldStrategies;
 	private ImpactStrategyCollection impactStrategies;
 	private ImpactChecker impactChecker;
@@ -17,7 +17,7 @@ public final class World {
 			throw new IllegalArgumentException("Размеры игрового мира должны быть больше нуля");
 		this.width = width;
 		this.height = height;
-		this.worldItems = new ArrayList<WorldItem>();
+		this.worldItems = new java.util.concurrent.LinkedBlockingQueue<WorldItem>();
 		this.impactStrategies = new ImpactStrategyCollection();
 		this.outOfWorldStrategies = new HashMap<WorldItem, OutOfWorldStrategy>();
 		this.impactChecker = new ImpactChecker();
@@ -67,7 +67,7 @@ public final class World {
 	}
 
 	public void activateItemsImpact() {
-		Collection<WorldItemTuple> impactedItems = impactChecker.checkImpact(worldItems);
+		Collection<WorldItemTuple> impactedItems = impactChecker.checkImpact(new ArrayList<WorldItem>(worldItems));
 		for (WorldItemTuple t : impactedItems) {
 			WorldItem first = t.getFirst();
 			WorldItem second = t.getSecond();

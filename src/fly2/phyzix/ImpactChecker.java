@@ -11,8 +11,8 @@ final class ImpactChecker {
 	/**
 	 * Ищит объекты которые ударились и возвращает их в виде коллекции кортежей.
 	 */
-	public Collection<WorldItemTuple> checkImpact(List<WorldItem> worldItems) {
-		Collection<WorldItemTuple> result = new ArrayList<WorldItemTuple>();
+	public Collection<WorldItemTuple> checkImpact(ArrayList<WorldItem> worldItems) {
+		Collection<WorldItemTuple> result = new ArrayList<WorldItemTuple>(worldItems.size());
 
 		for (int i = 0; i < worldItems.size() - 1; i++) {
 			for (int j = i + 1; j < worldItems.size(); j++) {

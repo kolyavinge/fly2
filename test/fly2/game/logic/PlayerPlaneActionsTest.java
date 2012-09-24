@@ -9,7 +9,8 @@ public class PlayerPlaneActionsTest extends TestCase {
 	private PlayerPlaneActions actions;
 
 	public void setUp() {
-		plane = new Plane(new Weapon());
+		plane = new Plane();
+		plane.setWeapon(new Weapon());
 		actions = new PlayerPlaneActions(plane);
 	}
 

@@ -2,12 +2,14 @@ package fly2.unittest;
 
 import fly2.common.Tuple;
 import fly2.game.common.GameWorldFileParserHandler;
+import fly2.game.logic.PlaneFactory;
 
 import java.util.ArrayList;
 
 public class TestGameWorldFileParserHandler implements GameWorldFileParserHandler {
 
 	private double gameWorldWidth, gameWorldHeight;
+	private PlaneFactory planeFactory;
 	private ArrayList<Tuple<Double, Double>> enemies;
 
 	public TestGameWorldFileParserHandler() {
@@ -22,6 +24,10 @@ public class TestGameWorldFileParserHandler implements GameWorldFileParserHandle
 		return gameWorldHeight;
 	}
 
+	public PlaneFactory getPlaneFactory() {
+		return planeFactory;
+	}
+
 	public ArrayList<Tuple<Double, Double>> getEnemies() {
 		return enemies;
 	}
@@ -31,6 +37,10 @@ public class TestGameWorldFileParserHandler implements GameWorldFileParserHandle
 	public void createGameWorld(double width, double height) {
 		gameWorldWidth = width;
 		gameWorldHeight = height;
+	}
+
+	public void createPlaneFactory(PlaneFactory factory) {
+		planeFactory = factory;
 	}
 
 	public void createEnemyPlane(double x, double y) {
