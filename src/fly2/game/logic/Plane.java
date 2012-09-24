@@ -1,5 +1,7 @@
 package fly2.game.logic;
 
+import static fly2.game.frontend.PlaneKind.*;
+import fly2.game.frontend.PlaneKind;
 import fly2.phyzix.ext.FlyingWorldItem;
 
 public class Plane extends FlyingWorldItem implements fly2.game.frontend.Plane {
@@ -7,6 +9,7 @@ public class Plane extends FlyingWorldItem implements fly2.game.frontend.Plane {
 	// TODO: генерацию id-шника можно вынести в отдельный класс
 	private static int lastId = 1;
 
+	private PlaneKind kind;
 	private double moveSpeed;
 	private int health;
 	private Weapon weapon;
@@ -14,11 +17,20 @@ public class Plane extends FlyingWorldItem implements fly2.game.frontend.Plane {
 	private int id = lastId++;
 
 	public Plane() {
+		kind = _UNDEFINED;
 		weapon = new NullWeapon();
 	}
 
 	public int getId() {
 		return id;
+	}
+
+	public PlaneKind getKind() {
+		return kind;
+	}
+
+	public void setKind(PlaneKind kind) {
+		this.kind = kind;
 	}
 
 	public PlaneListener getListener() {

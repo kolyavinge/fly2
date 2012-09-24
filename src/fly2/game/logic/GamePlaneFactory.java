@@ -1,7 +1,7 @@
 package fly2.game.logic;
 
-import static fly2.common.Direction.DOWN;
-import static fly2.common.Direction.UP;
+import static fly2.game.frontend.Direction.*;
+import static fly2.game.frontend.PlaneKind.*;
 
 public final class GamePlaneFactory implements PlaneFactory {
 
@@ -11,6 +11,7 @@ public final class GamePlaneFactory implements PlaneFactory {
 		Weapon gun = weaponFactory.makeGun();
 
 		Plane player = new Plane();
+		player.setKind(PLAYER);
 		player.setSize(2.0, 1.5);
 		player.setFlyDirection(UP);
 		player.setHealth(10);
@@ -28,6 +29,7 @@ public final class GamePlaneFactory implements PlaneFactory {
 		Weapon gun = weaponFactory.makeGun();
 
 		Plane enemy = new Plane();
+		enemy.setKind(ENEMY);
 		enemy.setSize(2.0, 1.5);
 		enemy.setFlyDirection(DOWN);
 		enemy.setHealth(1);

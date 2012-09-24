@@ -1,6 +1,6 @@
 package fly2.unittest;
 
-import fly2.common.Direction;
+import fly2.game.frontend.Direction;
 import fly2.game.frontend.Weapon;
 
 public class TestWeapon implements Weapon {

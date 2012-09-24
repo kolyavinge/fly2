@@ -1,6 +1,7 @@
 package fly2.game.logic;
 
-import static fly2.common.Direction.*;
+import static fly2.game.frontend.Direction.*;
+import static fly2.game.frontend.PlaneKind.*;
 import junit.framework.TestCase;
 
 public class GamePlaneFactoryTest extends TestCase {
@@ -13,6 +14,7 @@ public class GamePlaneFactoryTest extends TestCase {
 
 	public void testMakePlayer() {
 		Plane player = planeFactory.makePlayer();
+		assertEquals(PLAYER, player.getKind());
 		assertEquals(0.0, player.getX());
 		assertEquals(0.0, player.getY());
 		assertEquals(2.0, player.getWidth());
@@ -30,6 +32,7 @@ public class GamePlaneFactoryTest extends TestCase {
 
 	public void testMakeEnemy() {
 		Plane enemy = planeFactory.makeEnemy();
+		assertEquals(ENEMY, enemy.getKind());
 		assertEquals(0.0, enemy.getX());
 		assertEquals(0.0, enemy.getY());
 		assertEquals(2.0, enemy.getWidth());

@@ -1,5 +1,6 @@
 package fly2.game.logic;
 
+import static fly2.game.frontend.PlaneKind.*;
 import fly2.unittest.TestPlaneListener;
 import junit.framework.TestCase;
 
@@ -17,6 +18,7 @@ public class PlaneTest extends TestCase {
 		planeListener = new TestPlaneListener();
 		weapon = new Weapon();
 		plane = new Plane();
+		plane.setKind(PLAYER);
 		plane.setSize(width, height);
 		plane.setHealth(health);
 		plane.setMoveSpeed(moveSpeed);
@@ -26,6 +28,7 @@ public class PlaneTest extends TestCase {
 
 	public void testNew() {
 		plane = new Plane();
+		assertEquals(_UNDEFINED, plane.getKind());
 		assertEquals(0, plane.getHealth());
 		assertEquals(0, plane.getMoveSpeed(), 0.001);
 		assertTrue(plane.isDestroyed());
@@ -36,6 +39,7 @@ public class PlaneTest extends TestCase {
 	}
 
 	public void testSettersGetters() {
+		assertEquals(PLAYER, plane.getKind());
 		assertEquals(health, plane.getHealth());
 		assertEquals(moveSpeed, plane.getMoveSpeed(), 0.001);
 		assertFalse(plane.isDestroyed());

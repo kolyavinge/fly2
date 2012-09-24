@@ -1,7 +1,7 @@
 package fly2.game.enemy;
 
-import fly2.common.Direction;
-import static fly2.common.Direction.*;
+import fly2.game.frontend.Direction;
+import static fly2.game.frontend.Direction.*;
 
 public final class StepResult {
 

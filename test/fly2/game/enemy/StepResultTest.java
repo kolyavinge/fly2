@@ -1,7 +1,7 @@
 package fly2.game.enemy;
 
 import junit.framework.TestCase;
-import static fly2.common.Direction.*;
+import static fly2.game.frontend.Direction.*;
 
 public class StepResultTest extends TestCase {
 

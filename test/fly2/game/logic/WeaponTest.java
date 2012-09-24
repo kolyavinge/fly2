@@ -1,8 +1,8 @@
 package fly2.game.logic;
 
-import static fly2.common.Direction.UP;
-import static fly2.common.Direction._UNDEFINED;
-import fly2.common.Direction;
+import static fly2.game.frontend.Direction.UP;
+import static fly2.game.frontend.Direction._UNDEFINED;
+import fly2.game.frontend.Direction;
 import junit.framework.TestCase;
 
 public class WeaponTest extends TestCase {

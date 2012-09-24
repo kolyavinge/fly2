@@ -1,7 +1,7 @@
 package fly2.unittest;
 
-import fly2.common.Direction;
 import fly2.game.frontend.Bullet;
+import fly2.game.frontend.Direction;
 
 public class TestBullet implements Bullet {
 

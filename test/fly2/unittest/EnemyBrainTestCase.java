@@ -1,10 +1,10 @@
 package fly2.unittest;
 
-import fly2.common.Direction;
 import fly2.game.enemy.EnemyBrain;
 import fly2.game.enemy.EnemyBrainContext;
 import fly2.game.enemy.StepResult;
 import fly2.game.frontend.Bullet;
+import fly2.game.frontend.Direction;
 
 import java.util.Collection;
 

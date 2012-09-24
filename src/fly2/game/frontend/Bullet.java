@@ -1,6 +1,5 @@
 package fly2.game.frontend;
 
-import fly2.common.Direction;
 
 public interface Bullet {
 

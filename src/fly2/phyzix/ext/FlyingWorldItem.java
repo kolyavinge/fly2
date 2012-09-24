@@ -1,9 +1,9 @@
 package fly2.phyzix.ext;
 
-import fly2.common.Direction;
+import fly2.game.frontend.Direction;
 import fly2.phyzix.Updateable;
 import fly2.phyzix.WorldItem;
-import static fly2.common.Direction.*;
+import static fly2.game.frontend.Direction.*;
 
 /**
  * Летaющий игровой объект.

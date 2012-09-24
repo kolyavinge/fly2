@@ -2,7 +2,7 @@ package fly2.phyzix.ext;
 
 import fly2.phyzix.ext.FlyingWorldItem;
 import junit.framework.TestCase;
-import static fly2.common.Direction.*;
+import static fly2.game.frontend.Direction.*;
 
 public class FlyingWorldItemTest extends TestCase {
 

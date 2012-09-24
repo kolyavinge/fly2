@@ -1,4 +1,4 @@
-package fly2.common;
+package fly2.game.frontend;
 
 public enum Direction {
 

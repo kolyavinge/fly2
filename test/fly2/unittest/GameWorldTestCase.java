@@ -1,6 +1,6 @@
 package fly2.unittest;
 
-import fly2.common.Direction;
+import fly2.game.frontend.Direction;
 import fly2.game.logic.GameWorld;
 import fly2.game.logic.Plane;
 import fly2.game.logic.Weapon;
