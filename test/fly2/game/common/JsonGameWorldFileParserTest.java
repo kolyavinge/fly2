@@ -73,7 +73,7 @@ public class JsonGameWorldFileParserTest extends InstrumentationTestCase {
 		assertEquals(height, handler.getGameWorldHeight(), 0.001);
 	}
 
-	private void assertPlaneFactory(Class planeFactoryClass) {
+	private void assertPlaneFactory(Class<TestPlaneFactory> planeFactoryClass) {
 		assertEquals(planeFactoryClass.getName(), handler.getPlaneFactory().getClass().getName());
 	}
 

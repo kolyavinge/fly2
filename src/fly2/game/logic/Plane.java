@@ -1,22 +1,21 @@
 package fly2.game.logic;
 
 import static fly2.game.frontend.PlaneKind.*;
+import fly2.game.common.PlaneIdGenerator;
 import fly2.game.frontend.PlaneKind;
 import fly2.phyzix.ext.FlyingWorldItem;
 
 public class Plane extends FlyingWorldItem implements fly2.game.frontend.Plane {
 
-	// TODO: генерацию id-шника можно вынести в отдельный класс
-	private static int lastId = 1;
-
+	private int id;
 	private PlaneKind kind;
 	private double moveSpeed;
 	private int health;
 	private Weapon weapon;
 	private PlaneListener listener = new DefaultPlaneListener();
-	private int id = lastId++;
 
 	public Plane() {
+		id = PlaneIdGenerator.getInstance().generate();
 		kind = _UNDEFINED;
 		weapon = new NullWeapon();
 	}
@@ -63,7 +62,7 @@ public class Plane extends FlyingWorldItem implements fly2.game.frontend.Plane {
 	public void setMoveSpeed(double moveSpeed) {
 		if (moveSpeed < 0)
 			throw new IllegalArgumentException("moveSpeed");
-		
+
 		this.moveSpeed = moveSpeed;
 	}
 
