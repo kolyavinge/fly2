@@ -1,7 +1,7 @@
 package fly2.game.logic;
 
+import static fly2.game.frontend.PlaneKind.*;
 import fly2.phyzix.WorldItem;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -10,20 +10,20 @@ public final class WorldItemsHelper {
 	private WorldItemsHelper() {
 	}
 
-	public static Collection<Plane> getEnemyPlanes(Iterable<WorldItem> worldItems, WorldItem playerPlane) {
+	public static Collection<Plane> getEnemyPlanes(Iterable<WorldItem> worldItems) {
 		Collection<Plane> enemyPlanes = new ArrayList<Plane>();
 		for (WorldItem item : worldItems) {
-			if ((item instanceof Plane) && (item != playerPlane))
+			if ((item instanceof Plane) && ((Plane)item).getKind() == ENEMY)
 				enemyPlanes.add((Plane) item);
 		}
 
 		return enemyPlanes;
 	}
 
-	public static int getEnemyPlanesCount(Iterable<WorldItem> worldItems, WorldItem playerPlane) {
+	public static int getEnemyPlanesCount(Iterable<WorldItem> worldItems) {
 		int count = 0;
 		for (WorldItem item : worldItems) {
-			if ((item instanceof Plane) && (item != playerPlane))
+			if ((item instanceof Plane) && ((Plane)item).getKind() == ENEMY)
 				count++;
 		}
 

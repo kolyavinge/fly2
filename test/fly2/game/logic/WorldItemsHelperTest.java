@@ -1,5 +1,6 @@
 package fly2.game.logic;
 
+import fly2.game.frontend.PlaneKind;
 import fly2.phyzix.WorldItem;
 
 import java.util.ArrayList;
@@ -21,17 +22,20 @@ public class WorldItemsHelperTest extends TestCase {
 		items.add(enemy2 = new Plane());
 		items.add(bullet1 = new Bullet());
 		items.add(bullet2 = new Bullet());
+		player.setKind(PlaneKind.PLAYER);
+		enemy1.setKind(PlaneKind.ENEMY);
+		enemy2.setKind(PlaneKind.ENEMY);
 	}
 
 	public void testGetEnemyPlanes() {
-		Collection<Plane> enemyPlanes = WorldItemsHelper.getEnemyPlanes(items, player);
+		Collection<Plane> enemyPlanes = WorldItemsHelper.getEnemyPlanes(items);
 		assertEquals(2, enemyPlanes.size());
 		assertTrue(enemyPlanes.contains(enemy1));
 		assertTrue(enemyPlanes.contains(enemy2));
 	}
 
 	public void testGetEnemyPlanesCount() {
-		int enemyPlanesCount = WorldItemsHelper.getEnemyPlanesCount(items, player);
+		int enemyPlanesCount = WorldItemsHelper.getEnemyPlanesCount(items);
 		assertEquals(2, enemyPlanesCount);
 	}
 

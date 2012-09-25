@@ -69,11 +69,11 @@ public final class GameWorld implements fly2.game.frontend.GameWorld, PlaneListe
 	}
 
 	public Collection<Plane> getEnemyPlanes() {
-		return WorldItemsHelper.getEnemyPlanes(world.getItems(), playerPlane);
+		return WorldItemsHelper.getEnemyPlanes(world.getItems());
 	}
 
 	public int getEnemyPlanesCount() {
-		return WorldItemsHelper.getEnemyPlanesCount(world.getItems(), playerPlane);
+		return WorldItemsHelper.getEnemyPlanesCount(world.getItems());
 	}
 
 	public Collection<Bullet> getBullets() {
