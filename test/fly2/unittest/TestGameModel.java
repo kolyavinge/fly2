@@ -6,6 +6,8 @@ import fly2.game.frontend.GameWorld;
 import fly2.game.frontend.Plane;
 import fly2.game.frontend.PlayerPlaneActions;
 
+import java.util.Collection;
+
 public class TestGameModel implements GameModel {
 
 	public Plane getPlayerPlane() {
@@ -15,7 +17,7 @@ public class TestGameModel implements GameModel {
 	public void update() {
 	}
 
-	public Iterable<Plane> getEnemyPlanes() {
+	public Collection<Plane> getEnemyPlanes() {
 		return null;
 	}
 
@@ -27,7 +29,7 @@ public class TestGameModel implements GameModel {
 		return null;
 	}
 
-	public Iterable<Bullet> getBullets() {
+	public Collection<Bullet> getBullets() {
 		return null;
 	}
 

@@ -2,22 +2,26 @@ package fly2.game.logic;
 
 import fly2.game.common.ResourceFileReader;
 
+import java.util.Collection;
 import java.util.Collections;
 
-public class GameModel implements fly2.game.frontend.GameModel {
+public final class GameModel implements fly2.game.frontend.GameModel {
 
 	private GameWorld gameWorld;
 //	private GameWorldFactory gameWorldFactory;
-	private PlayerPlaneActions playerPlaneActions;
+	private PlaneActions playerPlaneActions;
+	// private EnemyBrainActivator brainActivator;
 
 	public GameModel(ResourceFileReader fileReader) {
 		GameWorldFactory gameWorldFactory = new GameWorldFactory(fileReader);
 		gameWorld = gameWorldFactory.makeWorld(0);
-		playerPlaneActions = new PlayerPlaneActions(gameWorld.getPlayerPlane());
+		playerPlaneActions = new PlaneActions(gameWorld.getPlayerPlane());
+		// brainActivator = new EnemyBrainActivator(gameWorld.getEnemyPlanes());
 	}
 
 	public void update() {
 		gameWorld.update();
+		// brainActivator.activate(gameWorld.getEnemyPlanes());
 	}
 
 	public fly2.game.frontend.GameWorld getWorld() {
@@ -28,7 +32,7 @@ public class GameModel implements fly2.game.frontend.GameModel {
 		return gameWorld.getPlayerPlane();
 	}
 
-	public Iterable<fly2.game.frontend.Plane> getEnemyPlanes() {
+	public Collection<fly2.game.frontend.Plane> getEnemyPlanes() {
 		return Collections.<fly2.game.frontend.Plane> unmodifiableCollection(gameWorld.getEnemyPlanes());
 	}
 
@@ -36,7 +40,7 @@ public class GameModel implements fly2.game.frontend.GameModel {
 		return gameWorld.getEnemyPlanesCount();
 	}
 
-	public Iterable<fly2.game.frontend.Bullet> getBullets() {
+	public Collection<fly2.game.frontend.Bullet> getBullets() {
 		return Collections.<fly2.game.frontend.Bullet> unmodifiableCollection(gameWorld.getBullets());
 	}
 

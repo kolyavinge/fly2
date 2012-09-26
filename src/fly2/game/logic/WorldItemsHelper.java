@@ -5,7 +5,7 @@ import fly2.phyzix.WorldItem;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public final class WorldItemsHelper {
+final class WorldItemsHelper {
 
 	private WorldItemsHelper() {
 	}

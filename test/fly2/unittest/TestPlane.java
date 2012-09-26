@@ -1,6 +1,7 @@
 package fly2.unittest;
 
 import fly2.game.frontend.Plane;
+import fly2.game.frontend.PlaneKind;
 import fly2.game.frontend.Weapon;
 
 public class TestPlane implements Plane {
@@ -8,6 +9,10 @@ public class TestPlane implements Plane {
 	private double width, height;
 	private double x, y;
 	
+	public PlaneKind getKind() {
+		return PlaneKind._UNDEFINED;
+	}
+
 	public double getX() {
 		return x;
 	}

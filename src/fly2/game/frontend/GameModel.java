@@ -1,5 +1,7 @@
 package fly2.game.frontend;
 
+import java.util.Collection;
+
 /**
  * Модель игры
  */
@@ -9,11 +11,11 @@ public interface GameModel {
 
 	Plane getPlayerPlane();
 
-	Iterable<Plane> getEnemyPlanes();
+	Collection<Plane> getEnemyPlanes();
 
 	int getEnemyPlanesCount();
 
-	Iterable<Bullet> getBullets();
+	Collection<Bullet> getBullets();
 
 	int getBulletsCount();
 	

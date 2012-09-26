@@ -1,6 +1,6 @@
 package fly2.game.enemy;
 
-public class NullEnemyBrain implements EnemyBrain {
+public final class NullEnemyBrain implements EnemyBrain {
 
 	public void setContext(EnemyBrainContext context) {
 		throw new EnemyBrainNotInitializeException();
