@@ -1,4 +1,4 @@
-package fly2.unittest;
+package fly2.unittest.framework;
 
 import fly2.game.frontend.Direction;
 import fly2.game.logic.GameWorld;

@@ -2,7 +2,7 @@ package fly2.game.logic;
 
 import static fly2.game.frontend.Direction.DOWN;
 import static fly2.game.frontend.Direction.UP;
-import fly2.unittest.GameWorldTestCase;
+import fly2.unittest.framework.GameWorldTestCase;
 
 public class GameWorldTest extends GameWorldTestCase {
 

@@ -1,4 +1,4 @@
-package fly2.unittest;
+package fly2.unittest.stub;
 
 import fly2.game.frontend.Bullet;
 import fly2.game.frontend.Direction;

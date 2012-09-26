@@ -1,7 +1,7 @@
 package fly2.game.view;
 
 import fly2.game.view.Camera;
-import fly2.unittest.TestCameraObservableObject;
+import fly2.unittest.stub.TestCameraObservableObject;
 import junit.framework.TestCase;
 
 public class CameraTest extends TestCase {

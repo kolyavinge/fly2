@@ -1,7 +1,7 @@
 package fly2.phyzix;
 
-import fly2.unittest.UpdateableWorldItem;
-import fly2.unittest.WorldTestCase;
+import fly2.unittest.framework.WorldTestCase;
+import fly2.unittest.stub.UpdateableWorldItem;
 
 import java.util.Iterator;
 

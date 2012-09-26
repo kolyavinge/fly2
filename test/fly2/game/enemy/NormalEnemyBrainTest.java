@@ -1,7 +1,7 @@
 package fly2.game.enemy;
 
 import static fly2.game.frontend.Direction._UNDEFINED;
-import fly2.unittest.EnemyBrainTestCase;
+import fly2.unittest.framework.EnemyBrainTestCase;
 
 public class NormalEnemyBrainTest extends EnemyBrainTestCase {
 

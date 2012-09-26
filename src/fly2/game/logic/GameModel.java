@@ -1,6 +1,6 @@
 package fly2.game.logic;
 
-import fly2.game.common.ResourceFileReader;
+import fly2.game.enemy.EnemyBrainController;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -8,20 +8,20 @@ import java.util.Collections;
 public final class GameModel implements fly2.game.frontend.GameModel {
 
 	private GameWorld gameWorld;
-//	private GameWorldFactory gameWorldFactory;
+	private GameWorldFactory gameWorldFactory;
 	private PlaneActions playerPlaneActions;
-	// private EnemyBrainActivator brainActivator;
+	private EnemyBrainController brainController;
 
-	public GameModel(ResourceFileReader fileReader) {
-		GameWorldFactory gameWorldFactory = new GameWorldFactory(fileReader);
-		gameWorld = gameWorldFactory.makeWorld(0);
+	public GameModel(GameWorldFactory gameWorldFactory, EnemyBrainController brainController) {
+		this.gameWorldFactory = gameWorldFactory;
+		gameWorld = this.gameWorldFactory.makeWorld(0);
 		playerPlaneActions = new PlaneActions(gameWorld.getPlayerPlane());
-		// brainActivator = new EnemyBrainActivator(gameWorld.getEnemyPlanes());
+		this.brainController = brainController;
 	}
 
 	public void update() {
 		gameWorld.update();
-		// brainActivator.activate(gameWorld.getEnemyPlanes());
+		brainController.activate();
 	}
 
 	public fly2.game.frontend.GameWorld getWorld() {

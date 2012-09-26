@@ -4,8 +4,8 @@ import android.content.res.AssetManager;
 import android.test.InstrumentationTestCase;
 import fly2.app.AssetFileReader;
 import fly2.common.Tuple;
-import fly2.unittest.TestGameWorldFileParserHandler;
-import fly2.unittest.TestPlaneFactory;
+import fly2.unittest.stub.TestGameWorldFileParserHandler;
+import fly2.unittest.stub.TestPlaneFactory;
 
 import java.io.IOException;
 import java.util.Iterator;

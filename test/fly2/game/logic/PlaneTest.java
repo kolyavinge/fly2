@@ -1,7 +1,7 @@
 package fly2.game.logic;
 
 import static fly2.game.frontend.PlaneKind.*;
-import fly2.unittest.TestPlaneListener;
+import fly2.unittest.stub.TestPlaneListener;
 import junit.framework.TestCase;
 
 public class PlaneTest extends TestCase {

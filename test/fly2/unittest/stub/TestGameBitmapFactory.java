@@ -1,4 +1,4 @@
-package fly2.unittest;
+package fly2.unittest.stub;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

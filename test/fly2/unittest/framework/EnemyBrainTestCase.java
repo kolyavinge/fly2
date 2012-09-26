@@ -1,9 +1,12 @@
-package fly2.unittest;
+package fly2.unittest.framework;
 
 import fly2.game.enemy.EnemyBrain;
 import fly2.game.enemy.EnemyBrainContext;
 import fly2.game.frontend.Bullet;
 import fly2.game.frontend.Direction;
+import fly2.unittest.stub.TestGameWorld;
+import fly2.unittest.stub.TestPlane;
+import fly2.unittest.stub.TestPlaneActions;
 
 import java.util.Collection;
 
