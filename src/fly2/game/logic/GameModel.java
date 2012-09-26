@@ -48,7 +48,7 @@ public final class GameModel implements fly2.game.frontend.GameModel {
 		return gameWorld.getBulletsCount();
 	}
 
-	public fly2.game.frontend.PlayerPlaneActions getPlayerPlaneActions() {
+	public fly2.game.frontend.PlaneActions getPlayerPlaneActions() {
 		return playerPlaneActions;
 	}
 }

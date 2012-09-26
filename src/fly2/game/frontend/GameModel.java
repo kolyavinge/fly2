@@ -19,7 +19,7 @@ public interface GameModel {
 
 	int getBulletsCount();
 	
-	PlayerPlaneActions getPlayerPlaneActions();
+	PlaneActions getPlayerPlaneActions();
 	
 	void update();
 }

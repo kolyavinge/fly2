@@ -4,5 +4,5 @@ public interface EnemyBrain {
 
 	void setContext(EnemyBrainContext context);
 	
-	StepResult activate();
+	void activate();
 }

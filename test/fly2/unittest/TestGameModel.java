@@ -4,7 +4,7 @@ import fly2.game.frontend.Bullet;
 import fly2.game.frontend.GameModel;
 import fly2.game.frontend.GameWorld;
 import fly2.game.frontend.Plane;
-import fly2.game.frontend.PlayerPlaneActions;
+import fly2.game.frontend.PlaneActions;
 
 import java.util.Collection;
 
@@ -37,7 +37,7 @@ public class TestGameModel implements GameModel {
 		return 0;
 	}
 
-	public PlayerPlaneActions getPlayerPlaneActions() {
+	public PlaneActions getPlayerPlaneActions() {
 		return null;
 	}
 }

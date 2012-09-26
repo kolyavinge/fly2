@@ -1,6 +1,6 @@
 package fly2.game.frontend;
 
-public interface PlayerPlaneActions {
+public interface PlaneActions {
 
 	void moveLeft();
 

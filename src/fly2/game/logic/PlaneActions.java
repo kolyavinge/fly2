@@ -1,6 +1,6 @@
 package fly2.game.logic;
 
-public class PlaneActions implements fly2.game.frontend.PlayerPlaneActions {
+public class PlaneActions implements fly2.game.frontend.PlaneActions {
 
 	private Plane plane;
 

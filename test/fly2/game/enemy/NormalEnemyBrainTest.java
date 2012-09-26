@@ -48,7 +48,7 @@ public class NormalEnemyBrainTest extends EnemyBrainTestCase {
 		assertFireAndDirection(NO_FIRE, _UNDEFINED);
 	}
 
-	public void testNullContext() {
+	public void testSetNullContext() {
 		try {
 			brain.setContext(null);
 			fail();
@@ -56,7 +56,7 @@ public class NormalEnemyBrainTest extends EnemyBrainTestCase {
 		}
 	}
 
-	public void testNoContext() {
+	public void testActivateWithoutContext() {
 		brain = new NormalEnemyBrain();
 
 		try {

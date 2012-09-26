@@ -1,9 +1,6 @@
 package fly2.game.enemy;
 
-import fly2.game.frontend.Bullet;
-import fly2.game.frontend.GameWorld;
-import fly2.game.frontend.Plane;
-
+import fly2.game.frontend.*;
 import java.util.Collection;
 
 public interface EnemyBrainContext {
@@ -13,6 +10,8 @@ public interface EnemyBrainContext {
 	Plane getPlayer();
 
 	Plane getEnemy();
+
+	PlaneActions getEnemyActions();
 
 	Collection<Plane> getEnemyPlanes();
 
