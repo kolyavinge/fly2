@@ -10,10 +10,16 @@ import java.util.Collections;
 public final class GameModel implements fly2.game.frontend.GameModel {
 
 	private GameWorld gameWorld;
-	private EnemyBrainController brainController;
+	EnemyBrainController brainController;
 	private PlaneActions playerPlaneActions;
 
 	public GameModel(GameWorldFactory gameWorldFactory, EnemyBrainController brainController) {
+		if (gameWorldFactory == null)
+			throw new NullPointerException("gameWorldFactory");
+		
+		if (brainController == null)
+			throw new NullPointerException("brainController");
+		
 		this.gameWorld = gameWorldFactory.makeWorld(0);
 		this.brainController = brainController;
 		createEnemyPlanesContexts();
@@ -21,7 +27,9 @@ public final class GameModel implements fly2.game.frontend.GameModel {
 	}
 
 	public void update() {
+		// обновляем игровые объекты
 		gameWorld.update();
+		// включаем мозги ботам
 		brainController.activate();
 	}
 

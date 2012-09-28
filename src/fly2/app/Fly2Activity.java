@@ -3,8 +3,9 @@ package fly2.app;
 import android.app.Activity;
 import android.os.Bundle;
 import fly2.game.common.ResourceFileReader;
+import fly2.game.frontend.Difficulty;
 import fly2.game.frontend.GameModel;
-import fly2.game.logic.GameModelFactory;
+import fly2.game.logic.GameModelBuilder;
 import fly2.game.view.GameSurfaceView;
 
 public class Fly2Activity extends Activity {
@@ -33,7 +34,11 @@ public class Fly2Activity extends Activity {
 
 	private GameModel createGameModel() {
 		ResourceFileReader fileReader = getFileReader();
-		return GameModelFactory.getInstance().createModel(fileReader);
+		GameModelBuilder builder = new GameModelBuilder();
+		builder.setFileReader(fileReader);
+		builder.setDifficulty(Difficulty.NORMAL);
+
+		return builder.buildModel();
 	}
 
 	private ResourceFileReader getFileReader() {

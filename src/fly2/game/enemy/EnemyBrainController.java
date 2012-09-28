@@ -11,18 +11,31 @@ public class EnemyBrainController {
 	private EnemyBrainContainer brainContainer;
 	private Collection<EnemyBrainContext> contextCollection;
 
-	public EnemyBrainController(EnemyBrainContainer brainContainer) {
+	public EnemyBrainController() {
+		this.brainContainer = new NullEnemyBrainContainer();
+		this.contextCollection = new ArrayList<EnemyBrainContext>();
+	}
+	
+	public EnemyBrainContainer getBrainContainer() {
+		return brainContainer;
+	}
+
+	public void setBrainContainer(EnemyBrainContainer brainContainer) {
 		if (brainContainer == null)
 			throw new NullPointerException("brainContainer");
-
+		
 		this.brainContainer = brainContainer;
+	}
+
+	public Collection<EnemyBrainContext> getContextCollection() {
+		return contextCollection;
 	}
 
 	public void setContextCollection(Collection<EnemyBrainContext> contextCollection) {
 		if (contextCollection == null)
 			throw new NullPointerException("contextCollection");
 
-		this.contextCollection = new ArrayList<EnemyBrainContext>(contextCollection);
+		this.contextCollection.addAll(contextCollection);
 	}
 
 	public void activate() {

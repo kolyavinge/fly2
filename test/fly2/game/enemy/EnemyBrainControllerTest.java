@@ -17,7 +17,8 @@ public class EnemyBrainControllerTest extends TestCase {
 
 	public void setUp() {
 		actions = new TestPlaneActions();
-		controller = new EnemyBrainController(brainContainerStub);
+		controller = new EnemyBrainController();
+		controller.setBrainContainer(brainContainerStub);
 	}
 
 	public void testActivateForAlivePlane() {
@@ -27,30 +28,60 @@ public class EnemyBrainControllerTest extends TestCase {
 		controller.activate();
 		assertTrue(actions.moveRightFlag);
 		assertTrue(actions.fireFlag);
+		assertFalse(controller.getContextCollection().isEmpty());
 	}
-	
+
 	public void testActivateForDestroyPlane() {
 		TestPlane plane = new TestPlane();
-		plane.setHealth(0);
+		plane.setHealth(0); // дохлый бот
 		controller.setContextCollection(getContextCollection(plane));
 		controller.activate();
 		assertTrue(actions.noMoveFlag);
 		assertFalse(actions.fireFlag);
+		// контексты для дохлых ботов удаляются
+		assertTrue(controller.getContextCollection().isEmpty());
 	}
 
+	public void testNew() {
+		controller = new EnemyBrainController();
+		assertNotNull(controller.getBrainContainer());
+		assertNotNull(controller.getContextCollection());
+		assertTrue(controller.getContextCollection().isEmpty());
+	}
+	
 	public void testSetNullBrainContainer() {
+		controller = new EnemyBrainController();
 		try {
-			new EnemyBrainController(null);
+			controller.setBrainContainer(null);
 			fail();
 		} catch (NullPointerException exp) {
 		}
 	}
 
 	public void testSetNullContextCollection() {
+		controller = new EnemyBrainController();
 		try {
 			controller.setContextCollection(null);
 			fail();
 		} catch (NullPointerException exp) {
+		}
+	}
+
+	public void testWithoutBrainContainerAndContexts() {
+		controller = new EnemyBrainController();
+		controller.activate();
+		// никакие ошибки не генерируются
+	}
+
+	public void testWithoutBrainContainer() {
+		TestPlane plane = new TestPlane();
+		plane.setHealth(10);
+		controller = new EnemyBrainController();
+		controller.setContextCollection(getContextCollection(plane));
+		try {
+			controller.activate();
+			fail();
+		} catch (IllegalStateException exp) {
 		}
 	}
 
