@@ -1,7 +1,7 @@
 package fly2.game.logic;
 
+import fly2.phyzix.ReturnedOutOfWorldStrategy;
 import fly2.phyzix.World;
-import fly2.phyzix.ext.ReturnedOutOfWorldStrategy;
 
 import java.util.Collection;
 
@@ -72,15 +72,7 @@ public final class GameWorld implements fly2.game.frontend.GameWorld, PlaneListe
 		return WorldItemsHelper.getEnemyPlanes(world.getItems());
 	}
 
-	public int getEnemyPlanesCount() {
-		return WorldItemsHelper.getEnemyPlanesCount(world.getItems());
-	}
-
 	public Collection<Bullet> getBullets() {
 		return WorldItemsHelper.getBullets(world.getItems());
-	}
-
-	public int getBulletsCount() {
-		return WorldItemsHelper.getBulletsCount(world.getItems());
 	}
 }

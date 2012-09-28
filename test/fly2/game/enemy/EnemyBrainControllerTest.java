@@ -17,19 +17,30 @@ public class EnemyBrainControllerTest extends TestCase {
 
 	public void setUp() {
 		actions = new TestPlaneActions();
-		Collection<EnemyBrainContext> contextCollection = getContextCollection();
-		controller = new EnemyBrainController(brainContainerStub, contextCollection);
+		controller = new EnemyBrainController(brainContainerStub);
 	}
 
-	public void testActivate() {
+	public void testActivateForAlivePlane() {
+		TestPlane plane = new TestPlane();
+		plane.setHealth(10);
+		controller.setContextCollection(getContextCollection(plane));
 		controller.activate();
 		assertTrue(actions.moveRightFlag);
 		assertTrue(actions.fireFlag);
 	}
+	
+	public void testActivateForDestroyPlane() {
+		TestPlane plane = new TestPlane();
+		plane.setHealth(0);
+		controller.setContextCollection(getContextCollection(plane));
+		controller.activate();
+		assertTrue(actions.noMoveFlag);
+		assertFalse(actions.fireFlag);
+	}
 
 	public void testSetNullBrainContainer() {
 		try {
-			new EnemyBrainController(null, new ArrayList<EnemyBrainContext>());
+			new EnemyBrainController(null);
 			fail();
 		} catch (NullPointerException exp) {
 		}
@@ -37,15 +48,15 @@ public class EnemyBrainControllerTest extends TestCase {
 
 	public void testSetNullContextCollection() {
 		try {
-			new EnemyBrainController(brainContainerStub, null);
+			controller.setContextCollection(null);
 			fail();
 		} catch (NullPointerException exp) {
 		}
 	}
 
-	private Collection<EnemyBrainContext> getContextCollection() {
+	private Collection<EnemyBrainContext> getContextCollection(TestPlane plane) {
 		TestEnemyBrainContext context = new TestEnemyBrainContext();
-		context.setEnemy(new TestPlane());
+		context.setEnemy(plane);
 		context.setEnemyActions(actions);
 
 		Collection<EnemyBrainContext> contextCollection = new ArrayList<EnemyBrainContext>();

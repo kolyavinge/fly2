@@ -1,7 +1,5 @@
-package fly2.phyzix.ext;
+package fly2.phyzix;
 
-import fly2.phyzix.OutOfWorldStrategy;
-import fly2.phyzix.WorldItem;
 
 /**
  * Возвращает объект в игровой мир, когда он из него выпадает

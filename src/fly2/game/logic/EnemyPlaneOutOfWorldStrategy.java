@@ -1,6 +1,6 @@
 package fly2.game.logic;
 
-import fly2.phyzix.ext.ReturnedOutOfWorldStrategy;
+import fly2.phyzix.ReturnedOutOfWorldStrategy;
 
 /**
  * Определяет поведение вражеского самолетика, когда он вылетает за пределы игрового мира.

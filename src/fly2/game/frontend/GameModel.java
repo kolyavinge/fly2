@@ -2,9 +2,6 @@ package fly2.game.frontend;
 
 import java.util.Collection;
 
-/**
- * Модель игры
- */
 public interface GameModel {
 
 	GameWorld getWorld();
@@ -13,12 +10,8 @@ public interface GameModel {
 
 	Collection<Plane> getEnemyPlanes();
 
-	int getEnemyPlanesCount();
-
 	Collection<Bullet> getBullets();
 
-	int getBulletsCount();
-	
 	PlaneActions getPlayerPlaneActions();
 	
 	void update();

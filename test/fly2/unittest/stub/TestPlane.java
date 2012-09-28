@@ -8,6 +8,7 @@ public class TestPlane implements Plane {
 
 	private double width, height;
 	private double x, y;
+	private int health;
 	
 	public PlaneKind getKind() {
 		return PlaneKind._UNDEFINED;
@@ -54,7 +55,11 @@ public class TestPlane implements Plane {
 	}
 
 	public int getHealth() {
-		throw new UnsupportedOperationException();
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
 	}
 
 	public Weapon getWeapon() {
@@ -62,6 +67,6 @@ public class TestPlane implements Plane {
 	}
 
 	public boolean isDestroyed() {
-		throw new UnsupportedOperationException();
+		return getHealth() == 0;
 	}
 }

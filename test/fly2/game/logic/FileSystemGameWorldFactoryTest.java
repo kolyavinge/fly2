@@ -6,16 +6,16 @@ import fly2.app.AssetFileReader;
 
 import java.util.Iterator;
 
-public class GameWorldFactoryTest extends InstrumentationTestCase {
+public class FileSystemGameWorldFactoryTest extends InstrumentationTestCase {
 
-	private GameWorldFactory factory;
+	private FileSystemGameWorldFactory factory;
 	private GameWorld gameWorld;
 	private Iterator<Plane> enemyIterator;
 
 	public void setUp() {
 		AssetManager assetManager = getInstrumentation().getContext().getAssets();
 		AssetFileReader reader = new AssetFileReader(assetManager);
-		factory = new GameWorldFactory(reader);
+		factory = new FileSystemGameWorldFactory(reader);
 	}
 
 	public void testWorldCount() {
@@ -56,7 +56,7 @@ public class GameWorldFactoryTest extends InstrumentationTestCase {
 
 	public void testNullReader() {
 		try {
-			new GameWorldFactory(null);
+			new FileSystemGameWorldFactory(null);
 			fail();
 		} catch (NullPointerException exp) {
 		}
@@ -74,7 +74,7 @@ public class GameWorldFactoryTest extends InstrumentationTestCase {
 	}
 
 	private void assertEnemyCount(int count) {
-		assertEquals(count, gameWorld.getEnemyPlanesCount());
+		assertEquals(count, gameWorld.getEnemyPlanes().size());
 	}
 
 	private void assertEnemyPosition(double x, double y) {

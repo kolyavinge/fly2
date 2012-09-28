@@ -1,6 +1,6 @@
 package fly2.game.logic;
 
-import fly2.phyzix.ext.FlyingWorldItem;
+import fly2.phyzix.FlyingWorldItem;
 
 /**
  * Пуля

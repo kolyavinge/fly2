@@ -1,7 +1,7 @@
-package fly2.phyzix.ext;
+package fly2.phyzix;
 
+import fly2.phyzix.ReturnedOutOfWorldStrategy;
 import fly2.phyzix.WorldItem;
-import fly2.phyzix.ext.ReturnedOutOfWorldStrategy;
 import junit.framework.TestCase;
 
 public class ReturnedOutOfWorldStrategyTest extends TestCase {

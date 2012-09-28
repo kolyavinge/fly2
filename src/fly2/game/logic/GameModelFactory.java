@@ -18,6 +18,6 @@ public final class GameModelFactory {
 	}
 
 	public fly2.game.frontend.GameModel createModel(ResourceFileReader fileReader) {
-		return new GameModel(fileReader);
+		return null;//new GameModel(fileReader);
 	}
 }

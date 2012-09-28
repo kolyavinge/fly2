@@ -38,12 +38,12 @@ public class GameWorldTest extends GameWorldTestCase {
 		player.fire();
 
 		gameWorld.update();
-		assertEquals(1, gameWorld.getBulletsCount());
+		assertEquals(1, gameWorld.getBullets().size());
 		assertEquals(playerInitHealth, player.getHealth());
 		assertEquals(enemyInitHealth, enemy.getHealth());
 
 		gameWorld.update();
-		assertEquals(0, gameWorld.getBulletsCount());
+		assertEquals(0, gameWorld.getBullets().size());
 		assertEquals(playerInitHealth, player.getHealth());
 		assertEquals(enemyInitHealth - playerWeapon.getBulletDamage(), enemy.getHealth());
 	}
@@ -82,10 +82,10 @@ public class GameWorldTest extends GameWorldTestCase {
 		player.fire();
 
 		gameWorld.update();
-		assertEquals(1, gameWorld.getBulletsCount());
+		assertEquals(1, gameWorld.getBullets().size());
 
 		gameWorld.update();
-		assertEquals(0, gameWorld.getBulletsCount());
+		assertEquals(0, gameWorld.getBullets().size());
 	}
 
 	public void testPlayerPlaneOutOfWorldLeft() {

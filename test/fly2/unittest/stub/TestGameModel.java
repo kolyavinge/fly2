@@ -21,20 +21,12 @@ public class TestGameModel implements GameModel {
 		return null;
 	}
 
-	public int getEnemyPlanesCount() {
-		return 0;
-	}
-
 	public GameWorld getWorld() {
 		return null;
 	}
 
 	public Collection<Bullet> getBullets() {
 		return null;
-	}
-
-	public int getBulletsCount() {
-		return 0;
 	}
 
 	public PlaneActions getPlayerPlaneActions() {

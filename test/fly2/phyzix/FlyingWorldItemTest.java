@@ -1,6 +1,6 @@
-package fly2.phyzix.ext;
+package fly2.phyzix;
 
-import fly2.phyzix.ext.FlyingWorldItem;
+import fly2.phyzix.FlyingWorldItem;
 import junit.framework.TestCase;
 import static fly2.game.frontend.Direction.*;
 

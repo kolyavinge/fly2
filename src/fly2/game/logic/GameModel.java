@@ -1,22 +1,23 @@
 package fly2.game.logic;
 
+import fly2.game.enemy.EnemyBrainContext;
 import fly2.game.enemy.EnemyBrainController;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
 public final class GameModel implements fly2.game.frontend.GameModel {
 
 	private GameWorld gameWorld;
-	private GameWorldFactory gameWorldFactory;
-	private PlaneActions playerPlaneActions;
 	private EnemyBrainController brainController;
+	private PlaneActions playerPlaneActions;
 
 	public GameModel(GameWorldFactory gameWorldFactory, EnemyBrainController brainController) {
-		this.gameWorldFactory = gameWorldFactory;
-		gameWorld = this.gameWorldFactory.makeWorld(0);
-		playerPlaneActions = new PlaneActions(gameWorld.getPlayerPlane());
+		this.gameWorld = gameWorldFactory.makeWorld(0);
 		this.brainController = brainController;
+		createEnemyPlanesContexts();
+		this.playerPlaneActions = new PlaneActions(gameWorld.getPlayerPlane());
 	}
 
 	public void update() {
@@ -24,6 +25,14 @@ public final class GameModel implements fly2.game.frontend.GameModel {
 		brainController.activate();
 	}
 
+	private void createEnemyPlanesContexts() {
+		Collection<EnemyBrainContext> contexts = new ArrayList<EnemyBrainContext>(gameWorld.getEnemyPlanes().size());
+		for (Plane enemy : gameWorld.getEnemyPlanes()) {
+			contexts.add(new EnemyBrainContextWrapper(gameWorld, enemy));
+		}
+		brainController.setContextCollection(contexts);
+	}
+	
 	public fly2.game.frontend.GameWorld getWorld() {
 		return gameWorld;
 	}
@@ -36,16 +45,8 @@ public final class GameModel implements fly2.game.frontend.GameModel {
 		return Collections.<fly2.game.frontend.Plane> unmodifiableCollection(gameWorld.getEnemyPlanes());
 	}
 
-	public int getEnemyPlanesCount() {
-		return gameWorld.getEnemyPlanesCount();
-	}
-
 	public Collection<fly2.game.frontend.Bullet> getBullets() {
 		return Collections.<fly2.game.frontend.Bullet> unmodifiableCollection(gameWorld.getBullets());
-	}
-
-	public int getBulletsCount() {
-		return gameWorld.getBulletsCount();
 	}
 
 	public fly2.game.frontend.PlaneActions getPlayerPlaneActions() {

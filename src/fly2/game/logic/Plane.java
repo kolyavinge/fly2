@@ -3,7 +3,7 @@ package fly2.game.logic;
 import static fly2.game.frontend.PlaneKind.*;
 import fly2.game.common.PlaneIdGenerator;
 import fly2.game.frontend.PlaneKind;
-import fly2.phyzix.ext.FlyingWorldItem;
+import fly2.phyzix.FlyingWorldItem;
 
 public class Plane extends FlyingWorldItem implements fly2.game.frontend.Plane {
 

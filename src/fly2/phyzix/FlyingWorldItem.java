@@ -1,8 +1,6 @@
-package fly2.phyzix.ext;
+package fly2.phyzix;
 
 import fly2.game.frontend.Direction;
-import fly2.phyzix.Updateable;
-import fly2.phyzix.WorldItem;
 import static fly2.game.frontend.Direction.*;
 
 /**
