@@ -5,7 +5,7 @@ import fly2.view.Mesh2d;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public class PlayerPlaneView implements GameObjectView<Plane>, CameraObservableObject {
+public class PlayerPlaneView implements GameObjectView<Plane> {
 
 	private Plane plane;
 	private Mesh2d mesh;
@@ -40,24 +40,4 @@ public class PlayerPlaneView implements GameObjectView<Plane>, CameraObservableO
 	public boolean isDestroyed() {
 		return plane.isDestroyed();
 	}
-
-	/* CameraObservableObject */
-
-	public double getX() {
-		return plane.getX();
-	}
-
-	public double getY() {
-		return plane.getY();
-	}
-
-	public double getWidth() {
-		return plane.getWidth();
-	}
-
-	public double getHeight() {
-		return plane.getHeight();
-	}
-	
-	/* CameraObservableObject */
 }
