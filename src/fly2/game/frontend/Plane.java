@@ -3,6 +3,8 @@ package fly2.game.frontend;
 public interface Plane {
 	
 	PlaneKind getKind();
+	
+	Direction getFlyDirection();
 
 	double getX();
 

@@ -1,5 +1,6 @@
 package fly2.unittest.stub;
 
+import fly2.game.frontend.Direction;
 import fly2.game.frontend.Plane;
 import fly2.game.frontend.PlaneKind;
 import fly2.game.frontend.Weapon;
@@ -12,6 +13,10 @@ public class TestPlane implements Plane {
 	
 	public PlaneKind getKind() {
 		return PlaneKind._UNDEFINED;
+	}
+
+	public Direction getFlyDirection() {
+		throw new UnsupportedOperationException();
 	}
 
 	public double getX() {

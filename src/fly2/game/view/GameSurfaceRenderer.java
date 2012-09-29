@@ -19,13 +19,13 @@ public class GameSurfaceRenderer implements GLSurfaceView.Renderer {
 	private BackgroundView background;
 	private Collection<GameObjectView> viewCollection;
 	private GameBitmapFactory bitmapFactory;
-	private PlayerPlaneView playerPlaneView;
+	private PlaneView playerPlaneView;
 	private GameObjectViewFactory viewFactory;
 
 	public GameSurfaceRenderer(GameModel gameModel, GameBitmapFactory bitmapFactory) {
 		this.gameModel = gameModel;
 		this.bitmapFactory = bitmapFactory;
-		this.viewCollection = new LinkedList<GameObjectView>();
+		this.viewCollection = new java.util.concurrent.LinkedBlockingQueue<GameObjectView>();
 	}
 
 	public void onDrawFrame(GL10 gl) {
@@ -85,9 +85,21 @@ public class GameSurfaceRenderer implements GLSurfaceView.Renderer {
 	}
 
 	private void createGameObjectViews() {
+		createPlayerPlaneView();
+		createEnemyPlaneViews();
+	}
+
+	private void createPlayerPlaneView() {
 		Plane plane = gameModel.getPlayerPlane();
 		playerPlaneView = viewFactory.getPlayerPlaneView(plane);
 		viewCollection.add(playerPlaneView);
+	}
+	
+	private void createEnemyPlaneViews() {
+		for (Plane enemy : gameModel.getEnemyPlanes()) {
+			PlaneView enemyPlaneView = viewFactory.getEnemyPlaneView(enemy);
+			viewCollection.add(enemyPlaneView);
+		}
 	}
 
 	private void createViewFactory(GL10 gl) {

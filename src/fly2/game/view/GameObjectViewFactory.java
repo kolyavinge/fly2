@@ -14,8 +14,13 @@ public class GameObjectViewFactory {
 		this.meshFactory = meshFactory;
 	}
 
-	public PlayerPlaneView getPlayerPlaneView(Plane plane) {
+	public PlaneView getPlayerPlaneView(Plane plane) {
 		Mesh2d mesh = meshFactory.getPlayerPlaneMesh();
-		return new PlayerPlaneView(plane, mesh);
+		return new PlaneView(plane, mesh);
+	}
+	
+	public PlaneView getEnemyPlaneView(Plane plane) {
+		Mesh2d mesh = meshFactory.getPlayerPlaneMesh();
+		return new PlaneView(plane, mesh);
 	}
 }
